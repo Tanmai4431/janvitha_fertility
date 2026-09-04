@@ -1,0 +1,5 @@
+# Sanity Studio CMS Project Credentials
+# Your Sanity Studio Project ID (e.g. from sanity.io/manage)
+SANITY_STUDIO_PROJECT_ID=
+# Your Sanity Studio Dataset (e.g. production)
+SANITY_STUDIO_DATASET=production

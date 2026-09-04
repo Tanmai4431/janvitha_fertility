@@ -1,0 +1,20 @@
+# Set default behavior to automatic text line ending normalization.
+* text=auto eol=lf
+
+# Force specific text file formats to always use LF.
+*.js text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.astro text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.md text eol=lf
+
+# Denote binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.svg text eol=lf

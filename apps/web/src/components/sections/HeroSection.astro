@@ -1,0 +1,76 @@
+---
+import SanityImage from '../SanityImage.astro';
+import CompanyTaglineRoll from '../ui/company-tagline-roll';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  ctaLabel?: string;
+  ctaUrl?: string;
+  theme?: 'light' | 'dark' | 'brand';
+  bgImage?: any;
+  badgeText?: string;
+  isHomepage?: boolean;
+}
+
+const { title, subtitle, ctaLabel, ctaUrl, theme = 'light', bgImage, badgeText, isHomepage = false } = Astro.props;
+
+// Compile styles based on theme selection
+const themeClasses = {
+  light: 'bg-background text-primary border-b border-border',
+  dark: 'bg-primary text-white border-b border-border',
+  brand: 'bg-primary text-white border-b border-border',
+};
+---
+
+<section class={`relative py-14 md:pt-14 md:pb-24 px-6 overflow-hidden ${themeClasses[theme]}`}>
+  {bgImage && (
+    <div class="absolute inset-0 z-0 pointer-events-none opacity-15">
+      <SanityImage 
+        src={bgImage} 
+        alt="" 
+        className="w-full h-full" 
+        maxWidth={1600}
+        sizes="100vw"
+      />
+      <div class="absolute inset-0 bg-background/80"></div>
+    </div>
+  )}
+
+  <div class="relative z-10 max-w-5xl mx-auto text-center space-y-8">
+    {isHomepage ? (
+      <div class="flex justify-center w-full" data-animate="zoom-in">
+        <CompanyTaglineRoll client:load />
+      </div>
+    ) : badgeText ? (
+      <div class="flex justify-center w-full" data-animate="zoom-in">
+        <span class="badge-neon-pill">
+          {badgeText}
+        </span>
+      </div>
+    ) : null}
+
+    <h1 class="text-4xl sm:text-5xl md:text-6xl font-heading font-bold tracking-tight leading-tight" data-animate="fade-up">
+      {title}
+    </h1>
+
+    {subtitle && (
+      <p class="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-secondary leading-relaxed delay-100 font-sans" data-animate="fade-up">
+        {subtitle}
+      </p>
+    )}
+
+    {ctaLabel && ctaUrl && (
+      <div class="pt-4 flex flex-wrap justify-center gap-4 delay-200" data-animate="zoom-in">
+        <a 
+          href={ctaUrl} 
+          class="btn-primary inline-flex items-center justify-center px-7 py-3.5 text-sm"
+          data-analytics-click={`Hero CTA - ${ctaLabel}`}
+          data-astro-prefetch="hover"
+        >
+          {ctaLabel}
+        </a>
+      </div>
+    )}
+  </div>
+</section>

@@ -1,0 +1,16 @@
+node_modules/
+.pnpm-debug.log*
+.astro/
+dist/
+.turbo/
+.env
+.env.*
+!.env.example
+.wrangler/
+.sanity/
+*.tsbuildinfo
+logs/
+*.log
+.DS_Store
+Thumbs.db
+studio-tree.txt

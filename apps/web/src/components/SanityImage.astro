@@ -1,0 +1,31 @@
+---
+import { getSanityImageProps, type SanityImageSource } from '../utils/image';
+
+interface Props {
+  src: SanityImageSource;
+  alt: string;
+  className?: string;
+  maxWidth?: number;
+  sizes?: string;
+  loading?: 'lazy' | 'eager';
+}
+
+const { src, alt, className = '', maxWidth = 1200, sizes = '100vw', loading = 'lazy' } = Astro.props;
+
+const imageProps = getSanityImageProps(src, maxWidth);
+---
+
+{imageProps ? (
+  <img
+    src={imageProps.src}
+    srcset={imageProps.srcset}
+    sizes={sizes}
+    width={imageProps.width}
+    height={imageProps.height}
+    style={{ aspectRatio: `${imageProps.aspectRatio}` }}
+    alt={alt}
+    class={`h-auto object-cover ${className}`}
+    loading={loading}
+    decoding="async"
+  />
+) : null}

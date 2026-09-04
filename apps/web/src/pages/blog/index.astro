@@ -1,0 +1,214 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { sanityClient, urlFor } from '../../utils/sanity';
+import Breadcrumbs from '../../components/ui/navigation/Breadcrumbs.astro';
+import { BlogCard, type BlogCardPost } from '../../components/ui/BlogCard';
+import client from '../../../../../client.json';
+
+let rawPosts: any[] = [];
+try {
+  rawPosts = await sanityClient.fetch(`
+    *[_type == "post"] | order(publishedAt desc) {
+      title,
+      "slug": slug.current,
+      category,
+      readTime,
+      isFeatured,
+      videoUrl,
+      "videoFileUrl": videoFile.asset->url,
+      author,
+      authorRole,
+      "authorAvatarUrl": authorAvatar.asset->url,
+      tags,
+      excerpt,
+      publishedAt,
+      mainImage
+    }
+  `);
+} catch (e) {
+  console.error("Failed to fetch blog posts from Sanity:", e);
+}
+
+// Map Sanity raw posts to BlogCardPost structure
+const mappedPosts: BlogCardPost[] = (rawPosts || []).map((p) => {
+  let mainImageUrl = '';
+  if (p.mainImage) {
+    try {
+      mainImageUrl = urlFor(p.mainImage).width(800).height(450).format('webp').url();
+    } catch (e) {
+      console.error('Failed to format mainImage URL:', e);
+    }
+  }
+  return {
+    title: p.title || 'Untitled Article',
+    slug: p.slug || '',
+    category: p.category || 'Clinical Guidance',
+    readTime: p.readTime || '4 min read',
+    publishedAt: p.publishedAt || new Date().toISOString(),
+    excerpt: p.excerpt || 'Discover clinical insights and fertility care guidance from our medical specialists.',
+    mainImageUrl,
+    videoUrl: p.videoFileUrl || p.videoUrl || undefined,
+    authorName: p.author || client.business.specialist?.name || client.business.name,
+    authorRole: p.authorRole || client.business.specialist?.designation || 'Medical Specialist',
+    authorAvatarUrl: p.authorAvatarUrl || undefined,
+    tags: p.tags || ['Fertility Care', 'Reproductive Medicine', 'IVF'],
+    isFeatured: p.isFeatured || false,
+  };
+});
+
+// Fallback clinical guidance posts for Janvithas Fertility Center
+const sampleFallbackPosts: BlogCardPost[] = [
+  {
+    title: 'Understanding When to Visit a Fertility Specialist: Key Signs & Guidelines',
+    slug: 'understanding-when-to-visit-a-fertility-specialist',
+    category: 'Fertility Evaluation',
+    readTime: '4 min read',
+    publishedAt: new Date(Date.now() - 86400000 * 2).toISOString(),
+    excerpt: 'Comprehensive guidance on when couples and individuals should consider early fertility diagnostics, ovarian reserve testing, and semen analysis.',
+    mainImageUrl: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80',
+    authorName: client.business.specialist?.name || 'Dr. P. Bharathi',
+    authorRole: client.business.specialist?.designation || 'Consultant Obstetrician & Gynaecologist',
+    tags: ['Fertility Assessment', 'Women Health', 'Reproductive Care'],
+    isFeatured: true,
+  },
+  {
+    title: 'Advanced Assisted Reproduction: Comparing IUI, IVF, and ICSI Protocols',
+    slug: 'comparing-iui-ivf-and-icsi-protocols',
+    category: 'Assisted Reproduction',
+    readTime: '6 min read',
+    publishedAt: new Date(Date.now() - 86400000 * 5).toISOString(),
+    excerpt: 'A clear clinical comparison of modern assisted reproductive options, from gentle IUI insemination to micromanipulated ICSI and PICSI techniques.',
+    mainImageUrl: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=1200&q=80',
+    authorName: client.business.specialist?.name || 'Dr. P. Bharathi',
+    authorRole: client.business.specialist?.designation || 'Consultant Obstetrician & Gynaecologist',
+    tags: ['IVF Care', 'ICSI', 'IUI Treatment'],
+    isFeatured: false,
+  },
+  {
+    title: 'The Role of Blastocyst Culture & Day-5 Embryo Incubation in IVF Success',
+    slug: 'role-of-blastocyst-culture-day-5-embryo-incubation',
+    category: 'Embryology',
+    readTime: '5 min read',
+    publishedAt: new Date(Date.now() - 86400000 * 9).toISOString(),
+    excerpt: 'How extended Day-5 embryology culture and physiological selection significantly enhance single-embryo transfer implantation success rates.',
+    mainImageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1200&q=80',
+    authorName: client.business.specialist?.name || 'Dr. P. Bharathi',
+    authorRole: client.business.specialist?.designation || 'Consultant Obstetrician & Gynaecologist',
+    tags: ['Blastocyst', 'Embryology', 'IVF Success'],
+    isFeatured: true,
+  },
+  {
+    title: 'Male Factor Fertility Evaluation: Semen Analysis & Advanced Diagnostics',
+    slug: 'male-factor-fertility-evaluation-semen-analysis',
+    category: 'Male Fertility',
+    readTime: '4 min read',
+    publishedAt: new Date(Date.now() - 86400000 * 14).toISOString(),
+    excerpt: 'Understanding semen parameter diagnostics, sperm DNA fragmentation testing, and modern treatment options for male reproductive health.',
+    mainImageUrl: 'https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&w=1200&q=80',
+    authorName: client.business.specialist?.name || 'Dr. P. Bharathi',
+    authorRole: client.business.specialist?.designation || 'Consultant Obstetrician & Gynaecologist',
+    tags: ['Male Fertility', 'Semen Analysis', 'PICSI'],
+    isFeatured: false,
+  },
+  {
+    title: 'Fertility Preservation: Protecting Future Family Options with Vitrification',
+    slug: 'fertility-preservation-protecting-future-family-options',
+    category: 'Fertility Preservation',
+    readTime: '5 min read',
+    publishedAt: new Date(Date.now() - 86400000 * 20).toISOString(),
+    excerpt: 'A comprehensive guide to elective and medical egg freezing, sperm cryopreservation, and advanced ultra-rapid vitrification technologies.',
+    mainImageUrl: 'https://images.unsplash.com/photo-1583912267670-6575ad362e4b?auto=format&fit=crop&w=1200&q=80',
+    authorName: client.business.specialist?.name || 'Dr. P. Bharathi',
+    authorRole: client.business.specialist?.designation || 'Consultant Obstetrician & Gynaecologist',
+    tags: ['Cryopreservation', 'Egg Freezing', 'Family Planning'],
+    isFeatured: true,
+  },
+];
+
+const allPosts: BlogCardPost[] = [
+  ...mappedPosts,
+  ...sampleFallbackPosts.filter(sp => !mappedPosts.some(mp => mp.slug === sp.slug))
+];
+
+const categories = [
+  'All Articles',
+  'Fertility Evaluation',
+  'Assisted Reproduction',
+  'Embryology',
+  'Male Fertility',
+  'Fertility Preservation',
+];
+---
+
+<Layout title={`Clinical Insights & Blog | ${client.business.name}`} description={`Read medical articles, treatment guides, and clinical insights from ${client.business.name}.`}>
+  <main class="flex-grow py-6 sm:py-10 md:py-12 bg-background">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 sm:space-y-6">
+      
+      <!-- Breadcrumbs Navigation -->
+      <Breadcrumbs items={[{ label: 'Blog' }]} className="justify-start mb-1" />
+
+      {/* =========================================================================
+          ONE MAIN PARENT CARD: Encapsulates Entire Blog Content Block
+          Matching exact structural container as AboutSection & HospitalLocationCard
+         ========================================================================= */}
+      <div 
+        class="rounded-[32px] sm:rounded-[36px] bg-[#FFFDFC] border-2 border-[#FDDCEB] p-5 sm:p-7 lg:p-9 shadow-[0_4px_30px_rgba(228,0,110,0.04)] space-y-8 sm:space-y-10"
+        data-animate="fade-up"
+      >
+        <!-- Blog Intro Header -->
+        <section class="max-w-3xl mx-auto text-center space-y-3 pt-1 sm:pt-2">
+          <div class="flex justify-center w-full" data-animate="zoom-in">
+            <div class="inline-flex items-center justify-center px-3.5 py-1 rounded-full bg-[#FFF0F6] border border-[#FADCEB]">
+              <span class="font-label font-bold uppercase tracking-wider text-[#E4006E] text-xs sm:text-[13px]">
+                CLINICAL BLOG & INSIGHTS
+              </span>
+            </div>
+          </div>
+          <h1 class="text-2xl sm:text-3xl md:text-4xl font-heading font-bold tracking-tight text-primary leading-tight" data-animate="fade-up">
+            Clinical Guidance & <span class="text-tertiary">Treatment Insights</span>
+          </h1>
+          <p class="text-secondary text-sm sm:text-base leading-relaxed font-sans max-w-2xl mx-auto">
+            Expert articles, patient education guides, and reproductive healthcare insights from <span class="text-primary font-bold">{client.business.name}</span>.
+          </p>
+        </section>
+
+        <!-- Category Filter Pills Bar -->
+        <section class="flex items-center justify-center gap-2 flex-wrap pt-2" data-animate="fade-up">
+          {categories.map((cat, idx) => (
+            <span
+              class={`px-4 py-2 rounded-[10px] text-xs font-sans font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer select-none ${
+                idx === 0
+                  ? 'bg-[#E4006E] hover:bg-[#6B21A8] text-white shadow-xs'
+                  : 'bg-white text-gray-700 border border-[#FADCEB] hover:border-[#6B21A8]/40 hover:text-[#6B21A8] hover:bg-[#FAF5FF]'
+              }`}
+            >
+              {cat}
+            </span>
+          ))}
+        </section>
+
+        <!-- Blog List Grid -->
+        <section class="pt-4 border-t border-border">
+          {allPosts.length > 0 ? (
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+              {allPosts.map((post) => (
+                <div class="flex flex-col h-full w-full" data-animate="fade-up">
+                  <BlogCard client:load post={post} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div class="text-center py-16 px-4 border border-dashed border-border rounded-card bg-surface">
+              <h3 class="font-heading font-bold text-lg text-primary mb-1">No articles found</h3>
+              <p class="text-sm text-secondary max-w-sm mx-auto font-sans">
+                Check back later or register and publish some posts in the Sanity Studio dashboard!
+              </p>
+            </div>
+          )}
+        </section>
+
+      </div>
+
+    </div>
+  </main>
+</Layout>

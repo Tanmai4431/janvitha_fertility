@@ -1,0 +1,18 @@
+---
+import HeroSection from './sections/HeroSection.astro';
+import FeaturesSection from './sections/FeaturesSection.astro';
+import CtaSection from './sections/CtaSection.astro';
+
+interface Props {
+  block: {
+    _type: string;
+    [key: string]: any;
+  };
+}
+
+const { block } = Astro.props;
+---
+
+{block._type === 'heroSection' && <HeroSection {...(block as any)} />}
+{block._type === 'featuresSection' && <FeaturesSection {...(block as any)} />}
+{block._type === 'ctaSection' && <CtaSection {...(block as any)} />}

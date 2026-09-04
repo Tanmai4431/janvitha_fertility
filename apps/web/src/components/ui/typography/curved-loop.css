@@ -1,0 +1,57 @@
+.curved-loop-jacket {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.curved-loop-svg {
+  user-select: none;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1440 / 140;
+  min-height: 80px;
+  max-height: 120px;
+  overflow: visible;
+  display: block;
+  font-size: 2.8rem;
+  fill: transparent;
+  stroke: #FF3DA5;
+  stroke-width: 2.2px;
+  paint-order: stroke fill;
+  font-family: var(--font-heading), 'Fraunces', system-ui, -apple-system, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+@media (min-width: 768px) {
+  .curved-loop-svg {
+    font-size: 3.2rem;
+    stroke-width: 2.4px;
+    min-height: 110px;
+    max-height: 150px;
+    aspect-ratio: 1440 / 160;
+  }
+}
+
+@media (min-width: 1024px) {
+  .curved-loop-svg {
+    font-size: 2.8rem;
+    stroke-width: 2.2px;
+    min-height: 100px;
+    max-height: 140px;
+    aspect-ratio: 1440 / 150;
+  }
+}

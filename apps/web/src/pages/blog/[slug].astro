@@ -1,0 +1,445 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { sanityClient, urlFor } from '../../utils/sanity';
+import PortableTextRenderer from '../../components/PortableTextRenderer';
+import Breadcrumbs from '../../components/ui/navigation/Breadcrumbs.astro';
+import { BlogCard, type BlogCardPost } from '../../components/ui/BlogCard';
+import { ArrowLeft, Clock, Tag, User, ShieldCheck } from 'lucide-react';
+import client from '../../../../../client.json';
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect('/404');
+}
+
+const defaultAuthorName = client.business.specialist?.name || client.business.name;
+const defaultAuthorRole = client.business.specialist?.designation || 'Medical Specialist';
+
+// Sample fallback clinical posts map
+const sampleFallbackPostsMap: Record<string, any> = {
+  'understanding-when-to-visit-a-fertility-specialist': {
+    title: 'Understanding When to Visit a Fertility Specialist: Key Signs & Guidelines',
+    slug: { current: 'understanding-when-to-visit-a-fertility-specialist' },
+    category: 'Fertility Evaluation',
+    readTime: '4 min read',
+    publishedAt: new Date(Date.now() - 86400000 * 2).toISOString(),
+    excerpt: 'Comprehensive guidance on when couples and individuals should consider early fertility diagnostics, ovarian reserve testing, and semen analysis.',
+    mainImageUrl: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80',
+    author: defaultAuthorName,
+    authorRole: defaultAuthorRole,
+    tags: ['Fertility Assessment', 'Women Health', 'Reproductive Care'],
+    isFeatured: true,
+    body: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Deciding when to consult a fertility specialist is a pivotal first step toward building your family. Understanding timing and diagnostic indicators can save valuable time and provide peace of mind.',
+          },
+        ],
+      },
+      {
+        _type: 'block',
+        style: 'h2',
+        children: [{ _type: 'span', text: '1. Recommended Timeline for Consultation' }],
+      },
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'For individuals or couples trying to conceive for more than 12 months (or 6 months if the female partner is 35 or older), a comprehensive evaluation of both partners is strongly advised.',
+          },
+        ],
+      },
+      {
+        _type: 'block',
+        style: 'blockquote',
+        children: [
+          {
+            _type: 'span',
+            text: 'Early evaluation enables accurate diagnosis and ensures tailored, minimally invasive interventions whenever possible.',
+          },
+        ],
+      },
+    ],
+  },
+  'comparing-iui-ivf-and-icsi-protocols': {
+    title: 'Advanced Assisted Reproduction: Comparing IUI, IVF, and ICSI Protocols',
+    slug: { current: 'comparing-iui-ivf-and-icsi-protocols' },
+    category: 'Assisted Reproduction',
+    readTime: '6 min read',
+    publishedAt: new Date(Date.now() - 86400000 * 5).toISOString(),
+    excerpt: 'A clear clinical comparison of modern assisted reproductive options, from gentle IUI insemination to micromanipulated ICSI and PICSI techniques.',
+    mainImageUrl: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=1200&q=80',
+    author: defaultAuthorName,
+    authorRole: defaultAuthorRole,
+    tags: ['IVF Care', 'ICSI', 'IUI Treatment'],
+    isFeatured: false,
+    body: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Assisted reproductive technologies offer multiple treatment pathways customized to the specific causes of infertility.',
+          },
+        ],
+      },
+      {
+        _type: 'block',
+        style: 'h2',
+        children: [{ _type: 'span', text: 'IUI vs. IVF and ICSI' }],
+      },
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'While IUI serves as a gentle first-line approach, IVF and ICSI provide micromanipulation precision and advanced lab incubation to optimize fertilization and embryo development.',
+          },
+        ],
+      },
+    ],
+  },
+  'role-of-blastocyst-culture-day-5-embryo-incubation': {
+    title: 'The Role of Blastocyst Culture & Day-5 Embryo Incubation in IVF Success',
+    slug: { current: 'role-of-blastocyst-culture-day-5-embryo-incubation' },
+    category: 'Embryology',
+    readTime: '5 min read',
+    publishedAt: new Date(Date.now() - 86400000 * 9).toISOString(),
+    excerpt: 'How extended Day-5 embryology culture and physiological selection significantly enhance single-embryo transfer implantation success rates.',
+    mainImageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1200&q=80',
+    author: defaultAuthorName,
+    authorRole: defaultAuthorRole,
+    tags: ['Blastocyst', 'Embryology', 'IVF Success'],
+    isFeatured: true,
+    body: [
+      {
+        _type: 'block',
+        children: [
+          {
+            _type: 'span',
+            text: 'Culturing embryos to the Day 5/6 blastocyst stage allows natural physiological selection of the most viable embryos with high developmental competence.',
+          },
+        ],
+      },
+    ],
+  },
+};
+
+let post: any = null;
+try {
+  post = await sanityClient.fetch(
+    `*[_type == "post" && slug.current == $slug][0] {
+      title,
+      "slug": slug.current,
+      category,
+      readTime,
+      isFeatured,
+      videoUrl,
+      "videoFileUrl": videoFile.asset->url,
+      author,
+      authorRole,
+      "authorAvatarUrl": authorAvatar.asset->url,
+      tags,
+      excerpt,
+      publishedAt,
+      mainImage,
+      body,
+      seo,
+      _updatedAt
+    }`,
+    { slug }
+  );
+} catch (e) {
+  console.error(`Failed to fetch post detail for slug: ${slug}`, e);
+}
+
+// Fallback to sample post if not found in Sanity CMS
+if (!post && sampleFallbackPostsMap[slug]) {
+  post = sampleFallbackPostsMap[slug];
+}
+
+if (!post) {
+  return new Response(null, {
+    status: 404,
+    statusText: 'Not Found',
+  });
+}
+
+// Format URLs & Metadata
+let mainImageUrl = post.mainImageUrl || '';
+if (!mainImageUrl && post.mainImage) {
+  try {
+    mainImageUrl = urlFor(post.mainImage).width(1200).height(675).format('webp').url();
+  } catch (e) {
+    console.error('Failed to format post detail image:', e);
+  }
+}
+
+// SEO & Share Image Resolution
+const seoTitle = post.seo?.metaTitle || post.title || client.seo.defaultTitle;
+const seoDescription = post.seo?.metaDescription || post.excerpt || client.seo.defaultDescription;
+let seoImage = client.seo.defaultShareImage;
+if (post.seo?.shareImage) {
+  try {
+    seoImage = urlFor(post.seo.shareImage).width(1200).height(630).format('jpg').url();
+  } catch (e) {}
+} else if (mainImageUrl) {
+  seoImage = mainImageUrl;
+}
+
+// Format Date & Read Time
+const formattedDate = post.publishedAt
+  ? new Date(post.publishedAt).toLocaleDateString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    })
+  : 'Recent Insight';
+
+const displayReadTime = post.readTime || '4 min read';
+const categoryName = post.category || 'Clinical Guidance';
+
+// Fetch Related Posts from Sanity
+let rawRelated: any[] = [];
+try {
+  rawRelated = await sanityClient.fetch(
+    `*[_type == "post" && slug.current != $slug] | order(publishedAt desc)[0...3] {
+      title,
+      "slug": slug.current,
+      category,
+      readTime,
+      isFeatured,
+      videoUrl,
+      "videoFileUrl": videoFile.asset->url,
+      author,
+      authorRole,
+      "authorAvatarUrl": authorAvatar.asset->url,
+      tags,
+      excerpt,
+      publishedAt,
+      mainImage
+    }`,
+    { slug }
+  );
+} catch (e) {
+  console.error("Failed to fetch related posts:", e);
+}
+
+const mappedRelatedPosts: BlogCardPost[] = (rawRelated || []).map((p) => {
+  let imgUrl = '';
+  if (p.mainImage) {
+    try {
+      imgUrl = urlFor(p.mainImage).width(800).height(450).format('webp').url();
+    } catch (e) {}
+  }
+  return {
+    title: p.title || 'Untitled Article',
+    slug: p.slug || '',
+    category: p.category || 'Clinical Guidance',
+    readTime: p.readTime || '4 min read',
+    publishedAt: p.publishedAt || new Date().toISOString(),
+    excerpt: p.excerpt || 'Explore key clinical findings from our specialists.',
+    mainImageUrl: imgUrl,
+    videoUrl: p.videoFileUrl || p.videoUrl || undefined,
+    authorName: p.author || defaultAuthorName,
+    authorRole: p.authorRole || defaultAuthorRole,
+    authorAvatarUrl: p.authorAvatarUrl || undefined,
+    tags: p.tags || ['Fertility Care', 'Reproductive Care'],
+    isFeatured: p.isFeatured || false,
+  };
+});
+
+// Fallbacks for related posts if Sanity has fewer items
+const fallbackRelatedList: BlogCardPost[] = Object.values(sampleFallbackPostsMap)
+  .filter((sp) => sp.slug.current !== slug)
+  .map((sp) => ({
+    title: sp.title,
+    slug: sp.slug.current,
+    category: sp.category,
+    readTime: sp.readTime,
+    publishedAt: sp.publishedAt,
+    excerpt: sp.excerpt,
+    mainImageUrl: sp.mainImageUrl,
+    videoUrl: sp.videoUrl,
+    authorName: sp.author,
+    authorRole: sp.authorRole,
+    tags: sp.tags,
+    isFeatured: sp.isFeatured,
+  }));
+
+const finalRelatedPosts: BlogCardPost[] = [
+  ...mappedRelatedPosts,
+  ...fallbackRelatedList.filter((fr) => !mappedRelatedPosts.some((mr) => mr.slug === fr.slug)),
+].slice(0, 3);
+---
+
+<Layout
+  title={seoTitle}
+  description={seoDescription}
+  shareImage={seoImage}
+  type="article"
+  publishedAt={post.publishedAt}
+  updatedAt={post._updatedAt}
+  author={post.author || defaultAuthorName}
+>
+  <main class="flex-grow pt-10 sm:pt-12 pb-20 md:pb-24 px-6 bg-background">
+    <article class="max-w-4xl mx-auto space-y-10">
+      
+      {/* Top Header Navigation & Meta Badges */}
+      <div class="space-y-6 pt-1 sm:pt-1.5">
+        <Breadcrumbs items={[{ label: 'Blog', href: '/blog' }, { label: post.title }]} className="justify-start mb-3 sm:mb-4" />
+
+        <div class="flex items-center justify-between gap-4 flex-wrap">
+          <a
+            href="/blog"
+            class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-button border border-border bg-surface text-xs font-sans font-bold uppercase tracking-wider text-primary hover:border-tertiary hover:text-tertiary transition-all shadow-xs"
+            data-astro-prefetch="hover"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Back to Publications</span>
+          </a>
+
+          <div class="flex items-center gap-2">
+            <span class="badge-neon-pill">
+              <Tag className="w-3 h-3" />
+              {categoryName}
+            </span>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-button bg-surface border border-border text-secondary text-xs font-sans font-medium">
+              <Clock className="w-3 h-3 text-tertiary" />
+              {displayReadTime}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Title & Excerpt Header */}
+      <header class="space-y-6 text-left">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading font-bold tracking-tight text-primary leading-tight">
+          {post.title}
+        </h1>
+
+        {post.excerpt && (
+          <p class="text-lg sm:text-xl text-secondary leading-relaxed border-l-4 border-tertiary bg-surface p-5 rounded-r-card font-sans">
+            {post.excerpt}
+          </p>
+        )}
+
+        {/* Author & Publication Details Card */}
+        <div class="pt-4 border-t border-b border-border py-4 flex items-center justify-between gap-4 flex-wrap">
+          <div class="flex items-center gap-3">
+            {post.authorAvatarUrl ? (
+              <img
+                src={post.authorAvatarUrl}
+                alt={post.author || 'Author'}
+                class="w-11 h-11 rounded-full object-cover border border-border"
+              />
+            ) : (
+              <div class="w-11 h-11 rounded-full bg-background border border-border flex items-center justify-center text-primary">
+                <User className="w-5 h-5 text-secondary" />
+              </div>
+            )}
+            <div>
+              <div class="font-heading font-bold text-sm text-primary">
+                {post.author || defaultAuthorName}
+              </div>
+              <div class="text-xs text-secondary font-sans">
+                {post.authorRole || defaultAuthorRole} • Published {formattedDate}
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-button bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-semibold">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              Medically Reviewed
+            </span>
+          </div>
+        </div>
+      </header>
+
+      {/* Featured Main Image or Video File / YouTube Embed */}
+      {post.videoFileUrl || post.videoUrl ? (
+        <div class="rounded-card overflow-hidden shadow-xl border border-border bg-primary aspect-video max-h-[550px] w-full">
+          {post.videoFileUrl ? (
+            <video
+              src={post.videoFileUrl}
+              controls
+              class="w-full h-full object-contain"
+            />
+          ) : (
+            <iframe
+              src={post.videoUrl}
+              title={post.title}
+              class="w-full h-full border-0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            />
+          )}
+        </div>
+      ) : mainImageUrl ? (
+        <div class="rounded-card overflow-hidden shadow-md border border-border max-h-[520px] w-full">
+          <img
+            src={mainImageUrl}
+            alt={post.title}
+            class="w-full h-full object-cover"
+          />
+        </div>
+      ) : null}
+
+      {/* Rich Body Content */}
+      <div class="prose prose-lg prose-headings:font-heading prose-headings:font-bold prose-headings:tracking-tight prose-a:text-tertiary prose-a:underline hover:prose-a:opacity-80 max-w-none text-primary leading-relaxed pt-2 font-sans">
+        {post.body && Array.isArray(post.body) ? (
+          <PortableTextRenderer client:load value={post.body} />
+        ) : typeof post.body === 'string' ? (
+          <div set:html={post.body} />
+        ) : (
+          <p class="text-base text-secondary">
+            Detailed clinical article and patient resources available during consultation.
+          </p>
+        )}
+      </div>
+
+      {/* Tags List */}
+      {post.tags && Array.isArray(post.tags) && post.tags.length > 0 && (
+        <div class="pt-8 border-t border-border flex items-center gap-2 flex-wrap">
+          <span class="font-label font-bold uppercase tracking-wider text-primary">
+            Topics:
+          </span>
+          {post.tags.map((tag: string) => (
+            <span class="px-3 py-1 rounded-button bg-surface border border-border text-xs font-sans text-secondary shadow-xs">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      )}
+
+      {/* Related Articles Section */}
+      {finalRelatedPosts.length > 0 && (
+        <section class="pt-16 border-t border-border space-y-8">
+          <div class="space-y-2">
+            <span class="font-label font-bold uppercase tracking-wider text-tertiary">
+              CONTINUE READING
+            </span>
+            <h3 class="text-2xl sm:text-3xl font-heading font-bold text-primary tracking-tight">
+              Related Clinical Articles & Insights
+            </h3>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {finalRelatedPosts.map((relatedPost) => (
+              <div class="flex flex-col h-full">
+                <BlogCard client:load post={relatedPost} />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+    </article>
+  </main>
+</Layout>

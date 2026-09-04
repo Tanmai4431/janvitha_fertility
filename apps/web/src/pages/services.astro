@@ -1,0 +1,453 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSiteSettings } from '../utils/sanity';
+import client from '../../../../client.json';
+import Breadcrumbs from '../components/ui/navigation/Breadcrumbs.astro';
+import TestimonialsSection from '../components/sections/home/TestimonialsSection';
+
+const siteSettings = await getSiteSettings();
+const siteName = siteSettings?.name || client.business.name;
+const siteDescription = siteSettings?.description || client.business.description;
+const primaryPhone = siteSettings?.primaryPhone || client.contact.primaryPhone;
+const primaryEmail = client.contact.primaryEmail || 'info@janvithasfertility.com';
+const whatsappPhone = client.contact.whatsappPhone || primaryPhone;
+const locationAddress = client.contact.location || 'Opp. Rotary School, Kamala Nagar, Ananthapuram';
+
+// Map services data dynamically from client.json
+const services = (client.services || []).map((s: any, idx: number) => ({
+  id: s.id || String(idx + 1),
+  slug: s.slug || `service-${idx + 1}`,
+  category: s.category || 'Specialized Care',
+  title: s.title || '',
+  shortDesc: s.shortDesc || s.description || '',
+  fullDescription: s.fullDescription || s.shortDesc || '',
+  imageUrl: s.imageUrl || '',
+  subservices: s.subservices || (s.features || []).map((f: string) => ({ title: f })),
+  features: s.features || [],
+  metrics: s.metrics || [],
+}));
+
+const faqs = client.faqs || [];
+
+// Distinctive SVG icon per fertility treatment slug
+function getServiceSvg(slug: string) {
+  switch (slug) {
+    case 'female-infertility':
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><circle cx="12" cy="8" r="5"/><path d="M12 13v8M9 17h6"/></svg>`;
+    case 'male-infertility':
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><circle cx="10" cy="14" r="5"/><path d="M19 5l-5.5 5.5M14 5h5v5"/></svg>`;
+    case 'ivf-treatment':
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><circle cx="12" cy="12" r="8"/><circle cx="10" cy="10" r="2.5"/><circle cx="14" cy="14" r="2.5"/></svg>`;
+    case 'iui-insemination':
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M18 3l3 3-10 10-4 1 1-4 10-10z"/><path d="M14 7l3 3M3 21l3-3"/></svg>`;
+    case 'icsi-procedure':
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><circle cx="14" cy="12" r="6"/><circle cx="14" cy="12" r="2"/><path d="M2 12h7"/></svg>`;
+    case 'picsi-technology':
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>`;
+    case 'genetic-program':
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M4 6c4 0 4 6 8 6s4 6 8 6M4 18c4 0 4-6 8-6s4-6 8-6"/><circle cx="4" cy="6" r="1.5"/><circle cx="20" cy="18" r="1.5"/></svg>`;
+    case 'fertility-preservation':
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M12 2v20M2 12h20"/><circle cx="12" cy="12" r="3"/></svg>`;
+    case 'blastocyst-culture':
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><circle cx="12" cy="12" r="8"/><circle cx="10" cy="10" r="1.5"/><circle cx="14" cy="10" r="1.5"/><circle cx="12" cy="14" r="1.5"/></svg>`;
+    default:
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M8 12h8"/></svg>`;
+  }
+}
+---
+
+<Layout
+  title={`Fertility Treatments & Specialized Care | ${siteName}`}
+  description={siteDescription}
+>
+  <main class="flex-grow pt-4 sm:pt-6 pb-20 md:pb-28 bg-[#FCFBFA]">
+    <div class="flex flex-col space-y-12 sm:space-y-16 lg:space-y-24">
+      
+      {/* ── 0. BREADCRUMBS ROW ── */}
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <Breadcrumbs items={[{ label: 'Services' }]} className="justify-start mb-1" />
+      </div>
+
+      {/* ── 1. HERO BANNER (MATCHING REFERENCE: WARM PINK/PEACH GRADIENT + COUPLE PHOTO) ── */}
+      <section class="w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="relative overflow-hidden rounded-[32px] sm:rounded-[40px] bg-gradient-to-r from-[#FDE8EE] via-[#FFF1F6] to-[#F5EAF7] border border-[#FADCEB] shadow-[0_10px_35px_rgba(228,0,110,0.06)] p-8 sm:p-12 lg:p-16" data-animate="fade-up">
+            
+            {/* Ambient Background Glow Elements */}
+            <div class="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-pink-200/40 blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-20 -right-20 w-96 h-96 rounded-full bg-purple-200/40 blur-3xl pointer-events-none"></div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
+              
+              {/* Left Content */}
+              <div class="lg:col-span-7 space-y-5 text-left">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/80 backdrop-blur-md border border-[#FADCEB] text-xs font-label font-bold uppercase tracking-wider text-[#E4006E]">
+                  <span class="w-2 h-2 rounded-full bg-[#E4006E] animate-pulse"></span>
+                  <span>Specialized Reproductive Care</span>
+                </div>
+
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-heading font-bold text-[#1A0B3C] tracking-tight leading-[1.15]">
+                  Fertility <span class="italic font-normal text-[#E4006E]">Treatments</span>
+                </h1>
+
+                <p class="text-secondary text-sm sm:text-base lg:text-lg font-sans max-w-xl leading-relaxed">
+                  Advanced fertility solutions designed to help individuals and couples overcome conception challenges and achieve their parenthood goals every step — from diagnosis to successful outcomes.
+                </p>
+
+                <div class="pt-2 flex flex-wrap items-center gap-4">
+                  <a
+                    href="/contact"
+                    class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-[#853676] hover:bg-[#E4006E] text-white font-sans font-bold text-sm shadow-md transition-all duration-300 active:scale-95"
+                  >
+                    <span>Book a Consultation</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                      <line x1="7" y1="17" x2="17" y2="7"/>
+                      <polyline points="7 7 17 7 17 17"/>
+                    </svg>
+                  </a>
+                  <a
+                    href={`tel:${primaryPhone.replace(/[^0-9+]/g, '')}`}
+                    class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white hover:bg-rose-50 border border-[#FADCEB] text-[#1A0B3C] font-sans font-bold text-sm shadow-xs transition-colors"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-[#E4006E]">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                    <span>{primaryPhone}</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Right Image (Parents Looking at Pregnancy Test) */}
+              <div class="lg:col-span-5 relative flex justify-center lg:justify-end">
+                <div class="relative w-full max-w-[420px] aspect-[4/3] sm:aspect-[16/11] rounded-[28px] overflow-hidden shadow-xl border-4 border-white/80">
+                  <img
+                    src="/assets/couple-pregnancy-test.jpg"
+                    alt="Hopeful Parents Looking at Positive Pregnancy Test"
+                    class="w-full h-full object-cover object-center"
+                    loading="eager"
+                  />
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── 2. KEY METRICS / TRUST STATS BAR (4 METRICS) ── */}
+      <section class="w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            
+            {/* Metric 1 */}
+            <div class="p-5 sm:p-6 rounded-[24px] bg-white border border-[#FADCEB] shadow-[0_4px_20px_rgba(228,0,110,0.03)] flex items-center gap-4 hover:border-[#E4006E] transition-all duration-300" data-animate="fade-up">
+              <div class="w-12 h-12 rounded-2xl bg-[#FFF0F6] text-[#E4006E] flex items-center justify-center shrink-0 border border-rose-100">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              </div>
+              <div class="text-left">
+                <p class="text-2xl sm:text-3xl font-heading font-bold text-[#1A0B3C]">10,000+</p>
+                <p class="text-xs sm:text-sm text-secondary font-sans font-medium">Happy Fertility Couples</p>
+              </div>
+            </div>
+
+            {/* Metric 2 */}
+            <div class="p-5 sm:p-6 rounded-[24px] bg-white border border-[#FADCEB] shadow-[0_4px_20px_rgba(228,0,110,0.03)] flex items-center gap-4 hover:border-[#853676] transition-all duration-300" data-animate="fade-up">
+              <div class="w-12 h-12 rounded-2xl bg-[#FAF0F8] text-[#853676] flex items-center justify-center shrink-0 border border-purple-100">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <div class="text-left">
+                <p class="text-2xl sm:text-3xl font-heading font-bold text-[#1A0B3C]">15+ Yrs</p>
+                <p class="text-xs sm:text-sm text-secondary font-sans font-medium">FMF (UK) Specialist</p>
+              </div>
+            </div>
+
+            {/* Metric 3 */}
+            <div class="p-5 sm:p-6 rounded-[24px] bg-white border border-[#FADCEB] shadow-[0_4px_20px_rgba(228,0,110,0.03)] flex items-center gap-4 hover:border-[#E4006E] transition-all duration-300" data-animate="fade-up">
+              <div class="w-12 h-12 rounded-2xl bg-[#FFF0F6] text-[#E4006E] flex items-center justify-center shrink-0 border border-rose-100">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="12" y1="8" x2="12" y2="16"/>
+                  <line x1="8" y1="12" x2="16" y2="12"/>
+                </svg>
+              </div>
+              <div class="text-left">
+                <p class="text-2xl sm:text-3xl font-heading font-bold text-[#1A0B3C]">9 ART</p>
+                <p class="text-xs sm:text-sm text-secondary font-sans font-medium">Treatments Offered</p>
+              </div>
+            </div>
+
+            {/* Metric 4 */}
+            <div class="p-5 sm:p-6 rounded-[24px] bg-white border border-[#FADCEB] shadow-[0_4px_20px_rgba(228,0,110,0.03)] flex items-center gap-4 hover:border-[#853676] transition-all duration-300" data-animate="fade-up">
+              <div class="w-12 h-12 rounded-2xl bg-[#FAF0F8] text-[#853676] flex items-center justify-center shrink-0 border border-purple-100">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+              </div>
+              <div class="text-left">
+                <p class="text-2xl sm:text-3xl font-heading font-bold text-[#1A0B3C]">85%+</p>
+                <p class="text-xs sm:text-sm text-secondary font-sans font-medium">Care & Success Rate</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── 3. MAIN SERVICES GRID ON SOFT AURA CONTAINER ── */}
+      <section class="w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div 
+            class="rounded-[36px] sm:rounded-[44px] bg-gradient-to-b from-[#EAE6F9]/70 via-[#FCEDF5]/90 to-[#E3E8FC]/70 border-2 border-[#F3D7E8] p-6 sm:p-10 lg:p-12 shadow-[0_12px_45px_rgba(228,0,110,0.05)] space-y-8 sm:space-y-10"
+            data-animate="fade-up"
+          >
+            
+            {/* Header within container */}
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 border border-[#FADCEB] text-xs font-bold text-[#E4006E] uppercase tracking-wider font-label">
+                COMPREHENSIVE FERTILITY SOLUTIONS
+              </span>
+              <h2 class="text-2xl sm:text-4xl font-heading font-bold text-[#1A0B3C]">
+                Explore Our Treatment Programs
+              </h2>
+              <p class="text-secondary text-xs sm:text-sm font-sans">
+                Evidence-based reproductive protocols delivered with compassionate individual care.
+              </p>
+            </div>
+
+            {/* 3-Column Services Card Grid */}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+              {services.map((service) => {
+                const iconSvg = getServiceSvg(service.slug);
+                const subList = service.subservices || [];
+
+                return (
+                  <div
+                    class="rounded-[26px] bg-white border border-[#F5E0EC] p-6 sm:p-7 flex flex-col justify-between shadow-[0_4px_16px_rgba(26,11,60,0.03)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group text-left relative"
+                    data-animate="fade-up"
+                  >
+                    <div class="space-y-4">
+                      {/* Top Round Icon Badge */}
+                      <div class="w-12 h-12 rounded-full bg-[#FFF0F6] border border-[#FADCEB] text-[#E4006E] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#E4006E] group-hover:text-white transition-all duration-300">
+                        <Fragment set:html={iconSvg} />
+                      </div>
+
+                      {/* Title */}
+                      <h3 class="text-lg sm:text-xl font-heading font-bold text-[#E4006E] group-hover:text-[#1A0B3C] transition-colors leading-snug">
+                        {service.title}
+                      </h3>
+
+                      {/* Description */}
+                      <p class="text-secondary text-xs sm:text-sm font-sans leading-relaxed line-clamp-3">
+                        {service.shortDesc}
+                      </p>
+
+                      {/* Key Subservices Chips */}
+                      {subList && subList.length > 0 && (
+                        <div class="pt-2 flex flex-wrap gap-1.5">
+                          {subList.slice(0, 2).map((sub: any) => (
+                            <span class="inline-block text-[11px] font-sans font-medium px-2.5 py-1 rounded-full bg-[#FAF0F8] text-[#853676] border border-purple-100 truncate max-w-[220px]">
+                              • {typeof sub === 'string' ? sub : sub.title}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Bottom Action Circle Button with Link */}
+                    <div class="mt-6 pt-4 border-t border-[#F8E7F0] flex items-center justify-between">
+                      <a
+                        href={`/services/${service.slug}`}
+                        class="text-xs font-bold text-[#1A0B3C] group-hover:text-[#E4006E] font-sans transition-colors flex items-center gap-1.5"
+                      >
+                        <span>Learn More</span>
+                        <span>→</span>
+                      </a>
+
+                      <a
+                        href={`/services/${service.slug}`}
+                        aria-label={`View details for ${service.title}`}
+                        class="w-9 h-9 rounded-full bg-[#853676] group-hover:bg-[#E4006E] text-white flex items-center justify-center shadow-xs transition-all duration-200 group-hover:scale-110"
+                      >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                          <line x1="7" y1="17" x2="17" y2="7"/>
+                          <polyline points="7 7 17 7 17 17"/>
+                        </svg>
+                      </a>
+                    </div>
+
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Bottom Callout Inside Aura Canvas */}
+            <div class="text-center pt-2">
+              <p class="text-xs sm:text-sm font-sans text-secondary">
+                Let&apos;s make something great work together: {' '}
+                <a
+                  href="/contact"
+                  class="font-bold text-[#E4006E] hover:text-[#1A0B3C] underline underline-offset-4"
+                >
+                  Book A Consultation
+                </a>
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4. TESTIMONIALS SECTION (SHARED HIGH-END COMPONENT & THEME) ── */}
+      <TestimonialsSection client:visible />
+
+
+      {/* ── 5. FAQS & SIDE CONTACT CARD (MATCHING REFERENCE) ── */}
+      <section class="w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            {/* Left FAQ Area */}
+            <div class="lg:col-span-7 space-y-6 text-left" data-animate="fade-up">
+              <div class="space-y-2">
+                <div class="inline-flex items-center gap-1.5 text-xs font-bold text-[#E4006E] uppercase tracking-wider font-label">
+                  <span>• FAQS</span>
+                </div>
+                <h2 class="text-2xl sm:text-4xl font-heading font-bold text-[#1A0B3C] leading-tight">
+                  Your IVF questions, clearly <span class="italic font-normal text-[#E4006E]">answered</span>
+                </h2>
+                <p class="text-secondary text-xs sm:text-sm font-sans max-w-lg">
+                  Find clear, trusted answers to the most common questions about fertility treatments and clinical support at every step of the way.
+                </p>
+              </div>
+
+              <div class="space-y-3 pt-2">
+                {faqs.map((faq, idx) => (
+                  <details
+                    class="group p-5 rounded-[22px] bg-white border border-[#FADCEB] open:border-[#E4006E] open:shadow-sm transition-all duration-200"
+                    open={idx === 0}
+                  >
+                    <summary class="flex items-center justify-between cursor-pointer list-none font-heading font-bold text-sm sm:text-base text-[#1A0B3C] group-hover:text-[#E4006E] transition-colors">
+                      <span class="pr-2">{faq.question}</span>
+                      <span class="w-6 h-6 rounded-full bg-[#FFF0F6] text-[#E4006E] flex items-center justify-center text-xs font-bold group-open:rotate-180 transition-transform duration-200 shrink-0">
+                        ↓
+                      </span>
+                    </summary>
+                    <div class="pt-3 text-secondary text-xs sm:text-sm leading-relaxed font-sans border-t border-rose-100 mt-3">
+                      {faq.answer}
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </div>
+
+            {/* Right Contact Card (Curious About IVF? Let's Talk.) */}
+            <div class="lg:col-span-5 lg:sticky lg:top-24" data-animate="fade-up">
+              <div class="rounded-[28px] bg-white border-2 border-[#FADCEB] p-6 sm:p-8 space-y-6 shadow-[0_6px_25px_rgba(228,0,110,0.04)] text-left">
+                
+                <div class="text-center space-y-1">
+                  <h3 class="text-lg sm:text-xl font-heading font-bold text-[#E4006E]">
+                    Curious About IVF? Let&apos;s Talk.
+                  </h3>
+                  <p class="text-xs text-secondary font-sans">
+                    Our medical coordinators are here to assist with consultations, questions, and treatment details.
+                  </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  
+                  {/* Call Us Box */}
+                  <a
+                    href={`tel:${primaryPhone.replace(/[^0-9+]/g, '')}`}
+                    class="p-4 rounded-2xl bg-[#FFF0F6] border border-[#FADCEB] hover:border-[#E4006E] space-y-1 text-left transition-colors group"
+                  >
+                    <div class="flex items-center gap-2 text-xs font-bold text-[#E4006E]">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                      </svg>
+                      <span>Call Us!</span>
+                    </div>
+                    <p class="text-xs font-bold font-sans text-[#1A0B3C] group-hover:text-[#E4006E] truncate">
+                      {primaryPhone}
+                    </p>
+                  </a>
+
+                  {/* Email Us Box */}
+                  <a
+                    href={`mailto:${primaryEmail}`}
+                    class="p-4 rounded-2xl bg-[#FAF0F8] border border-[#F2D8E6] hover:border-[#853676] space-y-1 text-left transition-colors group"
+                  >
+                    <div class="flex items-center gap-2 text-xs font-bold text-[#853676]">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                      </svg>
+                      <span>Email Us!</span>
+                    </div>
+                    <p class="text-xs font-bold font-sans text-[#1A0B3C] group-hover:text-[#853676] truncate">
+                      {primaryEmail}
+                    </p>
+                  </a>
+
+                </div>
+
+                <div class="pt-2">
+                  <a
+                    href="/contact"
+                    class="w-full block py-3.5 px-4 rounded-full bg-[#E4006E] hover:bg-[#1A0B3C] text-white text-center font-sans font-bold text-xs sm:text-sm shadow-md transition-all duration-200 active:scale-95"
+                  >
+                    Request Confidential Callback
+                  </a>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── 6. BOTTOM CONSULTATION CTA BANNER (MATCHING REFERENCE) ── */}
+      <section class="w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="rounded-[32px] sm:rounded-[40px] bg-gradient-to-r from-[#9C1D72] via-[#C41E7F] to-[#E4006E] p-8 sm:p-12 lg:p-14 text-white shadow-[0_12px_40px_rgba(196,30,127,0.22)]" data-animate="fade-up">
+            
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-6 text-left">
+              <div class="space-y-2 max-w-2xl">
+                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-heading font-bold text-white leading-tight">
+                  Schedule your consultation <span class="italic font-normal text-pink-200">Today!</span>
+                </h2>
+                <p class="text-white/90 text-xs sm:text-base font-sans leading-relaxed">
+                  Start your conversation with our fertility experts and take the first step towards your parenthood journey.
+                </p>
+              </div>
+
+              <div class="shrink-0">
+                <a
+                  href="/contact"
+                  class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-[#E4006E] hover:bg-[#1A0B3C] hover:text-white font-sans font-bold text-sm sm:text-base shadow-lg transition-all duration-200 active:scale-95"
+                >
+                  <span>Book an appointment</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                    <line x1="7" y1="17" x2="17" y2="7"/>
+                    <polyline points="7 7 17 7 17 17"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</Layout>
+

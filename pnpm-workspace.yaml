@@ -1,0 +1,22 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+allowBuilds:
+  esbuild: true
+  sharp: true
+  workerd: true
+minimumReleaseAgeExclude:
+  - '@sanity/diff@6.5.0'
+  - '@sanity/mutator@6.5.0'
+  - '@sanity/schema@6.5.0'
+  - '@sanity/types@6.5.0'
+  - '@sanity/util@6.5.0'
+  - '@sanity/vision@6.5.0'
+  - sanity@6.5.0
+  - '@turbo/darwin-64@2.10.10'
+  - '@turbo/darwin-arm64@2.10.10'
+  - '@turbo/linux-64@2.10.10'
+  - '@turbo/linux-arm64@2.10.10'
+  - '@turbo/windows-64@2.10.10'
+  - '@turbo/windows-arm64@2.10.10'
+  - turbo@2.10.10

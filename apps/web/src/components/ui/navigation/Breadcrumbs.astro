@@ -1,0 +1,88 @@
+---
+// Breadcrumbs.astro - Modern, sleek breadcrumb navigation component
+export interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
+
+export interface Props {
+  items: BreadcrumbItem[];
+  className?: string;
+}
+
+const { items, className = '' } = Astro.props;
+
+// Build Schema.org BreadcrumbList JSON-LD structured data for SEO
+const origin = Astro.url?.origin || 'https://janvithasfertility.com';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  'itemListElement': [
+    {
+      '@type': 'ListItem',
+      'position': 1,
+      'name': 'Home',
+      'item': `${origin}/`
+    },
+    ...items.map((item, idx) => ({
+      '@type': 'ListItem',
+      'position': idx + 2,
+      'name': item.label,
+      ...(item.href ? { 'item': item.href.startsWith('http') ? item.href : `${origin}${item.href}` } : {})
+    }))
+  ]
+};
+---
+
+<!-- JSON-LD Structured Data for Search Engine Breadcrumb Syndication -->
+<script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+<nav 
+  aria-label="Breadcrumb" 
+  class={`flex items-center justify-start flex-wrap gap-2 text-xs sm:text-sm font-sans ${className}`}
+  data-animate="fade-up"
+>
+  <ol class="inline-flex items-center gap-1.5 flex-wrap">
+    <!-- Home Item -->
+    <li class="inline-flex items-center">
+      <a
+        href="/"
+        class="inline-flex items-center gap-1.5 px-3 py-1 rounded-button bg-tertiary text-white hover:opacity-90 font-bold text-[11px] sm:text-xs uppercase tracking-wider transition-all duration-200 shadow-xs shrink-0"
+        data-astro-prefetch="hover"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-white">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
+        <span>Home</span>
+      </a>
+    </li>
+
+    {items.map((item, index) => {
+      const isLast = index === items.length - 1;
+      return (
+        <li class="inline-flex items-center gap-1.5">
+          <!-- Separator slash -->
+          <span class="text-tertiary font-bold text-xs select-none">/</span>
+          
+          {isLast || !item.href ? (
+            <span 
+              class="font-heading font-bold text-primary text-xs sm:text-sm tracking-tight truncate max-w-[180px] xs:max-w-[240px] sm:max-w-md inline-block"
+              aria-current="page"
+            >
+              {item.label}
+            </span>
+          ) : (
+            <a
+              href={item.href}
+              class="font-sans font-semibold text-secondary hover:text-tertiary text-xs sm:text-sm tracking-tight transition-colors duration-200"
+              data-astro-prefetch="hover"
+            >
+              {item.label}
+            </a>
+          )}
+        </li>
+      );
+    })}
+  </ol>
+</nav>

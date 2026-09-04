@@ -1,0 +1,242 @@
+---
+import { urlFor, getSiteSettings } from '../utils/sanity';
+import client from '../../../../client.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+  shareImage?: any;
+  canonicalUrl?: string;
+  type?: string;
+  publishedAt?: string;
+  updatedAt?: string;
+  author?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  shareImage,
+  canonicalUrl = Astro.url.href,
+  type = 'website',
+  publishedAt,
+  updatedAt,
+  author,
+  noindex = false,
+} = Astro.props;
+
+// Fetch siteSettings singleton dynamically from Sanity CMS with fallback
+const siteSettings = await getSiteSettings();
+
+// Resolve Site & Business Names
+const siteName = siteSettings?.name || client.business.name;
+const legalName = siteSettings?.legalName || client.business.legalName || siteName;
+const businessDescription = siteSettings?.description || client.business.description;
+
+// Address details
+const addressStreet = siteSettings?.addressStreet || (client.contact.address as any)?.street || '';
+const addressCity = siteSettings?.addressCity || client.contact.address.city;
+const addressState = siteSettings?.addressState || client.contact.address.state;
+const addressZip = siteSettings?.addressZip || client.contact.address.zip;
+const addressCountry = siteSettings?.addressCountry || client.contact.address.country;
+
+// Phone & Socials
+const telephone = siteSettings?.primaryPhone || client.contact.primaryPhone;
+const rawSocials = (siteSettings?.socialLinks && siteSettings.socialLinks.length > 0)
+  ? siteSettings.socialLinks
+  : (client.socialLinks || []);
+const socialsList = rawSocials
+  .map((item: any) => item?.url)
+  .filter((url: string) => typeof url === 'string' && url.trim().length > 0);
+
+// Resolve Final Title
+let finalTitle = '';
+if (title) {
+  finalTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+} else {
+  finalTitle = siteSettings?.title || client.seo.defaultTitle;
+}
+
+// Resolve Final Description
+const finalDescription = description || siteSettings?.seoDescription || client.seo.defaultDescription;
+
+// Resolve Final Share Image
+const finalShareImage = shareImage || siteSettings?.shareImage;
+
+// Verification & Analytics
+const siteVerificationId = siteSettings?.googleSiteVerificationId || client.seo.googleSiteVerificationId;
+const analyticsId = siteSettings?.googleAnalyticsId || client.seo.googleAnalyticsId;
+const tagManagerId = siteSettings?.googleTagManagerId || client.seo.googleTagManagerId;
+
+// Dynamically resolve sharing image with fallbacks to ensure absolute URLs
+let imageUrl = '';
+if (finalShareImage) {
+  try {
+    imageUrl = urlFor(finalShareImage).width(1200).height(630).fit('crop').url();
+  } catch (e) {
+    console.error('Failed to resolve custom shareImage URL:', e);
+  }
+}
+const siteOrigin = Astro.site?.origin || client.domain.production;
+
+if (!imageUrl) {
+  imageUrl = `${siteOrigin}/api/og.png?title=${encodeURIComponent(finalTitle)}&description=${encodeURIComponent(finalDescription)}`;
+}
+
+// Resolve Dynamic Logo URL from Sanity CMS siteSettings with fallback
+let logoUrl = '';
+if (siteSettings?.logo) {
+  try {
+    logoUrl = urlFor(siteSettings.logo).url();
+  } catch (e) {
+    console.error('Failed to resolve logo image URL from siteSettings.logo:', e);
+  }
+} else if (siteSettings?.brandIcon) {
+  try {
+    logoUrl = urlFor(siteSettings.brandIcon).url();
+  } catch (e) {
+    console.error('Failed to resolve logo image URL from siteSettings.brandIcon:', e);
+  }
+}
+
+if (!logoUrl) {
+  logoUrl = `${siteOrigin}/favicon.svg`;
+} else if (!logoUrl.startsWith('http')) {
+  logoUrl = `${siteOrigin}${logoUrl}`;
+}
+
+// Structured JSON-LD Schema selection based on page type and client archetype
+let schema: Record<string, any> = {};
+
+if (type === 'article') {
+  schema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": finalTitle,
+    "description": finalDescription,
+    ...(imageUrl && { "image": imageUrl }),
+    ...(publishedAt && { "datePublished": publishedAt }),
+    "dateModified": updatedAt || publishedAt || new Date().toISOString(),
+    ...(author && {
+      "author": {
+        "@type": "Person",
+        "name": author
+      }
+    }),
+    "publisher": {
+      "@type": "Organization",
+      "name": siteName,
+      "logo": {
+        "@type": "ImageObject",
+        "url": logoUrl
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalUrl
+    }
+  };
+} else {
+  // Map industry-grade LocalBusiness schema for business archetype
+  schema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "url": canonicalUrl,
+    "name": legalName,
+    "description": businessDescription,
+    "image": logoUrl,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": addressStreet,
+      "addressLocality": addressCity,
+      "addressRegion": addressState,
+      "postalCode": addressZip,
+      "addressCountry": addressCountry
+    },
+    ...(telephone && { "telephone": telephone }),
+    ...(socialsList.length > 0 && { "sameAs": socialsList }),
+    "priceRange": "$$"
+  };
+}
+
+let twitterHandle = '';
+const twitterLinkItem = rawSocials.find((s: any) => (s?.platform || '').toLowerCase().includes('twitter') || (s?.platform || '').toLowerCase().includes('x'));
+const twitterUrl = twitterLinkItem?.url || '';
+if (twitterUrl) {
+  try {
+    const url = new URL(twitterUrl);
+    const handle = url.pathname.replace(/^\//, '');
+    if (handle) {
+      twitterHandle = `@${handle}`;
+    }
+  } catch (e) {
+    console.error('Failed to parse twitter handle:', e);
+  }
+}
+---
+
+<!-- Primary Meta Tags -->
+<title>{finalTitle}</title>
+<meta name="title" content={finalTitle} />
+<meta name="description" content={finalDescription} />
+<link rel="canonical" href={canonicalUrl} />
+
+<!-- Robots Indexing Rules -->
+{noindex ? (
+  <meta name="robots" content="noindex, nofollow" />
+) : (
+  <meta name="robots" content="index, follow" />
+)}
+
+<!-- Search Console Verification -->
+{siteVerificationId && (
+  <meta name="google-site-verification" content={siteVerificationId} />
+)}
+
+<!-- Open Graph / Facebook / LinkedIn / Instagram -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:title" content={finalTitle} />
+<meta property="og:description" content={finalDescription} />
+<meta property="og:site_name" content={siteName} />
+<meta property="og:locale" content="en_US" />
+{imageUrl && <meta property="og:image" content={imageUrl} />}
+
+<!-- Twitter / X -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalUrl} />
+<meta property="twitter:title" content={finalTitle} />
+<meta property="twitter:description" content={finalDescription} />
+{twitterHandle && <meta name="twitter:site" content={twitterHandle} />}
+{twitterHandle && <meta name="twitter:creator" content={twitterHandle} />}
+{imageUrl && <meta property="twitter:image" content={imageUrl} />}
+
+<!-- JSON-LD Schema.org Structured Data -->
+<Fragment set:html={`<script type="application/ld+json">${JSON.stringify(schema)}</script>`} />
+
+<!-- Global Site Tag (gtag.js) - Google Analytics -->
+{analyticsId && (
+  <Fragment set:html={`
+    <script async src="https://www.googletagmanager.com/gtag/js?id=${analyticsId}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '${analyticsId}');
+    </script>
+  `} />
+)}
+
+<!-- Google Tag Manager -->
+{tagManagerId && (
+  <Fragment set:html={`
+    <script>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','${tagManagerId}');
+    </script>
+  `} />
+)}

@@ -1,0 +1,87 @@
+---
+import { Sparkles, Shield, Cpu, Activity, Zap, Star, Code, Heart, ArrowRight } from 'lucide-react';
+
+interface Feature {
+  title: string;
+  description?: string;
+  iconName?: string;
+}
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  theme?: 'light' | 'dark';
+  features?: Feature[];
+}
+
+const { title, subtitle, theme = 'light', features = [] } = Astro.props;
+
+const themeClasses = {
+  light: 'bg-slate-50 dark:bg-slate-900/40 border-b border-slate-100 dark:border-slate-800/80',
+  dark: 'bg-slate-900 dark:bg-slate-950 text-white border-b border-slate-800 dark:border-slate-900',
+};
+
+const iconMap: Record<string, any> = {
+  Sparkles,
+  Shield,
+  Cpu,
+  Activity,
+  Zap,
+  Star,
+  Code,
+  Heart,
+  ArrowRight,
+};
+
+const getIcon = (name?: string) => {
+  if (!name) return Sparkles;
+  return iconMap[name] || Sparkles;
+};
+---
+
+<section class={`py-20 px-6 ${themeClasses[theme]}`}>
+  <div class="max-w-6xl mx-auto space-y-12">
+    
+    <!-- Section Header Info -->
+    <div class="max-w-2xl text-left space-y-3" data-animate="fade-up">
+      <h2 class="text-3xl font-heading font-bold tracking-tight sm:text-4xl">
+        {title}
+      </h2>
+      {subtitle && (
+        <p class="text-secondary text-sm sm:text-base leading-relaxed font-sans">
+          {subtitle}
+        </p>
+      )}
+    </div>
+
+    <!-- Features Grid -->
+    {features.length > 0 && (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {features.map((item, idx) => {
+          const IconComponent = getIcon(item.iconName);
+          const delays = ['delay-100', 'delay-200', 'delay-300', 'delay-400'];
+          const delayClass = delays[idx % delays.length];
+          return (
+            <div 
+              class={`card-arcade p-6 group ${delayClass}`}
+              data-animate="fade-up"
+            >
+              <div class="p-3 bg-background text-tertiary rounded-button inline-block mb-4">
+                <IconComponent className="h-6 w-6" />
+              </div>
+              <h3 class="font-heading font-bold text-lg mb-2 group-hover:text-tertiary transition-colors text-primary">
+                {item.title}
+              </h3>
+              {item.description && (
+                <p class="text-xs sm:text-sm text-secondary leading-relaxed font-sans">
+                  {item.description}
+                </p>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    )}
+    
+  </div>
+</section>

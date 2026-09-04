@@ -1,0 +1,44 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  buttonLabel?: string;
+  buttonUrl?: string;
+  theme?: 'outline' | 'indigo';
+}
+
+const { title, description, buttonLabel, buttonUrl, theme = 'outline' } = Astro.props;
+
+const themeClasses = {
+  outline: 'card-arcade text-primary',
+  indigo: 'bg-primary text-white rounded-card border border-border shadow-xl relative overflow-hidden',
+};
+---
+
+<section class="py-16 px-6 max-w-6xl mx-auto">
+  <div class={`p-8 md:p-12 text-center space-y-6 ${themeClasses[theme]}`} data-animate="zoom-in">
+    <div class="relative z-10 max-w-2xl mx-auto space-y-4">
+      <h2 class="text-3xl font-heading font-bold tracking-tight sm:text-4xl" data-animate="fade-up">
+        {title}
+      </h2>
+      {description && (
+        <p class="text-sm sm:text-base text-secondary leading-relaxed delay-100 font-sans" data-animate="fade-up">
+          {description}
+        </p>
+      )}
+      
+      {buttonLabel && buttonUrl && (
+        <div class="pt-4 delay-200" data-animate="fade-up">
+          <a 
+            href={buttonUrl} 
+            class="btn-primary inline-flex items-center justify-center px-7 py-3.5 text-sm"
+            data-analytics-click={`CTA Section - ${buttonLabel}`}
+            data-astro-prefetch="hover"
+          >
+            {buttonLabel}
+          </a>
+        </div>
+      )}
+    </div>
+  </div>
+</section>

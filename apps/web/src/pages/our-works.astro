@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSiteSettings } from '../utils/sanity';
+import client from '../../../../client.json';
+import Breadcrumbs from '../components/ui/navigation/Breadcrumbs.astro';
+import TestimonialsSection from '../components/sections/home/TestimonialsSection';
+
+const siteSettings = await getSiteSettings();
+const siteName = siteSettings?.name || client.business.name;
+const siteDescription = siteSettings?.description || client.business.description;
+---
+
+<Layout
+  title={`Patient Testimonials & Reviews | ${siteName}`}
+  description={`Read genuine patient reviews and fertility journey experiences from real people at ${siteName}.`}
+>
+  <main class="flex-grow py-6 sm:py-10 md:py-12 bg-background">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Breadcrumbs Navigation */}
+      <Breadcrumbs items={[{ label: 'Testimonials' }]} className="justify-start mb-1" />
+    </div>
+
+    {/* =========================================================================
+        ONE MAIN PARENT CARD: Encapsulates Entire Testimonials Section Block
+        Matching exact structural container as AboutSection & HospitalLocationCard
+       ========================================================================= */}
+    <TestimonialsSection client:load />
+  </main>
+</Layout>

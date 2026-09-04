@@ -1,0 +1,54 @@
+---
+// ServicesSection.astro - Home Page & Global Services Section Block
+import client from '../../../../../../client.json';
+import { ServicesExplorer, type ServiceItemData } from '../services/ServicesExplorer';
+
+export type { ServiceItemData };
+
+interface Props {
+  siteName?: string;
+  siteDescription?: string;
+  primaryPhone?: string;
+}
+
+const {
+  siteName = client.business.name,
+  siteDescription = client.business.description,
+  primaryPhone = client.contact.primaryPhone,
+} = Astro.props;
+
+export const servicesData: ServiceItemData[] = ((client.services || []) as any[]).map((s: any, idx: number) => ({
+  id: s.id || String(idx + 1),
+  slug: s.slug || `service-${idx + 1}`,
+  category: s.category || 'Specialized Care',
+  title: s.title || '',
+  shortDesc: s.shortDesc || s.description || '',
+  imageUrl: s.imageUrl || '',
+  videoUrl: s.videoUrl || '',
+  features: s.features || [],
+  metrics: s.metrics || [],
+}));
+---
+
+<section id="services" class="w-full py-3 sm:py-4 scroll-mt-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    {/* =========================================================================
+        ONE MAIN PARENT CARD: Encapsulates Entire Services Section Block
+        Matching exact structural container as AboutSection & HospitalLocationCard
+       ========================================================================= */}
+    <div 
+      class="rounded-[32px] sm:rounded-[36px] bg-[#FFFDFC] border-2 border-[#FDDCEB] p-5 sm:p-7 lg:p-9 shadow-[0_4px_30px_rgba(228,0,110,0.04)]"
+      data-animate="fade-up"
+    >
+      <ServicesExplorer
+        client:visible
+        services={servicesData}
+        siteName={siteName}
+        siteDescription={siteDescription}
+        primaryPhone={primaryPhone}
+      />
+    </div>
+
+  </div>
+</section>

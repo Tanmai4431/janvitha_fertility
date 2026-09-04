@@ -1,0 +1,130 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSiteSettings } from '../utils/sanity';
+
+const siteSettings = await getSiteSettings();
+const offlineTitle = siteSettings?.pwaOfflineTitle || 'You Are Currently Offline';
+const offlineDescription = siteSettings?.pwaOfflineDescription || 'It looks like your internet connection was lost. Check your network or Wi-Fi settings and try reconnecting.';
+---
+
+<Layout title={offlineTitle} noindex={true}>
+  <main class="min-h-[85vh] flex items-center justify-center pt-8 pb-20 md:pt-12 md:pb-24 px-6 relative overflow-hidden bg-background">
+    <div class="max-w-xl w-full relative z-10 text-center">
+      <!-- Universal Page Badge -->
+      <div class="flex justify-center w-full mb-6" data-animate="zoom-in">
+        <span class="badge-neon-pill">
+          <span class="w-2 h-2 rounded-full bg-tertiary animate-ping shrink-0"></span>
+          <span class="font-label font-bold uppercase tracking-wider">OFFLINE PORTAL</span>
+        </span>
+      </div>
+
+      <!-- Main Card Container -->
+      <div class="card-arcade p-8 sm:p-12 shadow-xl relative overflow-hidden space-y-6">
+        
+        <!-- Offline Icon Lockup -->
+        <div class="mx-auto w-20 h-20 rounded-card bg-background border border-border flex items-center justify-center shadow-xs">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 text-tertiary animate-pulse">
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+            <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.5"></path>
+            <path d="M5 12.5a10.94 10.94 0 0 1 5.17-2.39"></path>
+            <path d="M10.71 5.05A16 16 0 0 1 22.58 9"></path>
+            <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path>
+            <path d="M12 20h.01"></path>
+          </svg>
+        </div>
+
+        <!-- Title & Description -->
+        <div class="space-y-3">
+          <h1 class="text-3xl sm:text-4xl font-heading font-bold text-primary tracking-tight leading-tight">
+            {offlineTitle}
+          </h1>
+          <p class="text-secondary text-sm sm:text-base leading-relaxed max-w-md mx-auto font-sans">
+            {offlineDescription}
+          </p>
+        </div>
+
+        <!-- Connection Status Badge & Retry Button -->
+        <div class="space-y-4 pt-2">
+          <div id="connection-status" class="inline-flex items-center gap-2 px-3.5 py-1 rounded-button bg-background text-xs font-sans font-bold text-secondary">
+            <span id="status-dot" class="w-2 h-2 rounded-full bg-amber-500"></span>
+            <span id="status-text">Network Disconnected</span>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+            <button 
+              id="retry-btn"
+              type="button"
+              class="btn-primary w-full sm:w-auto inline-flex items-center justify-center gap-2.5 cursor-pointer"
+            >
+              <span>Retry Connection</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-white">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+              </svg>
+            </button>
+
+            <a 
+              href="/"
+              class="btn-outline w-full sm:w-auto inline-flex items-center justify-center gap-2 text-primary"
+              data-astro-prefetch="hover"
+            >
+              <span>Back to Home</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Offline Cached Page Quick Links -->
+        <div class="pt-6 border-t border-border space-y-3">
+          <span class="font-label font-bold uppercase tracking-wider text-secondary block">
+            Explore Cached Pages
+          </span>
+          <div class="flex flex-wrap items-center justify-center gap-2">
+            <a href="/" class="px-3.5 py-1.5 rounded-button bg-background hover:bg-surface border border-border text-xs font-sans font-bold text-primary transition-all" data-astro-prefetch="hover">Home</a>
+            <a href="/services" class="px-3.5 py-1.5 rounded-button bg-background hover:bg-surface border border-border text-xs font-sans font-bold text-primary transition-all" data-astro-prefetch="hover">Services</a>
+            <a href="/our-works" class="px-3.5 py-1.5 rounded-button bg-background hover:bg-surface border border-border text-xs font-sans font-bold text-primary transition-all" data-astro-prefetch="hover">Patient Stories</a>
+            <a href="/contact" class="px-3.5 py-1.5 rounded-button bg-background hover:bg-surface border border-border text-xs font-sans font-bold text-primary transition-all" data-astro-prefetch="hover">Contact</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script is:inline>
+  const retryBtn = document.getElementById('retry-btn');
+  const statusText = document.getElementById('status-text');
+  const statusDot = document.getElementById('status-dot');
+
+  if (retryBtn) {
+    retryBtn.addEventListener('click', () => {
+      if (statusText) statusText.textContent = 'Checking internet connection...';
+      if (statusDot) {
+        statusDot.className = 'w-2 h-2 rounded-full bg-amber-500 animate-ping';
+      }
+
+      if (navigator.onLine) {
+        window.location.reload();
+      } else {
+        fetch('/', { method: 'HEAD', cache: 'no-store' })
+          .then(() => {
+            if (statusText) statusText.textContent = 'Connection restored! Reloading...';
+            if (statusDot) statusDot.className = 'w-2 h-2 rounded-full bg-emerald-500';
+            setTimeout(() => window.location.reload(), 400);
+          })
+          .catch(() => {
+            setTimeout(() => {
+              if (statusText) statusText.textContent = 'Still offline. Check Wi-Fi / Data.';
+              if (statusDot) statusDot.className = 'w-2 h-2 rounded-full bg-rose-500';
+            }, 800);
+          });
+      }
+    });
+  }
+
+  // Auto-reload when online connection returns
+  window.addEventListener('online', () => {
+    if (statusText) statusText.textContent = 'Connection back online! Reloading...';
+    if (statusDot) statusDot.className = 'w-2 h-2 rounded-full bg-emerald-500';
+    setTimeout(() => window.location.reload(), 500);
+  });
+</script>

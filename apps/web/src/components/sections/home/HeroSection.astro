@@ -1,0 +1,101 @@
+---
+import CompanyTaglineRoll from '../../ui/typography/company-tagline-roll';
+import BlurText from '../../ui/typography/blur-text';
+import { InteractiveHoverButton } from '../../ui/buttons/interactive-hover-button';
+import { TechStackOrbit } from './TechStackOrbit';
+import client from '../../../../../../client.json';
+
+interface Props {
+  orbitItems: any[];
+  centerLogoUrl: string | null;
+}
+
+const { orbitItems, centerLogoUrl } = Astro.props;
+
+const heroHeadline = client.hero?.headline || "Advanced Fertility Care & Reproductive Medicine";
+const highlightWords = client.hero?.highlightWords || ["Fertility Care", "Reproductive", "Medicine"];
+const heroSubheadline = client.hero?.subheadline || client.business?.description;
+const primaryCta = client.hero?.primaryCta || "Schedule Appointment";
+const primaryCtaHref = client.hero?.primaryCtaHref || "/contact";
+const secondaryCta = client.hero?.secondaryCta || `Call ${client.contact?.primaryPhone}`;
+const secondaryCtaHref = client.hero?.secondaryCtaHref || `tel:${client.contact?.primaryPhone.replace(/\s+/g, '')}`;
+---
+
+<!-- Hero Section -->
+<section id="hero" class="w-full py-3 sm:py-4 scroll-mt-24 relative space-y-5">
+  
+  <!-- Top Centered Tagline Roll Pill -->
+  <div class="flex justify-center w-full text-center pb-2" data-animate="zoom-in">
+    <CompanyTaglineRoll client:load />
+  </div>
+
+  <!-- Main Hero Content Grid: Left Title/Copy/CTAs + Right Floating Orbit Graphic -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-start">
+    
+    <!-- Left/Center Fluid Text Container -->
+    <div class="lg:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left space-y-6 z-10 pt-1">
+      <div data-animate="fade-up" class="w-full">
+        <BlurText
+          client:load
+          text={heroHeadline}
+          delay={100}
+          animateBy="words"
+          direction="top"
+          className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight text-primary leading-tight"
+          highlightWords={highlightWords}
+          highlightClassName="text-tertiary font-heading font-bold tracking-tight px-1.5"
+        />
+      </div>
+      
+      <p id="hero-description-container" class="text-secondary text-base sm:text-lg max-w-xl leading-relaxed font-sans">
+        {heroSubheadline}
+      </p>
+
+      {/* Dual CTA Button Pair: 1 Capsule Pill + 1 Tilted Square */}
+      <div class="flex flex-wrap gap-4 justify-center lg:justify-start delay-250 w-full" data-animate="fade-up">
+        <InteractiveHoverButton client:load href={primaryCtaHref}>
+          {primaryCta}
+        </InteractiveHoverButton>
+        <InteractiveHoverButton client:load href={secondaryCtaHref} shape="tilted-square">
+          {secondaryCta}
+        </InteractiveHoverButton>
+      </div>
+    </div>
+
+    <!-- Right Side: Floating Specialty Orbit Graphic -->
+    <div class="lg:col-span-6 w-full flex justify-center lg:justify-end items-start overflow-hidden shrink-0 lg:-mt-20 xl:-mt-28 pt-0" data-animate="zoom-in">
+      <TechStackOrbit client:load items={orbitItems} centerLogoUrl={centerLogoUrl} />
+    </div>
+
+  </div>
+</section>
+
+<script>
+  const initHeroScrollHighlightObserver = () => {
+    const heroDesc = document.querySelector('#hero-description-container');
+    if (!heroDesc) return;
+
+    const animatedMarks = heroDesc.querySelectorAll('.highlight-sweep-item');
+    const underlineDraw = heroDesc.querySelector('.underline-draw-item');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animatedMarks.forEach((mark) => mark.classList.add('is-animating'));
+            if (underlineDraw) underlineDraw.classList.add('is-animating');
+          } else {
+            animatedMarks.forEach((mark) => mark.classList.remove('is-animating'));
+            if (underlineDraw) underlineDraw.classList.remove('is-animating');
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(heroDesc);
+  };
+
+  // Register with Astro SPA ViewTransitions navigation engine
+  document.addEventListener('astro:page-load', initHeroScrollHighlightObserver);
+</script>

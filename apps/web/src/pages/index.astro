@@ -1,0 +1,273 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { sanityClient, getSiteSettings, getHomePage, urlFor } from '../utils/sanity';
+import client from '../../../../client.json';
+import HeroSection from '../components/sections/home/HeroSection.astro';
+import { AboutSection } from '../components/sections/home/AboutSection';
+import { HospitalLocationCard } from '../components/sections/home/HospitalLocationCard';
+import ServicesSection from '../components/sections/home/ServicesSection.astro';
+
+import { OurWorksSection } from '../components/sections/home/OurWorksSection';
+import TestimonialsSection from '../components/sections/home/TestimonialsSection';
+
+import { BlogCard, type BlogCardPost } from '../components/ui/BlogCard';
+import InteractiveHoverButton from '../components/ui/buttons/interactive-hover-button';
+import BlogHeadingRoll from '../components/ui/typography/BlogHeadingRoll';
+
+const works = (client.works || []) as any[];
+
+let rawPosts: any[] = [];
+try {
+  rawPosts = await sanityClient.fetch(`
+    *[_type == "post"] | order(publishedAt desc) {
+      title,
+      "slug": slug.current,
+      category,
+      readTime,
+      isFeatured,
+      videoUrl,
+      "videoFileUrl": videoFile.asset->url,
+      author,
+      authorRole,
+      "authorAvatarUrl": authorAvatar.asset->url,
+      tags,
+      excerpt,
+      publishedAt,
+      mainImage
+    }
+  `);
+} catch (e) {
+  console.error("Failed to fetch posts from Sanity:", e);
+}
+
+// Map Sanity raw posts to BlogCardPost structure
+const mappedPosts: BlogCardPost[] = (rawPosts || []).map((p) => {
+  let mainImageUrl = '';
+  if (p.mainImage) {
+    try {
+      mainImageUrl = urlFor(p.mainImage).width(800).height(450).format('webp').url();
+    } catch (e) {
+      console.error('Failed to format mainImage URL:', e);
+    }
+  }
+  return {
+    title: p.title || 'Untitled Publication',
+    slug: p.slug || '',
+    category: p.category || 'Insights & Trends',
+    readTime: p.readTime || '4 min read',
+    publishedAt: p.publishedAt || new Date().toISOString(),
+    excerpt: p.excerpt || 'Discover technical insights and architectural frameworks from our engineering team.',
+    mainImageUrl,
+    videoUrl: p.videoFileUrl || p.videoUrl || undefined,
+    authorName: p.author || client.business.specialist?.name || client.business.name,
+    authorRole: p.authorRole || client.business.specialist?.designation || 'Medical Specialist',
+    authorAvatarUrl: p.authorAvatarUrl || undefined,
+    tags: p.tags || ['IVF Care', 'Fertility', 'Reproductive Medicine'],
+    isFeatured: p.isFeatured || false,
+  };
+});
+
+// Fallback clinical guidance posts for Janvithas Fertility Center
+const sampleFallbackPosts: BlogCardPost[] = [
+  {
+    title: 'Understanding When to Visit a Fertility Specialist: Key Signs & Guidelines',
+    slug: 'understanding-when-to-visit-a-fertility-specialist',
+    category: 'Fertility Evaluation',
+    readTime: '4 min read',
+    publishedAt: new Date(Date.now() - 86400000 * 2).toISOString(),
+    excerpt: 'Comprehensive guidance on when couples and individuals should consider early fertility diagnostics, ovarian reserve testing, and semen analysis.',
+    mainImageUrl: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80',
+    authorName: client.business.specialist?.name || 'Dr. P. Bharathi',
+    authorRole: client.business.specialist?.designation || 'Consultant Obstetrician & Gynaecologist',
+    tags: ['Fertility Assessment', 'Women Health', 'Reproductive Care'],
+    isFeatured: true,
+  },
+  {
+    title: 'Advanced Assisted Reproduction: Comparing IUI, IVF, and ICSI Protocols',
+    slug: 'comparing-iui-ivf-and-icsi-protocols',
+    category: 'Assisted Reproduction',
+    readTime: '6 min read',
+    publishedAt: new Date(Date.now() - 86400000 * 5).toISOString(),
+    excerpt: 'A clear clinical comparison of modern assisted reproductive options, from gentle IUI insemination to micromanipulated ICSI and PICSI techniques.',
+    mainImageUrl: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=1200&q=80',
+    authorName: client.business.specialist?.name || 'Dr. P. Bharathi',
+    authorRole: client.business.specialist?.designation || 'Consultant Obstetrician & Gynaecologist',
+    tags: ['IVF Care', 'ICSI', 'IUI Treatment'],
+    isFeatured: false,
+  },
+  {
+    title: 'The Role of Blastocyst Culture & Day-5 Embryo Incubation in IVF Success',
+    slug: 'role-of-blastocyst-culture-day-5-embryo-incubation',
+    category: 'Embryology',
+    readTime: '5 min read',
+    publishedAt: new Date(Date.now() - 86400000 * 9).toISOString(),
+    excerpt: 'How extended Day-5 embryology culture and physiological selection significantly enhance single-embryo transfer implantation success rates.',
+    mainImageUrl: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1200&q=80',
+    authorName: client.business.specialist?.name || 'Dr. P. Bharathi',
+    authorRole: client.business.specialist?.designation || 'Consultant Obstetrician & Gynaecologist',
+    tags: ['Blastocyst', 'Embryology', 'IVF Success'],
+    isFeatured: true,
+  },
+];
+
+// Fetch both: siteSettings (branding/logo) and homePage (orbit items & about assets)
+const siteSettings = await getSiteSettings();
+const homePage = await getHomePage();
+
+// Resolve About Section Featured Media Gallery (Images & Videos): Priority 1 = Sanity homePage.aboutGallery, Priority 2 = homePage.aboutImages
+const aboutGallery = homePage?.aboutGallery || [];
+
+let aboutImages: string[] = [];
+if (homePage?.aboutImages && Array.isArray(homePage.aboutImages) && homePage.aboutImages.length > 0) {
+  aboutImages = homePage.aboutImages
+    .map((img: any) => {
+      if (img.sourceType === 'cdn' && img.cdnUrl && img.cdnUrl.trim().length > 0) {
+        return img.cdnUrl.trim();
+      }
+      if (img.imageUrl) {
+        return img.imageUrl;
+      }
+      if (img.cdnUrl && img.cdnUrl.trim().length > 0) {
+        return img.cdnUrl.trim();
+      }
+      return '';
+    })
+    .filter((url: string) => url.length > 0);
+}
+
+// Resolve Dynamic Social Profiles: Priority 1 = Sanity siteSettings, Priority 2 = client.json
+const rawSocialLinks = (siteSettings?.socialLinks && siteSettings.socialLinks.length > 0)
+  ? siteSettings.socialLinks
+  : (client.socialLinks || []);
+
+const socialLinks = rawSocialLinks.map((item: any) => {
+  let iconUrl: string | null = null;
+  if (item?.icon) {
+    try {
+      iconUrl = urlFor(item.icon).width(48).height(48).format('png').url();
+    } catch (e) {
+      console.error('Failed to resolve social item icon URL:', e);
+    }
+  }
+  return {
+    platform: item.platform || 'Social Profile',
+    customPlatformName: item.customPlatformName || '',
+    url: item.url || '',
+    svgCode: item.svgCode || '',
+    iconUrl,
+  };
+});
+
+// Resolve orbitItems: Priority 1 = Sanity homePage, Priority 2 = client.json fallback
+const rawOrbitItems = (homePage?.orbitItems && homePage.orbitItems.length > 0)
+  ? homePage.orbitItems
+  : (client.orbitItems || []);
+
+const orbitItems = rawOrbitItems.map((item: any) => {
+  let iconUrl: string | null = null;
+  if (item?.icon) {
+    try {
+      iconUrl = urlFor(item.icon).fit('max').url();
+    } catch (e) {
+      console.error("Failed to resolve orbit item icon URL:", e);
+    }
+  }
+  return {
+    name: item.name || 'Brand Node',
+    ring: item.ring || 'middle',
+    svgCode: item.svgCode || '',
+    iconUrl,
+    color: item.color || '',
+    url: item.url || '',
+  };
+});
+
+// Center logo: resolve from siteSettings brandIcon or logo (global branding)
+let centerLogoUrl: string | null = null;
+if (siteSettings?.brandIcon) {
+  try {
+    centerLogoUrl = urlFor(siteSettings.brandIcon).fit('max').url();
+  } catch (e) {
+    console.error("Failed to resolve center brandIcon URL:", e);
+  }
+} else if (siteSettings?.logo) {
+  try {
+    centerLogoUrl = urlFor(siteSettings.logo).fit('max').url();
+  } catch (e) {
+    console.error("Failed to resolve center logo URL:", e);
+  }
+}
+
+// Combine posts ensuring exactly 3 posts are displayed on homepage
+const finalPosts: BlogCardPost[] = [
+  ...mappedPosts,
+  ...sampleFallbackPosts.filter(sp => !mappedPosts.some(mp => mp.slug === sp.slug))
+].slice(0, 3);
+---
+
+<Layout>
+  <main class="flex-grow pt-4 sm:pt-6 pb-16 md:pb-20 bg-background">
+    <div class="flex flex-col">
+      
+      <!-- About Section -->
+      <AboutSection client:visible aboutGallery={aboutGallery} aboutImages={aboutImages} socialLinks={socialLinks} />
+
+      <!-- Hospital Location Showcase & Maps Section -->
+      <HospitalLocationCard client:visible />
+
+      <!-- Services Section Block -->
+      <ServicesSection />
+
+      <!-- Our Works Video Carousel Showcase Section -->
+      <OurWorksSection client:visible works={works} />
+
+      <!-- Testimonials Section -->
+      <TestimonialsSection client:visible />
+
+      <!-- Publications Feed Section (Structured Parent Container matching other sections) -->
+      <section id="publications" class="w-full py-3 sm:py-4 scroll-mt-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div 
+            class="rounded-[32px] sm:rounded-[36px] bg-[#FFFDFC] border-2 border-[#FDDCEB] p-5 sm:p-7 lg:p-9 shadow-[0_4px_30px_rgba(228,0,110,0.04)] space-y-8 sm:space-y-10"
+            data-animate="fade-up"
+          >
+            
+            <!-- Centered Section Header Badge & Dynamic Shifting Title -->
+            <div class="flex flex-col items-center text-center space-y-3 max-w-3xl mx-auto font-sans" data-animate="fade-up">
+              <div class="inline-flex items-center justify-center px-3.5 py-1 rounded-full bg-[#FFF0F6] border border-[#FADCEB]">
+                <span class="font-label font-bold uppercase tracking-wider text-[#E4006E] text-xs sm:text-[13px]">
+                  PUBLICATIONS & INSIGHTS
+                </span>
+              </div>
+
+              {/* Dynamic Rotating Word Shift Animation Loop across 4 Pillars */}
+              <BlogHeadingRoll client:visible />
+
+              <p class="text-secondary text-sm sm:text-base leading-relaxed max-w-2xl mx-auto pt-0.5 font-sans">
+                Expert articles, patient guides, and clinical insights on <span class="text-tertiary font-bold">IVF treatments</span>, <span class="text-tertiary font-bold">reproductive health</span>, <span class="text-tertiary font-bold">fetal medicine</span>, and <span class="text-tertiary font-bold">fertility preservation</span>.
+              </p>
+            </div>
+
+            <!-- Blog 3 Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+              {finalPosts.map((post) => (
+                <div class="flex flex-col h-full w-full" data-animate="fade-up">
+                  <BlogCard client:load post={post} />
+                </div>
+              ))}
+            </div>
+
+            <!-- Explore More Articles CTA Button Below the 3 Cards -->
+            <div class="pt-2 sm:pt-4 flex justify-center w-full" data-animate="zoom-in">
+              <InteractiveHoverButton client:visible href="/blog">
+                Explore More Articles
+              </InteractiveHoverButton>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</Layout>

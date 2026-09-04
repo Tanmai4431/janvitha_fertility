@@ -1,0 +1,380 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Nunito:ital,wght@0,300..900;1,300..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Arcade Neon Pop Brand Tokens */
+    --background: 334 100% 97%;       /* #FFF0F6 */
+    --foreground: 258 69% 14%;        /* #1A0B3C */
+
+    --card: 0 0% 100%;                /* #FFFFFF */
+    --card-foreground: 258 69% 14%;   /* #1A0B3C */
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 258 69% 14%;
+
+    --primary: 258 69% 14%;           /* #1A0B3C */
+    --primary-hover: 258 65% 22%;     /* #2A125E */
+    --primary-foreground: 0 0% 100%;  /* #FFFFFF */
+
+    --secondary: 259 19% 57%;         /* #8A7CA8 */
+    --secondary-hover: 259 19% 48%;   /* #736491 */
+    --secondary-foreground: 0 0% 100%;
+
+    --tertiary: 328 100% 62%;         /* #FF3DA5 */
+    --tertiary-hover: 328 75% 52%;    /* #E02A8C */
+    --tertiary-foreground: 0 0% 100%; /* #FFFFFF */
+
+    --accent: 328 100% 62%;           /* #FF3DA5 */
+    --accent-hover: 328 75% 52%;
+    --accent-foreground: 0 0% 100%;
+
+    --surface: 0 0% 100%;             /* #FFFFFF */
+    --surface-foreground: 258 69% 14%;
+
+    --muted: 259 19% 57%;             /* #8A7CA8 */
+    --muted-foreground: 258 69% 14%;
+
+    --destructive: 328 100% 62%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 330 30% 90%;            /* #F2D8E6 */
+    --input: 330 30% 90%;
+    --ring: 328 100% 62%;
+
+    /* Arcade Neon Pop Border Radii */
+    --radius-sm: 10px;
+    --radius-md: 18px;
+    --radius-lg: 28px;
+    --radius: 18px;
+  }
+
+  .dark {
+    --background: 334 100% 97%;
+    --foreground: 258 69% 14%;
+    --card: 0 0% 100%;
+    --card-foreground: 258 69% 14%;
+    --primary: 258 69% 14%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 259 19% 57%;
+    --tertiary: 328 100% 62%;
+    --border: 330 30% 90%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  astro-island {
+    display: block;
+    width: 100%;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    background-color: #FFF0F6;
+    color: #1A0B3C;
+  }
+
+  /* Candy Shop Typography Hierarchy */
+  h1, .font-h1 {
+    font-family: 'Fraunces', serif !important;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #1A0B3C;
+  }
+
+  .font-display {
+    font-family: 'Fraunces', serif !important;
+    font-size: 4.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: #1A0B3C;
+  }
+
+  h2, h3, h4, h5, h6, .font-heading {
+    font-family: 'Fraunces', serif !important;
+    font-weight: 700;
+    color: #1A0B3C;
+  }
+
+  .font-label {
+    font-family: 'Nunito', sans-serif !important;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+  }
+
+  .font-body {
+    font-family: 'Nunito', sans-serif !important;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .font-cursive, .font-serif-accent, .font-outfit, .font-sora, .font-space {
+    font-family: 'Fraunces', serif !important;
+  }
+}
+
+@layer components {
+  /* ==========================================
+     ARCADE NEON POP FLAT COMPONENT SUITE
+     ========================================== */
+
+  /* Primary Action Button: #E4006E, hover #6B21A8 (Purple), white text, 14px radius */
+  .btn-primary {
+    background-color: #E4006E;
+    color: #FFFFFF;
+    font-family: var(--font-sans, system-ui, sans-serif);
+    font-weight: 600;
+    border-radius: 14px;
+    padding: 10px 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    box-shadow: 0 2px 8px rgba(228, 0, 110, 0.25);
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .btn-primary:hover {
+    background-color: #6B21A8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(107, 33, 168, 0.35);
+  }
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+
+  /* Secondary Button: White bg, #E4006E border and text, hover purple #6B21A8 */
+  .btn-secondary {
+    background-color: #FFFFFF;
+    color: #E4006E;
+    font-family: var(--font-sans, system-ui, sans-serif);
+    font-weight: 600;
+    border-radius: 14px;
+    padding: 10px 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid #E4006E;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  }
+  .btn-secondary:hover {
+    background-color: #FAF5FF;
+    border-color: #6B21A8;
+    color: #6B21A8;
+    transform: translateY(-1px);
+  }
+  .btn-secondary:active {
+    transform: scale(0.98);
+  }
+
+  /* Outline Button: #FFFFFF background, #1A0B3C border & text, 18px radius */
+  .btn-outline {
+    background-color: #FFFFFF;
+    color: #1A0B3C;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    border: 1.5px solid #1A0B3C;
+    border-radius: 18px;
+    padding: 12px 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .btn-outline:hover {
+    background-color: #FFF0F6;
+    color: #FF3DA5;
+    border-color: #FF3DA5;
+  }
+
+  /* Arcade Flat Card: white background, primary text #1A0B3C, 28px radius, 24px padding */
+  .card-arcade, .card-glass {
+    background-color: #FFFFFF;
+    color: #1A0B3C;
+    border: 1px solid #F2D8E6;
+    border-radius: 28px;
+    padding: 24px;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+  }
+  .card-arcade:hover, .card-glass:hover {
+    border-color: #FF3DA5;
+    transform: translateY(-2px);
+  }
+
+  /* Neon Pop Pill Badge */
+  .badge-neon-pill, .badge-rose-pill {
+    background-color: #FFF0F6;
+    color: #FF3DA5;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    border-radius: 18px;
+    padding: 6px 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid rgba(255, 61, 165, 0.25);
+  }
+
+  .badge-secondary-pill, .badge-gold-pill {
+    background-color: #FFFFFF;
+    color: #8A7CA8;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    border-radius: 18px;
+    padding: 6px 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #F2D8E6;
+  }
+
+  .badge-mono-tag {
+    font-family: 'Nunito', monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+}
+
+/* ==========================================
+   PAGE ENTRANCE ANIMATIONS & SCROLL REVEAL SUITE
+   ========================================== */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+[data-animate] {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--stagger-index, 0) * 20ms);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+[data-animate="fade-up"],
+[data-animate="animate-fade-up"] {
+  transform: translateY(12px);
+}
+
+[data-animate="fade-down"],
+[data-animate="animate-fade-down"] {
+  transform: translateY(-12px);
+}
+
+[data-animate="fade-left"],
+[data-animate="animate-fade-left"] {
+  transform: translateX(12px);
+}
+
+[data-animate="fade-right"],
+[data-animate="animate-fade-right"] {
+  transform: translateX(-12px);
+}
+
+[data-animate="zoom-in"],
+[data-animate="animate-zoom-in"] {
+  transform: scale(0.98);
+}
+
+[data-animate].is-visible {
+  opacity: 1;
+  transform: translateY(0) translateX(0) scale(1);
+}
+
+/* Global Animation Override */
+html[data-page-animations="false"] [data-animate],
+html[data-page-animations="false"] [data-stagger-parent] > *,
+html[data-page-animations="false"] .animate-fade-in,
+html[data-page-animations="false"] .animate-fade-up,
+html[data-page-animations="false"] .animate-fade-down,
+html[data-page-animations="false"] .animate-zoom-in {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  animation: none !important;
+}
+
+@keyframes nav-drawer-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nav-drawer-enter {
+  animation: nav-drawer-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.highlight-sweep-item {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: clip-path;
+}
+
+.highlight-sweep-item.is-animating {
+  clip-path: inset(0 0 0 0);
+}
+
+.underline-draw-item {
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  transition: stroke-dashoffset 1.4s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: stroke-dashoffset;
+}
+
+.underline-draw-item.is-animating {
+  stroke-dashoffset: 0;
+}

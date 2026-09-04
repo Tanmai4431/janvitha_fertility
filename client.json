@@ -1,0 +1,780 @@
+{
+  "business": {
+    "name": "Janvithas Fertility Center",
+    "legalName": "Janvithas Fertility Center",
+    "category": "Fertility & Reproductive Healthcare Center",
+    "tagline": "Bringing Dreams to Life with Care & Compassion",
+    "secondaryTagline": "Your health is our priority.",
+    "accessibilityStatement": "We believe in affordable specialty healthcare for all.",
+    "description": "Janvithas Fertility Center is a specialized fertility and reproductive healthcare center in Ananthapuram, providing world-class fertility evaluations, IVF, IUI, ICSI, PICSI, genetic programs, and fertility preservation with compassionate medical care.",
+    "foundedYear": 2020,
+    "logo": "",
+    "logoIcon": "",
+    "logoLockup": "",
+    "vision": "To make world-class reproductive medicine and compassionate fertility care accessible and affordable to every aspiring family.",
+    "mission": "To provide ethical, scientifically advanced, and empathetic fertility treatments tailored to individual and couple needs.",
+    "coreValues": [
+      {
+        "title": "Compassionate Care",
+        "description": "Providing personalized emotional and clinical support at every step of your fertility journey."
+      },
+      {
+        "title": "Clinical Excellence",
+        "description": "Adopting the latest assisted reproductive technologies and evidence-based medical protocols."
+      },
+      {
+        "title": "Affordability & Transparency",
+        "description": "Committed to clear, honest guidance and affordable specialty healthcare without hidden costs."
+      },
+      {
+        "title": "Ethical Practice",
+        "description": "Maintaining the highest medical standards, patient privacy, and confidentiality."
+      }
+    ],
+    "specialist": {
+      "name": "Dr. P. Bharathi",
+      "designation": "Consultant Obstetrician & Gynaecologist",
+      "qualifications": [
+        "Fellow in Fetal Medicine, FMF (UK)",
+        "Recognised Fellowship in Reproductive Medicine"
+      ],
+      "experience": "Specialist in Reproductive Medicine & Fetal Diagnostics",
+      "bio": "Dr. P. Bharathi is a distinguished fertility specialist and Consultant Obstetrician & Gynaecologist with international fellowships in Fetal Medicine (UK) and Reproductive Medicine. She is dedicated to guiding couples through personalized fertility solutions with deep medical expertise and empathetic care.",
+      "image": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80"
+    }
+  },
+  "contact": {
+    "primaryEmail": "info@janvithasfertility.com",
+    "supportEmail": "contact@janvithasfertility.com",
+    "primaryPhone": "+91 81214 49988",
+    "secondaryPhone": "+91 81214 49988",
+    "whatsappPhone": "+91 81214 49988",
+    "address": {
+      "street": "15–381, Opp. Rotary School, Kamala Nagar",
+      "city": "Ananthapuram",
+      "state": "Andhra Pradesh",
+      "zip": "515001",
+      "country": "India"
+    },
+    "location": "Opp. Rotary School, Kamala Nagar, Ananthapuram, Andhra Pradesh 515001"
+  },
+  "socialLinks": [
+    {
+      "platform": "Facebook",
+      "url": "https://facebook.com/janvithasfertility",
+      "svgCode": ""
+    },
+    {
+      "platform": "Instagram",
+      "url": "https://instagram.com/janvithasfertility",
+      "svgCode": ""
+    },
+    {
+      "platform": "YouTube",
+      "url": "https://youtube.com/@janvithasfertility",
+      "svgCode": ""
+    }
+  ],
+  "orbitItems": [
+    {
+      "name": "Janvithas Center",
+      "ring": "center",
+      "color": "#C60909"
+    },
+    {
+      "name": "IVF Treatment",
+      "ring": "inner",
+      "color": "#E11D48"
+    },
+    {
+      "name": "IUI Insemination",
+      "ring": "inner",
+      "color": "#0284C7"
+    },
+    {
+      "name": "ICSI Procedure",
+      "ring": "inner",
+      "color": "#0D9488"
+    },
+    {
+      "name": "PICSI Technology",
+      "ring": "middle",
+      "color": "#7C3AED"
+    },
+    {
+      "name": "Genetic Program",
+      "ring": "middle",
+      "color": "#EA580C"
+    },
+    {
+      "name": "Fertility Preservation",
+      "ring": "middle",
+      "color": "#16A34A"
+    },
+    {
+      "name": "Blastocyst Culture",
+      "ring": "outer",
+      "color": "#D97706"
+    },
+    {
+      "name": "Fetal Medicine",
+      "ring": "outer",
+      "color": "#DB2777"
+    },
+    {
+      "name": "Reproductive Care",
+      "ring": "outer",
+      "color": "#2563EB"
+    }
+  ],
+  "domain": {
+    "production": "https://janvithasfertility.com",
+    "staging": "https://staging.janvithasfertility.com"
+  },
+  "seo": {
+    "defaultTitle": "Janvithas Fertility Center - Best Fertility & IVF Clinic in Ananthapuram",
+    "defaultDescription": "Janvithas Fertility Center in Ananthapuram offers comprehensive fertility care including IVF, IUI, ICSI, PICSI, Genetic Programs, and Fertility Preservation by Dr. P. Bharathi.",
+    "defaultShareImage": "/images/og-default.png",
+    "googleSiteVerificationId": "",
+    "googleAnalyticsId": "",
+    "googleTagManagerId": ""
+  },
+  "hero": {
+    "taglinePill": "BRINGING DREAMS TO LIFE WITH CARE & COMPASSION",
+    "headline": "Advanced Fertility Care & Reproductive Medicine in Ananthapuram",
+    "highlightWords": ["Fertility Care", "Reproductive", "Medicine"],
+    "subheadline": "Led by Dr. P. Bharathi, Janvithas Fertility Center provides comprehensive IVF, IUI, ICSI, and genetic fertility solutions with world-class clinical expertise and compassionate care.",
+    "primaryCta": "Schedule Appointment",
+    "primaryCtaHref": "/contact",
+    "secondaryCta": "Call +91 81214 49988",
+    "secondaryCtaHref": "tel:+918121449988"
+  },
+  "consultation": {
+    "price": "Personalized Consultation",
+    "duration": "In-Clinic & Virtual",
+    "modes": [
+      "In-Clinic Appointment",
+      "Direct Phone Call",
+      "WhatsApp Assistance"
+    ],
+    "description": "Schedule a detailed consultation with Dr. P. Bharathi to discuss your fertility goals, diagnostic evaluations, and personalized treatment pathways."
+  },
+  "services": [
+    {
+      "id": "1",
+      "slug": "female-infertility",
+      "category": "Specialized Care",
+      "title": "Female Infertility",
+      "shortDesc": "Comprehensive evaluation and targeted medical treatment for ovulation disorders, PCOS, tubal factors, and hormonal balance.",
+      "fullDescription": "Comprehensive diagnostic evaluation and individualized treatment plans for women addressing ovulation irregularities, polycystic ovarian syndrome (PCOS), endometriosis, tubal blockages, and hormonal imbalances with empathetic medical care.",
+      "imageUrl": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80",
+      "subservices": [
+        {
+          "title": "Ovarian Reserve Profiling",
+          "desc": "Precision AMH and antral follicle count diagnostics."
+        },
+        {
+          "title": "Tubal Patency Testing",
+          "desc": "Ultrasound and contrast imaging evaluating fallopian tube health."
+        },
+        {
+          "title": "PCOS & Endometriosis Care",
+          "desc": "Targeted hormonal regulation and lifestyle management."
+        },
+        {
+          "title": "Ovulation Induction",
+          "desc": "Personalized follicular stimulation and cycle tracking."
+        }
+      ],
+      "features": [
+        "Hormonal & Ovarian Reserve Assessment",
+        "Tubal Patency & Ultrasound Diagnostics",
+        "PCOS & Endometriosis Management",
+        "Tailored Ovulation Induction Protocols"
+      ],
+      "metrics": [
+        { "label": "Diagnostic Precision", "value": "High Accuracy" },
+        { "label": "Care Approach", "value": "Individualized" }
+      ],
+      "benefits": [
+        { "title": "Ovarian Reserve Profiling", "desc": "Precision AMH and antral follicle count assessments for accurate reproductive forecasting.", "icon": "M13 10V3L4 14h7v7l9-11h-7z" },
+        { "title": "Tubal Patency Testing", "desc": "Advanced ultrasound and contrast imaging evaluating fallopian tube health safely.", "icon": "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
+        { "title": "Personalized Protocols", "desc": "Customized ovulation induction and endocrine balance regimens for optimal outcomes.", "icon": "M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z" },
+        { "title": "Compassionate Care", "desc": "Emotional support and thorough consultations at every phase of your journey.", "icon": "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" }
+      ],
+      "deliverables": [
+        "Specialist Medical Consultation",
+        "Detailed Hormonal & Ultrasound Report",
+        "Personalized Ovulation Protocol",
+        "Ongoing Cycle Monitoring & Care"
+      ],
+      "faqs": [
+        { "question": "What causes female infertility?", "answer": "Common factors include ovulation disorders, PCOS, blocked fallopian tubes, uterine fibroids, and age-related ovarian reserve decline." },
+        { "question": "How is female fertility evaluated?", "answer": "We conduct pelvic ultrasounds, hormonal blood profiles (AMH, FSH, LH), and tubal patency assessments." }
+      ]
+    },
+    {
+      "id": "2",
+      "slug": "male-infertility",
+      "category": "Specialized Care",
+      "title": "Male Infertility",
+      "shortDesc": "Advanced semen analysis, sperm function diagnostics, and specialized therapeutic solutions for male-factor reproductive health.",
+      "fullDescription": "Specialized evaluation and therapeutic interventions for male-factor reproductive health combining computerized semen analysis, sperm function assessments, and advanced micromanipulation technologies.",
+      "imageUrl": "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&w=1200&q=80",
+      "subservices": [
+        {
+          "title": "Computerized Semen Analysis",
+          "desc": "Standardized count, motility, and morphological evaluations."
+        },
+        {
+          "title": "DNA Fragmentation Index (DFI)",
+          "desc": "Assessing sperm genetic integrity for embryo viability."
+        },
+        {
+          "title": "Sperm Washing & Isolation",
+          "desc": "Density gradient centrifugation for optimal motile sperm yield."
+        },
+        {
+          "title": "Surgical Sperm Retrieval (TESA/PESA)",
+          "desc": "Minimally invasive extraction for obstructive azoospermia."
+        }
+      ],
+      "features": [
+        "Comprehensive Semen & Morphology Analysis",
+        "Sperm DNA Fragmentation Index Testing",
+        "Medical & Surgical Treatment Pathways",
+        "Advanced Sperm Processing Techniques"
+      ],
+      "metrics": [
+        { "label": "Sperm Analysis", "value": "Standardized" },
+        { "label": "Success Support", "value": "Holistic" }
+      ],
+      "benefits": [
+        { "title": "Standardized Semen Analysis", "desc": "Accurate sperm count, motility, and morphology diagnostics according to clinical guidelines.", "icon": "M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" },
+        { "title": "DNA Fragmentation Testing", "desc": "Assessing sperm genetic integrity to optimize fertilization and embryo quality.", "icon": "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10" },
+        { "title": "Advanced Sperm Prep", "desc": "State-of-the-art density gradient centrifugation and swim-up isolation protocols.", "icon": "M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7" },
+        { "title": "Therapeutic Pathways", "desc": "Lifestyle, medical, and surgical interventions tailored to male factor conditions.", "icon": "M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11" }
+      ],
+      "deliverables": [
+        "Comprehensive Semen Diagnostic Report",
+        "Sperm Function & Motility Profile",
+        "Clinical Specialist Consultation",
+        "Tailored Treatment & Lifestyle Guidance"
+      ],
+      "faqs": [
+        { "question": "How common is male infertility?", "answer": "Male factor infertility contributes to roughly 40-50% of all infertility cases, making early dual-partner evaluation essential." },
+        { "question": "Can low sperm motility be treated?", "answer": "Yes. Depending on the root cause, lifestyle improvements, medical therapy, and assisted reproductive procedures like ICSI provide high success rates." }
+      ]
+    },
+    {
+      "id": "3",
+      "slug": "ivf-treatment",
+      "category": "Assisted Reproduction",
+      "title": "IVF (In Vitro Fertilization)",
+      "shortDesc": "State-of-the-art ART protocol facilitating controlled egg retrieval, precision fertilization in our embryology lab, and gentle embryo transfer.",
+      "fullDescription": "In Vitro Fertilization (IVF) is our flagship assisted reproductive technology. Conducted in state-of-the-art embryology suites, IVF facilitates controlled ovarian stimulation, gentle egg retrieval, precision fertilization, and optimal embryo transfer.",
+      "imageUrl": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=1200&q=80",
+      "subservices": [
+        {
+          "title": "Controlled Ovarian Stimulation",
+          "desc": "Personalized hormone regimens tailored to your reserve."
+        },
+        {
+          "title": "Outpatient Egg Retrieval",
+          "desc": "Gentle, ultrasound-guided ovum pick-up under mild sedation."
+        },
+        {
+          "title": "Clean-Room Lab Fertilization",
+          "desc": "HEPA-filtered incubation simulating physiological warmth."
+        },
+        {
+          "title": "Ultrasound Embryo Transfer",
+          "desc": "Precision placement of viable embryos into the uterine cavity."
+        }
+      ],
+      "features": [
+        "Customized Controlled Ovarian Stimulation",
+        "Clean-Room Embryology Culture Systems",
+        "Laser-Assisted Hatching Capabilities",
+        "Comfortable Outpatient Procedure"
+      ],
+      "metrics": [
+        { "label": "Lab Standards", "value": "State-of-Art" },
+        { "label": "Protocol", "value": "Personalized" }
+      ],
+      "benefits": [
+        { "title": "Controlled Stimulation", "desc": "Customized hormonal protocols to optimize mature egg yield while prioritizing patient comfort.", "icon": "M13 10V3L4 14h7v7l9-11h-7z" },
+        { "title": "Clean-Room Embryology", "desc": "HEPA-filtered, strictly monitored incubators providing ideal embryo growth conditions.", "icon": "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
+        { "title": "Single Embryo Transfer", "desc": "Maximizing pregnancy success while reducing the risks associated with multiple gestations.", "icon": "M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z" },
+        { "title": "Transparent Care", "desc": "Clear clinical communication with no hidden costs and dedicated doctor support.", "icon": "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" }
+      ],
+      "deliverables": [
+        "Personalized Ovarian Stimulation Regimen",
+        "Ultrasound Follicular Tracking",
+        "Outpatient Ovum Pick-Up Procedure",
+        "Embryo Culture & Grading Report",
+        "Precision Ultrasound-Guided Transfer"
+      ],
+      "faqs": [
+        { "question": "What is the standard IVF treatment cycle timeline?", "answer": "A complete IVF cycle typically spans 3 to 4 weeks from initial stimulation to embryo transfer." },
+        { "question": "Is IVF painful?", "answer": "Egg retrieval is conducted under light sedation, ensuring a comfortable, pain-free experience." }
+      ]
+    },
+    {
+      "id": "4",
+      "slug": "iui-insemination",
+      "category": "Assisted Reproduction",
+      "title": "IUI (Intrauterine Insemination)",
+      "shortDesc": "A gentle, minimally invasive treatment placing concentrated, highly mobile sperm directly into the uterus at the time of ovulation.",
+      "fullDescription": "Intrauterine Insemination (IUI) is a gentle, cost-effective first-line fertility treatment. Highly concentrated and washed motile sperm are placed directly into the uterus at the exact time of ovulation.",
+      "imageUrl": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
+      "subservices": [
+        {
+          "title": "Follicular Monitoring",
+          "desc": "Real-time ultrasound tracking of dominant follicle growth."
+        },
+        {
+          "title": "Sperm Processing & Wash",
+          "desc": "Concentration of highest-motility sperm for insemination."
+        },
+        {
+          "title": "Synchronized Insemination",
+          "desc": "Painless in-clinic placement timed with ovulation trigger."
+        },
+        {
+          "title": "Luteal Phase Support",
+          "desc": "Progesterone support promoting healthy implantation."
+        }
+      ],
+      "features": [
+        "Ovulation Tracking & Timing Optimization",
+        "Specialized Sperm Wash & Preparation",
+        "Quick, Painless In-Clinic Procedure",
+        "Cost-Effective First-Line Fertility Care"
+      ],
+      "metrics": [
+        { "label": "Procedure Time", "value": "< 15 min" },
+        { "label": "Invasiveness", "value": "Minimal" }
+      ],
+      "benefits": [
+        { "title": "Minimally Invasive", "desc": "A quick, virtually painless in-clinic procedure requiring no anesthesia.", "icon": "M13 10V3L4 14h7v7l9-11h-7z" },
+        { "title": "Cycle Synchronization", "desc": "Precise ultrasound tracking to synchronize insemination with natural or stimulated ovulation.", "icon": "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
+        { "title": "Sperm Optimization", "desc": "Laboratory processing isolates the healthiest, most active sperm for placement.", "icon": "M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z" },
+        { "title": "Accessible First Step", "desc": "Affordable specialty care ideal for unexplained infertility and mild male factors.", "icon": "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" }
+      ],
+      "deliverables": [
+        "Ovulation Tracking Scans",
+        "Sperm Wash & Preparation",
+        "Intrauterine Insemination Procedure",
+        "Luteal Phase Support Guidance"
+      ],
+      "faqs": [
+        { "question": "Who is a good candidate for IUI?", "answer": "Couples with unexplained infertility, mild male factor concerns, or cervical factor issues and patent fallopian tubes." },
+        { "question": "How long does the IUI procedure take?", "answer": "The insemination itself takes only 5 to 10 minutes and requires minimal resting time afterward." }
+      ]
+    },
+    {
+      "id": "5",
+      "slug": "icsi-procedure",
+      "category": "Precision Embryology",
+      "title": "ICSI (Intracytoplasmic Sperm Injection)",
+      "shortDesc": "Advanced micromanipulation technique where a single high-quality sperm is injected directly into a mature egg to maximize fertilization.",
+      "fullDescription": "Intracytoplasmic Sperm Injection (ICSI) is an advanced micromanipulation technique used alongside IVF. A single selected healthy sperm is injected directly into the cytoplasm of a mature egg, overcoming severe fertilization challenges.",
+      "imageUrl": "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=1200&q=80",
+      "subservices": [
+        {
+          "title": "High-Power Micromanipulation",
+          "desc": "Precision inverted microscope control for injection."
+        },
+        {
+          "title": "Single Sperm Selection",
+          "desc": "Morphological isolation of the single best sperm."
+        },
+        {
+          "title": "Direct Oocyte Micro-Injection",
+          "desc": "Bypassing outer egg barriers for guaranteed entry."
+        },
+        {
+          "title": "Fertilization Assessment",
+          "desc": "Confirming normal two-pronuclei (2PN) fertilization."
+        }
+      ],
+      "features": [
+        "High-Power Micromanipulator Systems",
+        "Effective for Severe Male Factor Infertility",
+        "Overcomes Prior Fertilization Failures",
+        "Conducted by Experienced Embryologists"
+      ],
+      "metrics": [
+        { "label": "Precision Tech", "value": "Micro-Assisted" },
+        { "label": "Fertilization Rate", "value": "Optimized" }
+      ],
+      "benefits": [
+        { "title": "High Fertilization Rates", "desc": "Direct micro-injection bypasses barriers in sperm-egg binding and penetration.", "icon": "M13 10V3L4 14h7v7l9-11h-7z" },
+        { "title": "Severe Factor Resolution", "desc": "Effective even in cases of very low sperm count, poor morphology, or prior IVF failures.", "icon": "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
+        { "title": "Experienced Embryology", "desc": "Performed under high-magnification micromanipulator systems by skilled embryologists.", "icon": "M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z" },
+        { "title": "Embryo Quality Monitoring", "desc": "Continuous incubator tracking to observe optimal developmental milestones.", "icon": "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" }
+      ],
+      "deliverables": [
+        "Specialized Sperm Selection",
+        "Micromanipulated Single-Sperm Injection",
+        "Fertilization Verification Report",
+        "Embryo Culture to Blastocyst Stage"
+      ],
+      "faqs": [
+        { "question": "How is ICSI different from standard IVF?", "answer": "In standard IVF, eggs and sperm mix in a dish for natural fertilization. In ICSI, a single selected sperm is directly injected into each mature egg." }
+      ]
+    },
+    {
+      "id": "6",
+      "slug": "picsi-technology",
+      "category": "Precision Embryology",
+      "title": "PICSI (Physiological ICSI)",
+      "shortDesc": "Enhanced physiological sperm selection utilizing hyaluronan binding to identify mature sperm with optimal DNA integrity.",
+      "fullDescription": "Physiological ICSI (PICSI) utilizes hyaluronan binding to select mature, functionally competent sperm with lower DNA fragmentation, optimizing embryo quality and pregnancy safety.",
+      "imageUrl": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80",
+      "subservices": [
+        {
+          "title": "Hyaluronan Hydrogel Binding",
+          "desc": "Simulating natural zona pellucida receptor binding."
+        },
+        {
+          "title": "Intact DNA Screening",
+          "desc": "Selecting sperm with lower chromosomal aneuploidy."
+        },
+        {
+          "title": "Targeted Micro-Injection",
+          "desc": "Injecting physiologically mature selected sperm."
+        },
+        {
+          "title": "Recurrent Loss Protocol",
+          "desc": "Recommended for unexplained prior cycle failures."
+        }
+      ],
+      "features": [
+        "Hyaluronan-Binding Physiological Selection",
+        "Reduces DNA Fragmentation Risk",
+        "Improves Embryo Development Quality",
+        "Recommended for Recurrent Treatment Cycles"
+      ],
+      "metrics": [
+        { "label": "Selection Method", "value": "Physiological" },
+        { "label": "Genetic Safety", "value": "Enhanced" }
+      ],
+      "benefits": [
+        { "title": "Physiological Selection", "desc": "Binds mature sperm with intact membranes and natural cellular readiness.", "icon": "M13 10V3L4 14h7v7l9-11h-7z" },
+        { "title": "Reduces DNA Damage Risk", "desc": "Filters out sperm with high genetic fragmentation for superior embryonic viability.", "icon": "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
+        { "title": "Improved Implantation", "desc": "Higher quality embryos correlate with enhanced implantation rates and lower miscarriage risk.", "icon": "M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z" },
+        { "title": "Recommended for Recurrent Cycles", "desc": "Ideal for couples with unexplained previous cycle failures or recurrent pregnancy loss.", "icon": "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" }
+      ],
+      "deliverables": [
+        "Hyaluronan-Binding Sperm Selection",
+        "Precision Micro-Injection Protocol",
+        "Embryology Quality Tracking"
+      ],
+      "faqs": [
+        { "question": "When is PICSI recommended?", "answer": "PICSI is recommended for cases with high sperm DNA fragmentation index, unexplained recurrent IVF failure, or recurrent early pregnancy loss." }
+      ]
+    },
+    {
+      "id": "7",
+      "slug": "genetic-program",
+      "category": "Advanced Genetics",
+      "title": "Genetic Program",
+      "shortDesc": "Pre-implantation genetic screening and comprehensive reproductive genetic testing to promote healthy embryonic development and successful pregnancy.",
+      "fullDescription": "Pre-implantation genetic screening and comprehensive reproductive genetic assessments to help couples identify chromosomal abnormalities and genetic conditions before embryo transfer.",
+      "imageUrl": "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1200&q=80",
+      "subservices": [
+        {
+          "title": "PGT-A Aneuploidy Screening",
+          "desc": "Testing for 24-chromosome abnormalities before transfer."
+        },
+        {
+          "title": "PGT-M Monogenic Testing",
+          "desc": "Preventing transmission of known single-gene disorders."
+        },
+        {
+          "title": "Trophectoderm Laser Biopsy",
+          "desc": "Safe removal of 4-6 placental cells without inner cell damage."
+        },
+        {
+          "title": "Genetic Counseling Support",
+          "desc": "Expert clinical consultation on diagnostic findings."
+        }
+      ],
+      "features": [
+        "Pre-Implantation Genetic Testing (PGT-A / PGT-M)",
+        "Chromosomal Aneuploidy Screening",
+        "Carrier Genetic Screening for Couples",
+        "Specialist Fetal & Genetic Counseling"
+      ],
+      "metrics": [
+        { "label": "Genetic Insights", "value": "Comprehensive" },
+        { "label": "Counseling", "value": "Expert-Led" }
+      ],
+      "benefits": [
+        { "title": "Chromosomal Screening", "desc": "Identifies euploid embryos to maximize single embryo transfer success rates.", "icon": "M13 10V3L4 14h7v7l9-11h-7z" },
+        { "title": "Reduces Miscarriage Risk", "desc": "Transfers genetically balanced embryos, significantly lowering spontaneous loss rates.", "icon": "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
+        { "title": "Carrier Screening", "desc": "Comprehensive genetic carrier testing for couples planning their family.", "icon": "M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z" },
+        { "title": "Expert Counseling", "desc": "Guidance and interpretation by clinical fetal medicine and genetic specialists.", "icon": "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" }
+      ],
+      "deliverables": [
+        "Genetic Carrier Profile",
+        "Trophectoderm Biopsy",
+        "Chromosomal Screening Report",
+        "Genetic Counseling Consultation"
+      ],
+      "faqs": [
+        { "question": "Does embryo biopsy harm the embryo?", "answer": "Trophectoderm biopsy removes a few cells from the future placental layer at the blastocyst stage without impacting the inner cell mass." }
+      ]
+    },
+    {
+      "id": "8",
+      "slug": "fertility-preservation",
+      "category": "Future Planning",
+      "title": "Fertility Preservation",
+      "shortDesc": "Cryopreservation of eggs, sperm, and embryos using advanced vitrification technology to safeguard your future family-building choices.",
+      "fullDescription": "Cryopreservation of eggs, sperm, and embryos utilizing ultra-rapid vitrification technology. Safeguard your future parenthood choices for elective family planning or before medical treatments.",
+      "imageUrl": "https://images.unsplash.com/photo-1583912267670-6575ad362e4b?auto=format&fit=crop&w=1200&q=80",
+      "subservices": [
+        {
+          "title": "Elective Egg Freezing (Oocyte Vitrification)",
+          "desc": "Preserving egg quality at peak reproductive years."
+        },
+        {
+          "title": "Sperm Cryopreservation",
+          "desc": "Long-term liquid nitrogen storage for male gametes."
+        },
+        {
+          "title": "Embryo Freezing (Surplus Storage)",
+          "desc": "Safe cryopreservation of top-grade blastocysts."
+        },
+        {
+          "title": "Onco-Fertility Preservation",
+          "desc": "Urgent fertility preservation prior to chemotherapy/radiation."
+        }
+      ],
+      "features": [
+        "Ultra-Rapid Vitrification Cryopreservation",
+        "Elective & Medical Egg Freezing",
+        "Sperm Cryopreservation & Storage",
+        "Secure, Constant-Monitored Cryobanks"
+      ],
+      "metrics": [
+        { "label": "Storage Security", "value": "24/7 Monitored" },
+        { "label": "Thawing Survival", "value": "High Rate" }
+      ],
+      "benefits": [
+        { "title": "Ultra-Rapid Vitrification", "desc": "Prevents ice crystal formation, ensuring over 90% cell survival rates upon thawing.", "icon": "M13 10V3L4 14h7v7l9-11h-7z" },
+        { "title": "Elective & Medical Freezing", "desc": "Options for social egg freezing or medical preservation prior to clinical therapies.", "icon": "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
+        { "title": "Constant Monitoring", "desc": "State-of-the-art liquid nitrogen storage tanks monitored 24/7 for optimal security.", "icon": "M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z" },
+        { "title": "Future Flexibility", "desc": "Take control of your biological timeline with peace of mind.", "icon": "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" }
+      ],
+      "deliverables": [
+        "Ovarian Assessment & Stimulation",
+        "Ovum Pick-Up / Semen Cryopreservation",
+        "Vitrification & Storage Certificate",
+        "Annual Monitoring & Storage Management"
+      ],
+      "faqs": [
+        { "question": "How long can eggs or embryos remain frozen?", "answer": "Vitrified eggs, sperm, and embryos can remain securely frozen for many years without loss of viability." }
+      ]
+    },
+    {
+      "id": "9",
+      "slug": "blastocyst-culture",
+      "category": "Advanced Embryology",
+      "title": "Blastocyst Culture",
+      "shortDesc": "Extended embryo culture to Day 5/6, allowing the natural selection of the strongest, most viable embryos for higher implantation rates.",
+      "fullDescription": "Extended embryo culture up to Day 5/6 allowing natural development into the blastocyst stage. This enables precise morphological selection of the most viable embryos for single embryo transfer.",
+      "imageUrl": "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1200&q=80",
+      "subservices": [
+        {
+          "title": "Day-5 Extended Incubation",
+          "desc": "Simulating the natural uterine timing of embryo development."
+        },
+        {
+          "title": "Gardner Grading Assessment",
+          "desc": "High-precision inner cell mass & trophectoderm scoring."
+        },
+        {
+          "title": "Single Embryo Transfer (SET)",
+          "desc": "Maximizing singleton pregnancy success rates."
+        },
+        {
+          "title": "Surplus Blastocyst Vitrification",
+          "desc": "Cryostoring remaining viable blastocysts for future cycles."
+        }
+      ],
+      "features": [
+        "Extended Day-5 / Day-6 Embryo Incubation",
+        "Natural Selection of Top-Quality Embryos",
+        "Reduces Multi-Fetal Gestation Risk",
+        "Maximizes Single Embryo Transfer Success"
+      ],
+      "metrics": [
+        { "label": "Culture Period", "value": "Day 5/6" },
+        { "label": "Transfer Strategy", "value": "Single Embryo" }
+      ],
+      "benefits": [
+        { "title": "Extended Incubation", "desc": "Day-5 culture mimics natural physiological development in our specialized incubators.", "icon": "M13 10V3L4 14h7v7l9-11h-7z" },
+        { "title": "Natural Selection", "desc": "Allows weaker embryos to halt naturally, identifying the strongest candidates for transfer.", "icon": "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
+        { "title": "Higher Implantation", "desc": "Blastocysts exhibit superior synchronization with the receptive uterine endometrium.", "icon": "M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z" },
+        { "title": "Single Embryo Protocol", "desc": "Eliminates the risks of higher-order multiple pregnancies while maximizing success.", "icon": "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" }
+      ],
+      "deliverables": [
+        "Day-3 to Day-5 Extended Culture Monitoring",
+        "Blastocyst Morphological Grading Report",
+        "Single Embryo Transfer Protocol",
+        "Surplus Blastocyst Vitrification"
+      ],
+      "faqs": [
+        { "question": "Why is blastocyst transfer preferred?", "answer": "Blastocyst embryos have demonstrated developmental competence and align naturally with the uterine window of implantation." }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "question": "When should I visit a fertility center?",
+      "answer": "Individuals or couples who have been trying to conceive for over a year (or six months if the female partner is over 35), or those with irregular cycles, previous surgeries, or known reproductive conditions, should visit a fertility specialist for timely evaluation."
+    },
+    {
+      "question": "What services are offered at Janvithas Fertility Center?",
+      "answer": "We offer complete reproductive healthcare including Female & Male Infertility Evaluations, IUI, IVF, ICSI, PICSI, Genetic Programs, Fertility Preservation (egg/sperm freezing), and Blastocyst Culture."
+    },
+    {
+      "question": "Do both partners need to get evaluated?",
+      "answer": "Yes. Conception involves both partners equally. A comprehensive dual evaluation of both partners ensures accurate diagnosis and the most effective, personalized treatment pathway."
+    },
+    {
+      "question": "Is fertility treatment affordable at Janvithas Fertility Center?",
+      "answer": "We believe in affordable specialty healthcare for all. Our center provides transparent guidance, ethical clinical protocols, and accessible treatment options without hidden charges."
+    }
+  ],
+  "works": [
+    {
+      "id": "ivf-success-story-1",
+      "client": "Happy Parents",
+      "business": "Janvithas Fertility Center",
+      "type": "IVF Treatment & Blastocyst Culture",
+      "tag": "Assisted Conception",
+      "title": "Successful Journey to Parenthood through Personalized IVF",
+      "description": "Comprehensive fertility evaluation and Day-5 blastocyst transfer resulting in a healthy, successful pregnancy after 4 years of unexplained infertility.",
+      "domain": "janvithasfertility.com",
+      "href": "/contact",
+      "brandLogoSrc": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&auto=format&fit=crop&q=80",
+      "imageSrc": "https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=1200&auto=format&fit=crop",
+      "videoSrc": "",
+      "techStack": [
+        "Female Infertility",
+        "IVF Treatment",
+        "Blastocyst Culture",
+        "Fetal Diagnostics"
+      ]
+    },
+    {
+      "id": "icsi-success-story-2",
+      "client": "Grateful Family",
+      "business": "Janvithas Fertility Center",
+      "type": "ICSI & PICSI Precision Care",
+      "tag": "Male Factor Resolution",
+      "title": "Overcoming Severe Male Factor with Advanced PICSI",
+      "description": "Targeted physiological sperm selection and micromanipulated fertilization overcoming severe male-factor infertility with successful single embryo implantation.",
+      "domain": "janvithasfertility.com",
+      "href": "/contact",
+      "brandLogoSrc": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&auto=format&fit=crop&q=80",
+      "imageSrc": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200&auto=format&fit=crop",
+      "videoSrc": "",
+      "techStack": [
+        "Male Infertility",
+        "PICSI Selection",
+        "ICSI Care",
+        "Vitrification"
+      ]
+    },
+    {
+      "id": "iui-success-story-3",
+      "client": "New Mother",
+      "business": "Janvithas Fertility Center",
+      "type": "IUI & Ovulation Induction",
+      "tag": "First-Line Care",
+      "title": "PCOS Management & First-Cycle IUI Conception",
+      "description": "Customized ovulation induction protocols and precisely timed intrauterine insemination delivering success on the very first cycle.",
+      "domain": "janvithasfertility.com",
+      "href": "/contact",
+      "brandLogoSrc": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&auto=format&fit=crop&q=80",
+      "imageSrc": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1200&auto=format&fit=crop",
+      "videoSrc": "",
+      "techStack": [
+        "Ovulation Tracking",
+        "IUI Care",
+        "Hormone Therapy",
+        "Ultrasound"
+      ]
+    }
+  ],
+  "testimonials": [
+    {
+      "name": "Lakshmi & Srinivas",
+      "role": "Parents",
+      "business": "Ananthapuram",
+      "domain": "janvithasfertility.com",
+      "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&auto=format&fit=crop&q=80",
+      "rating": 5,
+      "text": "Dr. P. Bharathi's compassionate guidance gave us hope when we were completely lost. The personalized IVF treatment at Janvithas Fertility Center was transparent and successful."
+    },
+    {
+      "name": "Kavitha & Ramesh",
+      "role": "Parents",
+      "business": "Dharmavaram",
+      "domain": "janvithasfertility.com",
+      "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80",
+      "rating": 5,
+      "text": "The entire team at Janvithas treated us with respect and kindness. The clinic facilities and advanced ICSI procedures are top-tier while remaining affordable."
+    },
+    {
+      "name": "Anusha & Venkat",
+      "role": "Parents",
+      "business": "Kadapa",
+      "domain": "janvithasfertility.com",
+      "image": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80",
+      "rating": 5,
+      "text": "We are blessed with a healthy baby boy thanks to Dr. Bharathi's expertise in fetal medicine and reproductive care. Truly the best fertility center in the region."
+    },
+    {
+      "name": "Deepika & Rajesh",
+      "role": "Parents",
+      "business": "Hindupur",
+      "domain": "janvithasfertility.com",
+      "image": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300&auto=format&fit=crop&q=80",
+      "rating": 5,
+      "text": "After 5 years of waiting, Dr. Bharathi's accurate diagnosis and gentle IUI treatment made our dream of parenthood come true. We are forever grateful to Janvithas."
+    },
+    {
+      "name": "Sunitha & Madhav",
+      "role": "Parents",
+      "business": "Guntakal",
+      "domain": "janvithasfertility.com",
+      "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=300&auto=format&fit=crop&q=80",
+      "rating": 5,
+      "text": "The embryology lab and PICSI technology here are truly advanced. Dr. Bharathi explained every single step with complete honesty and genuine warmth."
+    },
+    {
+      "name": "Pranathi & Suresh",
+      "role": "Parents",
+      "business": "Tadipatri",
+      "domain": "janvithasfertility.com",
+      "image": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop&q=80",
+      "rating": 5,
+      "text": "From our first consultation to Day-5 blastocyst transfer, the care we received was exceptional. Janvithas Fertility Center is a true blessing for couples."
+    }
+  ],
+  "settings": {
+    "enablePageAnimations": true,
+    "enablePwaBanner": true
+  },
+  "sanity": {
+    "projectId": "xwuayh4h",
+    "dataset": "production"
+  }
+}

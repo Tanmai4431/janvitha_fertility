@@ -1,0 +1,613 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getSiteSettings } from '../utils/sanity';
+import client from '../../../../client.json';
+import Breadcrumbs from '../components/ui/navigation/Breadcrumbs.astro';
+
+// Fetch siteSettings dynamically from Sanity CMS with fallback
+const siteSettings = await getSiteSettings();
+
+// Resolve contact variables dynamically
+const email = siteSettings?.primaryEmail || client.contact.primaryEmail;
+const supportEmail = siteSettings?.supportEmail || client.contact.supportEmail;
+const whatsAppPhone =
+  siteSettings?.whatsAppPhone ||
+  siteSettings?.primaryPhone ||
+  (client.contact as any)?.whatsappPhone ||
+  client.contact.primaryPhone ||
+  '+91 81214 49988';
+
+// Environment validation check for developer warning alerts
+const resendKey = siteSettings?.resendApiKey || import.meta.env.RESEND_API_KEY || '';
+const isResendConfigured = Boolean(resendKey && resendKey.trim().length > 0 && resendKey !== 're_your_resend_api_key_here');
+const showDevWarning = import.meta.env.DEV && !isResendConfigured;
+
+// Services list derived dynamically from client.json
+const servicesList = ((client.services || []) as any[])
+  .map((s: any) => s.title)
+  .concat(["General Inquiry / Appointment Request"]);
+const siteName = siteSettings?.name || client.business.name;
+const siteDesc = siteSettings?.description || client.business.description;
+---
+
+<Layout title={`Contact Us & Appointments - ${siteName}`} description={siteDesc}>
+  <main class="flex-grow pt-8 sm:pt-12 pb-20 md:pb-24 px-4 sm:px-6 lg:px-8 bg-background">
+    <div class="max-w-7xl mx-auto space-y-8 sm:space-y-10">
+      
+      <!-- Header Section -->
+      <section class="max-w-3xl mx-auto text-center space-y-4 pt-2">
+        <Breadcrumbs items={[{ label: 'Contact Us' }]} className="justify-start mb-3 sm:mb-4" />
+
+        <div class="flex justify-center w-full" data-animate="zoom-in">
+          <div class="badge-neon-pill">
+            <span class="text-tertiary animate-spin text-sm shrink-0">✱</span>
+            <span class="font-label font-bold uppercase tracking-wider text-primary">APPOINTMENT & INQUIRY</span>
+          </div>
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-heading font-bold tracking-tight text-primary leading-tight" data-animate="fade-up">
+          Schedule Your <span class="text-tertiary">Fertility Consultation</span>
+        </h1>
+        <p class="text-secondary text-base sm:text-lg leading-relaxed max-w-2xl mx-auto font-sans" data-animate="fade-up">
+          Connect directly with our clinical specialist and team for compassionate guidance, diagnostic evaluations, and tailored treatment plans.
+        </p>
+      </section>
+
+      <!-- Main Layout Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start pt-6 border-t border-border">
+        
+        <!-- Left Panel -->
+        <section class="lg:col-span-5 space-y-5" data-animate="fade-right">
+          
+          <!-- WhatsApp Card -->
+          <div class="p-6 rounded-card border border-border bg-surface shadow-xs space-y-4 text-left">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-button bg-background border border-border flex items-center justify-center p-2.5 shadow-xs shrink-0">
+                <img src="/assets/icons/whatsapp.svg" alt="WhatsApp" class="w-7 h-7 object-contain" />
+              </div>
+
+              <div class="space-y-1.5 flex-1">
+                <div class="flex items-center justify-between">
+                  <h3 class="font-heading font-bold text-base text-primary">WhatsApp Line</h3>
+                  <span class="font-label font-bold uppercase tracking-wider px-2 py-0.5 rounded-button bg-emerald-50 text-emerald-700 border border-emerald-200/60">Fastest</span>
+                </div>
+                <p class="text-xs text-secondary leading-relaxed font-sans">
+                  Direct connection with our clinic coordinator for immediate appointment scheduling.
+                </p>
+                <div class="pt-2">
+                  <a 
+                    href={`https://wa.me/${whatsAppPhone.replace(/[^\d]/g, '')}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="btn-primary inline-flex items-center gap-2 text-xs font-bold"
+                  >
+                    <span>Chat on WhatsApp</span>
+                    <span class="text-[11px] opacity-90">({whatsAppPhone})</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Email Card -->
+          <div class="p-6 rounded-card border border-border bg-surface shadow-xs space-y-4 text-left">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-button bg-background border border-border flex items-center justify-center p-2.5 shadow-xs shrink-0">
+                <img src="/assets/icons/email.svg" alt="Email" class="w-7 h-7 object-contain" />
+              </div>
+
+              <div class="space-y-1.5 flex-1">
+                <h3 class="font-heading font-bold text-base text-primary">Clinic Email</h3>
+                <p class="text-xs text-secondary leading-relaxed font-sans">
+                  Send your medical queries and reports for specialist review.
+                </p>
+                <div class="pt-1">
+                  <a href={`mailto:${email}`} class="text-sm font-bold text-tertiary hover:underline flex items-center gap-1 font-sans">
+                    <span>{email}</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                  </a>
+                  {supportEmail && supportEmail !== email && (
+                    <p class="text-xs text-secondary mt-0.5 font-sans">Desk: <a href={`mailto:${supportEmail}`} class="hover:underline">{supportEmail}</a></p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Clinic Response Box -->
+          <div class="p-5 rounded-card bg-surface border border-border text-xs text-secondary space-y-1.5 text-left">
+            <p class="font-bold text-primary flex items-center gap-2 font-sans">
+              <span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+              <span>Patient Consultation Priority</span>
+            </p>
+            <p class="leading-relaxed text-xs text-secondary font-sans">
+              Inquiries are handled with complete confidentiality and care. WhatsApp messages receive priority response.
+            </p>
+          </div>
+        </section>
+
+        <!-- Right Panel: Form -->
+        <section class="lg:col-span-7" data-animate="fade-left">
+          {showDevWarning && (
+            <div class="mb-6 p-4 rounded-card bg-amber-50 border border-amber-200 text-amber-800 text-xs flex items-start gap-3 shadow-xs">
+              <svg class="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+              </svg>
+              <div>
+                <p class="font-semibold">Developer Notice:</p>
+                <p class="mt-0.5 leading-relaxed font-sans">Resend API key is unconfigured. Email dispatch will simulate. Configure keys inside <strong>Sanity Studio CMS</strong> or <code>apps/web/.env</code> to test live email dispatches.</p>
+              </div>
+            </div>
+          )}
+
+          <div class="p-6 sm:p-8 rounded-card border border-border bg-surface shadow-md relative overflow-hidden text-left">
+            
+            <form 
+              id="contact-form" 
+              action="/api/submit-contact" 
+              method="POST" 
+              class="space-y-6" 
+              novalidate
+              data-whatsapp-phone={whatsAppPhone}
+            >
+              <!-- Hidden Channel State & Honeypot Protection -->
+              <input type="hidden" id="active-channel" name="channel" value="email" />
+              <div class="hidden" aria-hidden="true">
+                <input type="text" id="honeypot" name="honeypot" tabindex="-1" autocomplete="off" />
+              </div>
+
+              <!-- Capsule Switcher -->
+              <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-border">
+                <div>
+                  <h2 class="font-heading font-bold text-lg text-primary">
+                    Consultation Request Form
+                  </h2>
+                  <p class="text-xs text-secondary font-sans">Choose submission channel:</p>
+                </div>
+
+                <div class="inline-flex p-1 rounded-button bg-background border border-border shrink-0">
+                  <button 
+                    type="button" 
+                    id="btn-channel-email"
+                    class="py-1.5 px-3.5 rounded-button font-bold text-xs transition-all duration-200 cursor-pointer flex items-center gap-2 border border-tertiary bg-surface text-primary shadow-xs"
+                  >
+                    <img src="/assets/icons/email.svg" alt="Email" class="w-4 h-4 object-contain shrink-0" />
+                    <span>Email</span>
+                  </button>
+
+                  <button 
+                    type="button" 
+                    id="btn-channel-whatsapp"
+                    class="py-1.5 px-3.5 rounded-button font-medium text-xs transition-all duration-200 cursor-pointer flex items-center gap-2 border border-transparent bg-transparent text-secondary hover:text-primary"
+                  >
+                    <img src="/assets/icons/whatsapp.svg" alt="WhatsApp" class="w-4 h-4 object-contain shrink-0" />
+                    <span>WhatsApp</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Input Fields Grid -->
+              <div class="space-y-4 font-sans">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                  <!-- Full Name -->
+                  <div class="space-y-1.5">
+                    <label for="name" class="font-label font-bold text-primary uppercase tracking-wider">
+                      Full Name <span class="text-tertiary">*</span>
+                    </label>
+                    <input 
+                      type="text" 
+                      id="name" 
+                      name="name" 
+                      required
+                      placeholder="Your Name"
+                      class="w-full px-4 py-3 rounded-button border border-border bg-background text-primary text-sm focus:border-tertiary focus:outline-none transition-all duration-200"
+                    />
+                    <span id="name-error" class="hidden text-xs text-rose-600 font-medium"></span>
+                  </div>
+
+                  <!-- Email Address -->
+                  <div class="space-y-1.5">
+                    <label for="email" class="font-label font-bold text-primary uppercase tracking-wider">
+                      Email Address <span class="text-tertiary">*</span>
+                    </label>
+                    <input 
+                      type="email" 
+                      id="email" 
+                      name="email" 
+                      required
+                      placeholder="your.email@example.com"
+                      class="w-full px-4 py-3 rounded-button border border-border bg-background text-primary text-sm focus:border-tertiary focus:outline-none transition-all duration-200"
+                    />
+                    <span id="email-error" class="hidden text-xs text-rose-600 font-medium"></span>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+                  <!-- Contact Phone -->
+                  <div class="space-y-1.5">
+                    <label for="phone" class="font-label font-bold text-primary uppercase tracking-wider">
+                      Contact Phone <span class="text-tertiary">*</span>
+                    </label>
+                    <input 
+                      type="tel" 
+                      id="phone" 
+                      name="phone" 
+                      required
+                      placeholder="+91 81214 49988"
+                      class="w-full px-4 py-3 rounded-button border border-border bg-background text-primary text-sm focus:border-tertiary focus:outline-none transition-all duration-200"
+                    />
+                    <span id="phone-error" class="hidden text-xs text-rose-600 font-medium"></span>
+                  </div>
+
+                  <!-- Service Dropdown -->
+                  <div class="space-y-1.5 relative">
+                    <label for="service-trigger" class="font-label font-bold text-primary uppercase tracking-wider">
+                      Service Required <span class="text-tertiary">*</span>
+                    </label>
+                    
+                    <input type="hidden" id="service" name="service" required value="" />
+
+                    <button 
+                      type="button" 
+                      id="custom-select-trigger"
+                      class="w-full px-4 py-3 rounded-button border border-border bg-background text-secondary text-sm focus:border-tertiary flex items-center justify-between cursor-pointer transition-all duration-200"
+                    >
+                      <span id="custom-select-label">Select a care service</span>
+                      <svg id="custom-select-chevron" class="w-4 h-4 text-secondary transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                      </svg>
+                    </button>
+
+                    <div 
+                      id="custom-select-menu"
+                      class="hidden absolute z-30 left-0 top-full mt-1.5 w-full rounded-card border border-border bg-surface shadow-xl max-h-60 overflow-y-auto p-1.5 space-y-1"
+                    >
+                      {servicesList.map((svc) => (
+                        <div 
+                          class="custom-option-item p-2.5 rounded-button text-xs sm:text-sm font-medium text-primary hover:bg-background hover:text-tertiary cursor-pointer transition-colors flex items-center justify-between"
+                          data-value={svc}
+                        >
+                          <span>{svc}</span>
+                          <svg class="w-4 h-4 text-tertiary opacity-0 check-mark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        </div>
+                      ))}
+                    </div>
+
+                    <span id="service-error" class="hidden text-xs text-rose-600 font-medium"></span>
+                  </div>
+                </div>
+
+                <!-- Message Description -->
+                <div class="space-y-1.5">
+                  <label for="message" class="font-label font-bold text-primary uppercase tracking-wider">
+                    Message / Medical Query <span class="text-tertiary">*</span>
+                  </label>
+                  <textarea 
+                    id="message" 
+                    name="message" 
+                    rows="4" 
+                    required
+                    placeholder="Briefly describe your requirements or preferred appointment dates..."
+                    class="w-full px-4 py-3 rounded-button border border-border bg-background text-primary text-sm focus:border-tertiary focus:outline-none transition-all duration-200 resize-none font-sans"
+                  ></textarea>
+                  <span id="message-error" class="hidden text-xs text-rose-600 font-medium"></span>
+                </div>
+              </div>
+
+              <!-- Form Error Alert -->
+              <div id="form-error-alert" class="hidden p-4 rounded-button bg-rose-50 border border-rose-200 text-xs text-rose-700 font-medium"></div>
+
+              <!-- Submit Button -->
+              <button 
+                type="submit" 
+                id="submit-btn"
+                class="btn-primary w-full flex items-center justify-center gap-3 cursor-pointer shadow-md text-base"
+              >
+                <div class="w-6 h-6 rounded-full bg-white flex items-center justify-center p-1 shrink-0 shadow-xs">
+                  <img id="btn-icon-email" src="/assets/icons/email.svg" alt="Email" class="w-3.5 h-3.5 object-contain" />
+                  <img id="btn-icon-whatsapp" src="/assets/icons/whatsapp.svg" alt="WhatsApp" class="w-3.5 h-3.5 object-contain hidden" />
+                </div>
+
+                <span id="btn-text" class="text-white font-bold text-base">Submit Consultation via Email</span>
+
+                <svg id="loading-spinner" class="hidden animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              </button>
+            </form>
+
+            <!-- Success Panel Overlay -->
+            <div id="success-panel" class="hidden absolute inset-0 bg-surface z-20 flex flex-col items-center justify-center text-center p-8 space-y-6 animate-fade-in">
+              <div class="w-16 h-16 bg-background text-tertiary rounded-full flex items-center justify-center shadow-inner border border-border">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 6 9 17l-5-5"/>
+                </svg>
+              </div>
+              <div class="space-y-2">
+                <h2 id="success-title" class="text-2xl font-heading font-bold text-primary">Inquiry Dispatched!</h2>
+                <p id="success-desc" class="text-secondary text-sm max-w-sm font-sans">
+                  Thank you for reaching out. We've received your request and will contact you promptly.
+                </p>
+              </div>
+              <button 
+                id="reset-btn" 
+                class="px-6 py-3 bg-background text-primary text-xs font-bold rounded-button hover:border-tertiary border border-border transition-colors cursor-pointer"
+              >
+                Send another message
+              </button>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    if (!form) return;
+
+    const whatsAppNumber = form.getAttribute('data-whatsapp-phone') || '+91 81214 49988';
+
+    // Channel Buttons
+    const btnEmail = document.getElementById('btn-channel-email') as HTMLButtonElement | null;
+    const btnWhatsApp = document.getElementById('btn-channel-whatsapp') as HTMLButtonElement | null;
+    const activeChannelInput = document.getElementById('active-channel') as HTMLInputElement | null;
+
+    // Submit Button Elements
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+    const btnIconEmail = document.getElementById('btn-icon-email') as HTMLElement | null;
+    const btnIconWhatsApp = document.getElementById('btn-icon-whatsapp') as HTMLElement | null;
+    const btnText = document.getElementById('btn-text') as HTMLElement | null;
+    const spinner = document.getElementById('loading-spinner') as HTMLElement | null;
+
+    // Custom Dropdown Elements
+    const serviceHidden = document.getElementById('service') as HTMLInputElement;
+    const selectTrigger = document.getElementById('custom-select-trigger') as HTMLButtonElement;
+    const selectLabel = document.getElementById('custom-select-label') as HTMLElement;
+    const selectChevron = document.getElementById('custom-select-chevron') as HTMLElement;
+    const selectMenu = document.getElementById('custom-select-menu') as HTMLElement;
+    const optionItems = document.querySelectorAll('.custom-option-item');
+
+    // Panels & Feedback
+    const successPanel = document.getElementById('success-panel') as HTMLElement | null;
+    const successTitle = document.getElementById('success-title') as HTMLElement | null;
+    const successDesc = document.getElementById('success-desc') as HTMLElement | null;
+    const resetBtn = document.getElementById('reset-btn') as HTMLButtonElement | null;
+    const errorAlert = document.getElementById('form-error-alert') as HTMLElement | null;
+
+    // Inputs & Errors
+    const nameInput = document.getElementById('name') as HTMLInputElement;
+    const emailInput = document.getElementById('email') as HTMLInputElement;
+    const phoneInput = document.getElementById('phone') as HTMLInputElement;
+    const messageInput = document.getElementById('message') as HTMLTextAreaElement;
+
+    const nameError = document.getElementById('name-error') as HTMLElement;
+    const emailError = document.getElementById('email-error') as HTMLElement;
+    const phoneError = document.getElementById('phone-error') as HTMLElement;
+    const serviceError = document.getElementById('service-error') as HTMLElement;
+    const messageError = document.getElementById('message-error') as HTMLElement;
+
+    // 1. CUSTOM DROPDOWN INTERACTION
+    if (selectTrigger && selectMenu) {
+      selectTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = !selectMenu.classList.contains('hidden');
+        if (isOpen) {
+          selectMenu.classList.add('hidden');
+          selectChevron?.classList.remove('rotate-180');
+        } else {
+          selectMenu.classList.remove('hidden');
+          selectChevron?.classList.add('rotate-180');
+        }
+      });
+
+      optionItems.forEach((item) => {
+        item.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const target = item as HTMLElement;
+          const val = target.getAttribute('data-value') || '';
+
+          if (serviceHidden) serviceHidden.value = val;
+          if (selectLabel) {
+            selectLabel.textContent = val;
+            selectLabel.classList.remove('text-secondary');
+            selectLabel.classList.add('text-primary', 'font-semibold');
+          }
+
+          optionItems.forEach((opt) => {
+            const check = opt.querySelector('.check-mark');
+            if (check) check.classList.add('opacity-0');
+          });
+          const currentCheck = target.querySelector('.check-mark');
+          if (currentCheck) currentCheck.classList.remove('opacity-0');
+
+          selectMenu.classList.add('hidden');
+          selectChevron?.classList.remove('rotate-180');
+          if (serviceError) serviceError.classList.add('hidden');
+        });
+      });
+
+      document.addEventListener('click', () => {
+        selectMenu.classList.add('hidden');
+        selectChevron?.classList.remove('rotate-180');
+      });
+    }
+
+    // 2. CHANNEL SWITCHING LOGIC
+    let activeChannel: 'email' | 'whatsapp' = 'email';
+
+    const setChannel = (mode: 'email' | 'whatsapp') => {
+      activeChannel = mode;
+      if (activeChannelInput) activeChannelInput.value = mode;
+
+      if (mode === 'email') {
+        if (btnEmail) {
+          btnEmail.className = 'py-1.5 px-3.5 rounded-button font-bold text-xs transition-all duration-200 cursor-pointer flex items-center gap-2 border border-tertiary bg-surface text-primary shadow-xs';
+        }
+        if (btnWhatsApp) {
+          btnWhatsApp.className = 'py-1.5 px-3.5 rounded-button font-medium text-xs transition-all duration-200 cursor-pointer flex items-center gap-2 border border-transparent bg-transparent text-secondary hover:text-primary';
+        }
+
+        if (btnIconEmail) btnIconEmail.classList.remove('hidden');
+        if (btnIconWhatsApp) btnIconWhatsApp.classList.add('hidden');
+        if (btnText) btnText.textContent = 'Submit Consultation via Email';
+
+      } else {
+        if (btnWhatsApp) {
+          btnWhatsApp.className = 'py-1.5 px-3.5 rounded-button font-bold text-xs transition-all duration-200 cursor-pointer flex items-center gap-2 border border-tertiary bg-surface text-primary shadow-xs';
+        }
+        if (btnEmail) {
+          btnEmail.className = 'py-1.5 px-3.5 rounded-button font-medium text-xs transition-all duration-200 cursor-pointer flex items-center gap-2 border border-transparent bg-transparent text-secondary hover:text-primary';
+        }
+
+        if (btnIconWhatsApp) btnIconWhatsApp.classList.remove('hidden');
+        if (btnIconEmail) btnIconEmail.classList.add('hidden');
+        if (btnText) btnText.textContent = 'Submit & Connect on WhatsApp';
+      }
+    };
+
+    const isMobileOrTablet = window.innerWidth < 1024;
+    if (isMobileOrTablet) {
+      setChannel('whatsapp');
+    } else {
+      setChannel('email');
+    }
+
+    if (btnEmail) btnEmail.addEventListener('click', () => setChannel('email'));
+    if (btnWhatsApp) btnWhatsApp.addEventListener('click', () => setChannel('whatsapp'));
+
+    const clearErrors = () => {
+      [nameError, emailError, phoneError, serviceError, messageError].forEach(el => {
+        if (el) {
+          el.textContent = '';
+          el.classList.add('hidden');
+        }
+      });
+      if (errorAlert) {
+        errorAlert.textContent = '';
+        errorAlert.classList.add('hidden');
+      }
+    };
+
+    const showInputError = (element: HTMLElement, message: string) => {
+      if (element) {
+        element.textContent = message;
+        element.classList.remove('hidden');
+      }
+    };
+
+    // 3. FORM SUBMISSION
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      clearErrors();
+
+      let hasErrors = false;
+
+      if (nameInput.value.trim().length < 2) {
+        showInputError(nameError, 'Please enter your full name (minimum 2 characters).');
+        hasErrors = true;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(emailInput.value.trim())) {
+        showInputError(emailError, 'Please enter a valid email address.');
+        hasErrors = true;
+      }
+
+      const cleanPhoneDigits = phoneInput.value.replace(/[^\d]/g, '');
+      if (cleanPhoneDigits.length < 7) {
+        showInputError(phoneError, 'Please enter a valid phone number (minimum 7 digits).');
+        hasErrors = true;
+      }
+
+      if (!serviceHidden.value) {
+        showInputError(serviceError, 'Please select a care service from the dropdown.');
+        hasErrors = true;
+      }
+
+      if (messageInput.value.trim().length < 5) {
+        showInputError(messageError, 'Please enter details regarding your consultation request.');
+        hasErrors = true;
+      }
+
+      if (hasErrors) return;
+
+      if (submitBtn) submitBtn.disabled = true;
+      if (spinner) spinner.classList.remove('hidden');
+
+      const formData = new FormData(form);
+
+      try {
+        if (activeChannel === 'whatsapp') {
+          const rawText = `*Janvithas Fertility Consultation Request*\n\n` +
+            `*Name:* ${nameInput.value.trim()}\n` +
+            `*Email:* ${emailInput.value.trim()}\n` +
+            `*Phone:* ${phoneInput.value.trim()}\n` +
+            `*Service:* ${serviceHidden.value}\n` +
+            `*Query:* ${messageInput.value.trim()}`;
+
+          const cleanWa = whatsAppNumber.replace(/[^\d]/g, '');
+          const waUrl = `https://wa.me/${cleanWa}?text=${encodeURIComponent(rawText)}`;
+
+          fetch('/api/submit-contact', { method: 'POST', body: formData }).catch(() => {});
+
+          window.open(waUrl, '_blank', 'noopener,noreferrer');
+
+          if (successTitle) successTitle.textContent = 'WhatsApp Message Prepared!';
+          if (successDesc) successDesc.textContent = 'Your consultation details have been formatted and forwarded to WhatsApp.';
+          if (successPanel) successPanel.classList.remove('hidden');
+
+        } else {
+          const res = await fetch('/api/submit-contact', {
+            method: 'POST',
+            body: formData,
+          });
+
+          const result = await res.json();
+
+          if (res.ok && result.success) {
+            if (successTitle) successTitle.textContent = 'Consultation Request Received!';
+            if (successDesc) successDesc.textContent = "Thank you for reaching out. We will connect with you promptly.";
+            if (successPanel) successPanel.classList.remove('hidden');
+          } else {
+            if (errorAlert) {
+              errorAlert.textContent = result.message || 'An unexpected error occurred. Please try again or reach out on WhatsApp.';
+              errorAlert.classList.remove('hidden');
+            }
+          }
+        }
+      } catch (err) {
+        if (errorAlert) {
+          errorAlert.textContent = 'Network or communication failure. Please reach out to our clinic directly.';
+          errorAlert.classList.remove('hidden');
+        }
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+        if (spinner) spinner.classList.add('hidden');
+      }
+    });
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        form.reset();
+        if (serviceHidden) serviceHidden.value = '';
+        if (selectLabel) {
+          selectLabel.textContent = 'Select a care service';
+          selectLabel.classList.add('text-secondary');
+          selectLabel.classList.remove('text-primary', 'font-semibold');
+        }
+        optionItems.forEach((opt) => {
+          const check = opt.querySelector('.check-mark');
+          if (check) check.classList.add('opacity-0');
+        });
+        if (successPanel) successPanel.classList.add('hidden');
+      });
+    }
+  });
+</script>

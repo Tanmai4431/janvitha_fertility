@@ -1,0 +1,97 @@
+---
+// Global Sticky Radial Scroll Progress Back to Top Button
+---
+
+<div 
+  id="back-to-top-wrapper" 
+  class="fixed bottom-18 right-4 nav-desktop:bottom-22 nav-desktop:right-6 z-50 opacity-0 pointer-events-none scale-75 transition-all duration-300 ease-out flex items-center justify-center select-none"
+>
+  <div class="relative w-14 h-14 flex items-center justify-center group">
+    <!-- SVG Circular Radial Progress Ring -->
+    <svg class="w-14 h-14 -rotate-90 transform pointer-events-none drop-shadow-sm" viewBox="0 0 52 52">
+      <!-- Background Track Ring -->
+      <circle 
+        cx="26" 
+        cy="26" 
+        r="22" 
+        stroke="rgba(255, 61, 165, 0.2)" 
+        stroke-width="3.5" 
+        fill="none" 
+      />
+      <!-- Active Progress Fill Ring -->
+      <circle 
+        id="back-to-top-progress" 
+        cx="26" 
+        cy="26" 
+        r="22" 
+        stroke="#FF3DA5" 
+        stroke-width="3.5" 
+        fill="none" 
+        stroke-linecap="round" 
+        stroke-dasharray="138.23" 
+        stroke-dashoffset="138.23" 
+        class="transition-[stroke-dashoffset] duration-100 ease-out" 
+      />
+    </svg>
+
+    <!-- Center Floating Action Button -->
+    <button 
+      id="global-back-to-top-btn" 
+      type="button" 
+      aria-label="Back to top of page" 
+      class="absolute inset-1.5 rounded-full bg-tertiary text-white flex items-center justify-center shadow-md hover:opacity-90 hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
+      title="Scroll back to top"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-white transition-transform duration-200 group-hover:-translate-y-0.5">
+        <path d="M18 15l-6-6-6 6" />
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  const initBackToTopButton = () => {
+    const wrapper = document.getElementById('back-to-top-wrapper');
+    const button = document.getElementById('global-back-to-top-btn');
+    const progressRing = document.getElementById('back-to-top-progress') as SVGCircleElement | null;
+
+    if (!wrapper || !button || !progressRing) return;
+
+    const circumference = 2 * Math.PI * 22; // ~138.23px
+
+    const updateScrollProgress = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+      // 1. Toggle visibility when scrolled > 200px
+      if (scrollTop > 200) {
+        wrapper.classList.remove('opacity-0', 'pointer-events-none', 'scale-75');
+        wrapper.classList.add('opacity-100', 'pointer-events-auto', 'scale-100');
+      } else {
+        wrapper.classList.remove('opacity-100', 'pointer-events-auto', 'scale-100');
+        wrapper.classList.add('opacity-0', 'pointer-events-none', 'scale-75');
+      }
+
+      // 2. Calculate radial progress ring dashoffset
+      if (scrollHeight > 0) {
+        const scrollFraction = Math.min(Math.max(scrollTop / scrollHeight, 0), 1);
+        const offset = circumference - (scrollFraction * circumference);
+        progressRing.style.strokeDashoffset = `${offset}`;
+      } else {
+        progressRing.style.strokeDashoffset = `${circumference}`;
+      }
+    };
+
+    // 3. Smooth scroll to top on click
+    button.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // 4. Attach scroll listener
+    window.addEventListener('scroll', updateScrollProgress, { passive: true });
+    updateScrollProgress();
+  };
+
+  // Register with Astro SPA ViewTransitions navigation engine
+  document.addEventListener('astro:page-load', initBackToTopButton);
+</script>

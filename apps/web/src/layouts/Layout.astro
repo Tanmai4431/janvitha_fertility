@@ -1,0 +1,851 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+import SEO from '../components/SEO.astro';
+import client from '../../../../client.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+  shareImage?: any;
+  type?: string;
+  publishedAt?: string;
+  updatedAt?: string;
+  author?: string;
+  noindex?: boolean;
+  children?: any;
+}
+
+const { title, description, shareImage, type, publishedAt, updatedAt, author, noindex } = Astro.props;
+
+// Fetch siteSettings singleton dynamically from Sanity CMS with fallback
+// Fetch siteSettings singleton dynamically from Sanity CMS with fallback
+import { getSiteSettings, urlFor } from '../utils/sanity';
+import { FloatingHeader } from '../components/ui/header/floating-header';
+import Footer from '../components/Footer.astro';
+import BackToTop from '../components/BackToTop.astro';
+import WhatsAppSticky from '../components/WhatsAppSticky.astro';
+import MobileBottomNav from '../components/ui/navigation/MobileBottomNav';
+const siteSettings = await getSiteSettings();
+const tagManagerId = siteSettings?.googleTagManagerId || client.seo.googleTagManagerId;
+const siteName = siteSettings?.name || client.business.name;
+const legalName = siteSettings?.legalName || client.business.legalName || siteName;
+const enablePageAnimations = siteSettings?.enablePageAnimations ?? client.settings?.enablePageAnimations ?? true;
+const enablePwaBanner = siteSettings?.enablePwaBanner ?? client.settings?.enablePwaBanner ?? true;
+const pwaLimitOncePerDay = siteSettings?.pwaLimitOncePerDay ?? true;
+const pwaBannerDisplaySeconds = siteSettings?.pwaBannerDisplaySeconds ?? 5;
+
+// Resolve Dynamic Favicon, PWA Icon, and Brand Logo URLs from Sanity CMS
+let faviconUrl = '/favicon.ico';
+let faviconSvgUrl = '/favicon.svg';
+let appleTouchIconUrl = '/apple-touch-icon.png';
+let pwaAppIconUrl: string | null = null;
+let navLogoUrl: string | null = null;
+let navBrandIconUrl: string | null = null;
+let footerLogoUrl: string | null = null;
+
+const pwaIconRef = siteSettings?.pwaAppIcon || siteSettings?.brandIcon || siteSettings?.favicon || siteSettings?.logo;
+if (pwaIconRef) {
+  try {
+    pwaAppIconUrl = urlFor(pwaIconRef).width(96).height(96).format('png').url();
+  } catch (e) {
+    console.error('Failed to resolve pwaAppIconUrl from Sanity:', e);
+  }
+}
+
+if (siteSettings?.favicon) {
+  try {
+    faviconUrl = urlFor(siteSettings.favicon).width(64).height(64).format('png').url();
+    faviconSvgUrl = urlFor(siteSettings.favicon).url();
+  } catch (e) {
+    console.error('Failed to resolve favicon from Sanity:', e);
+  }
+} else if (siteSettings?.brandIcon) {
+  try {
+    faviconUrl = urlFor(siteSettings.brandIcon).width(64).height(64).format('png').url();
+    faviconSvgUrl = urlFor(siteSettings.brandIcon).url();
+  } catch (e) {
+    console.error('Failed to resolve brandIcon favicon from Sanity:', e);
+  }
+} else if (siteSettings?.logo) {
+  try {
+    faviconUrl = urlFor(siteSettings.logo).width(64).height(64).format('png').url();
+    faviconSvgUrl = urlFor(siteSettings.logo).url();
+  } catch (e) {
+    console.error('Failed to resolve logo favicon from Sanity:', e);
+  }
+}
+
+if (siteSettings?.appleTouchIcon) {
+  try {
+    appleTouchIconUrl = urlFor(siteSettings.appleTouchIcon).width(180).height(180).format('png').url();
+  } catch (e) {
+    console.error('Failed to resolve appleTouchIcon from Sanity:', e);
+  }
+} else if (siteSettings?.brandIcon) {
+  try {
+    appleTouchIconUrl = urlFor(siteSettings.brandIcon).width(180).height(180).format('png').url();
+  } catch (e) {
+    console.error('Failed to resolve brandIcon appleTouchIcon from Sanity:', e);
+  }
+} else if (siteSettings?.logo) {
+  try {
+    appleTouchIconUrl = urlFor(siteSettings.logo).width(180).height(180).format('png').url();
+  } catch (e) {
+    console.error('Failed to resolve logo appleTouchIcon from Sanity:', e);
+  }
+}
+
+if (siteSettings?.logo) {
+  try {
+    navLogoUrl = urlFor(siteSettings.logo).url();
+  } catch (e) {
+    console.error('Failed to resolve siteSettings.logo:', e);
+  }
+}
+
+if (siteSettings?.brandIcon) {
+  try {
+    navBrandIconUrl = urlFor(siteSettings.brandIcon).url();
+  } catch (e) {
+    console.error('Failed to resolve siteSettings.brandIcon:', e);
+  }
+}
+
+if (siteSettings?.invertedLogo) {
+  try {
+    footerLogoUrl = urlFor(siteSettings.invertedLogo).url();
+  } catch (e) {
+    console.error('Failed to resolve siteSettings.invertedLogo:', e);
+  }
+} else {
+  footerLogoUrl = navLogoUrl || navBrandIconUrl;
+}
+
+const pwaLogoUrl = pwaAppIconUrl || navBrandIconUrl || faviconSvgUrl;
+
+// Resolve Dynamic Social Profiles from Sanity CMS with client.json Fallback
+const rawSocialLinks = (siteSettings?.socialLinks && siteSettings.socialLinks.length > 0)
+  ? siteSettings.socialLinks
+  : (client.socialLinks || []);
+
+const socialLinks = rawSocialLinks.map((item: any) => {
+  let iconUrl: string | null = null;
+  if (item?.icon) {
+    try {
+      iconUrl = urlFor(item.icon).width(48).height(48).format('png').url();
+    } catch (e) {
+      console.error('Failed to resolve social item icon URL:', e);
+    }
+  }
+  return {
+    platform: item.platform || 'Social Profile',
+    customPlatformName: item.customPlatformName || '',
+    url: item.url || '',
+    svgCode: item.svgCode || '',
+    iconUrl,
+  };
+});
+
+const primaryPhone = siteSettings?.primaryPhone || client.contact?.primaryPhone || '+91 94913 09988';
+---
+
+<!doctype html>
+<html lang="en" data-page-animations={enablePageAnimations ? 'true' : 'false'}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href={faviconSvgUrl} />
+    <link rel="icon" href={faviconUrl} />
+    <link rel="apple-touch-icon" href={appleTouchIconUrl} />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="alternate" type="application/rss+xml" title={`${client.business.name} Blog Feed`} href={new URL('rss.xml', Astro.site || client.domain.production).toString()} />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Load Design System Typography: Fraunces & Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Nunito:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+
+    <SEO 
+      title={title} 
+      description={description} 
+      shareImage={shareImage} 
+      type={type} 
+      publishedAt={publishedAt} 
+      updatedAt={updatedAt} 
+      author={author} 
+      noindex={noindex}
+    />
+    <ClientRouter />
+  </head>
+  <body class="bg-background text-foreground font-sans min-h-screen flex flex-col antialiased">
+    <!-- Google Tag Manager (noscript) -->
+    {tagManagerId && (
+      <noscript>
+        <iframe 
+          src={`https://www.googletagmanager.com/ns.html?id=${tagManagerId}`}
+          height="0" 
+          width="0" 
+          style="display:none;visibility:hidden"
+        />
+      </noscript>
+    )}
+
+    <!-- Modern Floating Responsive Header -->
+    <FloatingHeader 
+      client:load 
+      transition:persist="floating-header"
+      siteName={siteName} 
+      navLogoUrl={navLogoUrl} 
+      navBrandIconUrl={navBrandIconUrl} 
+      socialLinks={socialLinks}
+      primaryPhone={primaryPhone}
+    />
+
+    <!-- Main Content Grid -->
+    <slot />
+
+    <!-- Agency Footer -->
+    <Footer siteName={siteName} legalName={legalName} footerLogoUrl={footerLogoUrl} socialLinks={socialLinks} siteSettings={siteSettings} />
+    
+    <!-- Sticky Radial Scroll Progress Back to Top Button -->
+    <BackToTop />
+
+    <!-- Desktop Sticky Floating WhatsApp Action Button -->
+    <WhatsAppSticky primaryPhone={primaryPhone} />
+
+    <!-- Mobile & Tablet Glassmorphic Sticky Bottom Navigation Bar -->
+    <MobileBottomNav client:load primaryPhone={primaryPhone} whatsappPhone={primaryPhone} transition:persist="mobile-bottom-nav" />
+    <!-- Global Analytics Event Delegation Script -->
+    <script is:inline>
+      // Page View Tracking on Client-Side Transitions (SPA Routing)
+      document.addEventListener('astro:page-load', () => {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'page_view',
+          page_path: window.location.pathname,
+          page_title: document.title
+        });
+      });
+
+      // Event Delegation for Button/CTA Click & Outbound Link Tracking
+      document.addEventListener('click', (event) => {
+        const target = event.target;
+        if (target instanceof Element) {
+          // 1. Check custom CTA tracker attributes
+          const clickTarget = target.closest('[data-analytics-click]');
+          if (clickTarget) {
+            const label = clickTarget.getAttribute('data-analytics-click');
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: 'custom_click',
+              click_label: label,
+              page_path: window.location.pathname
+            });
+          }
+
+          // 2. Check outbound links
+          const linkTarget = target.closest('a');
+          if (linkTarget) {
+            const href = linkTarget.getAttribute('href');
+            if (href && href.startsWith('http') && !href.includes(window.location.host)) {
+              window.dataLayer = window.dataLayer || [];
+              window.dataLayer.push({
+                event: 'outbound_click',
+                outbound_url: href,
+                page_path: window.location.pathname
+              });
+            }
+          }
+        }
+      });
+
+      // Global Form Submission Tracker
+      document.addEventListener('submit', (event) => {
+        const target = event.target;
+        if (target instanceof HTMLFormElement) {
+          const formId = target.id || target.getAttribute('name') || 'anonymous-form';
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'form_submission',
+            form_id: formId,
+            page_path: window.location.pathname
+          });
+        }
+      });
+
+      // Real-User Core Web Vitals Tracking (LCP, FID, CLS)
+      if ('PerformanceObserver' in window) {
+        try {
+          // Track Largest Contentful Paint (LCP)
+          const lcpObserver = new PerformanceObserver((entryList) => {
+            const entries = entryList.getEntries();
+            const lastEntry = entries[entries.length - 1];
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: 'web_vital',
+              vital_name: 'LCP',
+              vital_value: lastEntry.startTime
+            });
+          });
+          lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
+
+          // Track Cumulative Layout Shift (CLS)
+          let clsValue = 0;
+          const clsObserver = new PerformanceObserver((entryList) => {
+            for (const entry of entryList.getEntries()) {
+              if (!entry.hadRecentInput) {
+                clsValue += entry.value || 0;
+              }
+            }
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: 'web_vital',
+              vital_name: 'CLS',
+              vital_value: clsValue
+            });
+          });
+          clsObserver.observe({ type: 'layout-shift', buffered: true });
+
+          // Track First Input Delay (FID)
+          const fidObserver = new PerformanceObserver((entryList) => {
+            const entries = entryList.getEntries();
+            if (entries.length > 0) {
+              const entry = entries[0];
+              window.dataLayer = window.dataLayer || [];
+              window.dataLayer.push({
+                event: 'web_vital',
+                vital_name: 'FID',
+                vital_value: (entry.processingStart || 0) - entry.startTime
+              });
+            }
+          });
+          fidObserver.observe({ type: 'first-input', buffered: true });
+        } catch (e) {
+          console.warn('PerformanceObserver observers failed to initialize:', e);
+        }
+      }
+
+      // Scroll Depth tracking state
+      let trackedThresholds = new Set();
+      document.addEventListener('astro:page-load', () => {
+        trackedThresholds.clear();
+      });
+
+      window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        if (scrollHeight <= 0) return;
+        const scrollPercent = Math.round((scrollTop / scrollHeight) * 100);
+
+        [25, 50, 75, 100].forEach((threshold) => {
+          if (scrollPercent >= threshold && !trackedThresholds.has(threshold)) {
+            trackedThresholds.add(threshold);
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+              event: 'scroll_depth',
+              scroll_percentage: threshold,
+              page_path: window.location.pathname
+            });
+          }
+        });
+      }, { passive: true });
+
+      // Global JavaScript Exception Logger
+      window.addEventListener('error', (event) => {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({
+          event: 'js_error',
+          error_message: event.message || 'Unknown runtime error',
+          error_source: (event.filename || 'unknown_file') + ':' + (event.lineno || 0),
+          page_path: window.location.pathname
+        });
+      });
+
+      // Copy to Clipboard Tracker (High-Intent Interaction)
+      document.addEventListener('copy', () => {
+        const selection = window.getSelection();
+        const selectedText = selection ? selection.toString().trim() : '';
+        if (selectedText.length > 0) {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event: 'text_copy',
+            copied_text: selectedText.substring(0, 60),
+            page_path: window.location.pathname
+          });
+        }
+      });
+    </script>
+
+    <!-- Dynamic PWA Installation Toaster Banner (Light-Mode Capsule Pill Attached Under Navigation Header) -->
+    {enablePwaBanner && (
+      <div 
+        id="pwa-install-prompt" 
+        data-pwa-banner="true"
+        data-pwa-once-per-day={pwaLimitOncePerDay ? 'true' : 'false'}
+        data-pwa-display-seconds={pwaBannerDisplaySeconds}
+        class="fixed top-[80px] md:top-[92px] left-1/2 -translate-x-1/2 md:left-auto md:right-8 md:translate-x-0 z-50 w-[92%] max-w-xs sm:max-w-sm bg-surface/95 backdrop-blur-2xl border border-border shadow-lg rounded-card px-3 py-2 sm:px-4 sm:py-2.5 hidden items-center justify-between gap-3 -translate-y-[180%] opacity-0 pointer-events-auto transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+        style="will-change: transform, opacity;"
+      >
+        <div class="flex items-center gap-2.5 min-w-0">
+          <!-- Highlighted Brand Logo Lockup -->
+          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-background border border-border p-1 flex items-center justify-center shrink-0 shadow-xs overflow-hidden">
+            {pwaLogoUrl ? (
+              <img src={pwaLogoUrl} alt={siteName} class="w-full h-full object-contain rounded-full" />
+            ) : (
+              <span class="font-heading font-bold text-tertiary text-xs">J</span>
+            )}
+          </div>
+          <!-- Concise Copy -->
+          <div class="min-w-0 pr-1">
+            <h4 class="text-xs sm:text-sm font-heading font-bold text-primary tracking-tight whitespace-nowrap">
+              Download App Now
+            </h4>
+          </div>
+        </div>
+
+        <!-- Action Buttons: Circular Download Button + Countdown Ring -->
+        <div class="flex items-center gap-2 shrink-0">
+          <button 
+            id="pwa-install-btn" 
+            type="button" 
+            class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-tertiary hover:opacity-90 text-white flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer group"
+            aria-label="Download Application"
+            title="Download App"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white group-hover:translate-y-0.5 transition-transform">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+          </button>
+
+          <!-- Interactive Live Countdown Ring Badge (Clickable Close) -->
+          <button 
+            id="pwa-close-btn" 
+            type="button" 
+            class="relative w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-background hover:bg-surface text-secondary flex items-center justify-center transition-all cursor-pointer group"
+            aria-label="Dismiss app banner"
+            title="Click to dismiss"
+          >
+            <svg class="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 36 36">
+              <path
+                class="text-border"
+                stroke-width="3"
+                stroke="currentColor"
+                fill="none"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+              <path
+                id="pwa-countdown-ring"
+                class="text-tertiary transition-all duration-1000 ease-linear"
+                stroke-dasharray="100, 100"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke="currentColor"
+                fill="none"
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+              />
+            </svg>
+            <span id="pwa-countdown-num" class="text-[10px] sm:text-[11px] font-sans font-bold text-primary z-10">5</span>
+          </button>
+        </div>
+      </div>
+    )}
+
+    <!-- Dynamic Notification Toast -->
+    <div id="pwa-toast" class="fixed top-6 right-6 bg-slate-900/95 backdrop-blur-xl border border-slate-800 rounded-2xl p-4 shadow-2xl z-50 transform -translate-y-24 opacity-0 transition-all duration-500 hidden flex-col max-w-sm">
+      <h4 id="pwa-toast-title" class="text-xs font-semibold font-outfit text-slate-100 mb-1">Alert</h4>
+      <p id="pwa-toast-desc" class="text-[11px] text-slate-400 leading-relaxed">Details</p>
+    </div>
+
+    <script>
+      // 1. PWA Service Worker Registration
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((reg) => console.log('PWA Service Worker registered:', reg.scope))
+            .catch((err) => console.error('PWA Service Worker registration failed:', err));
+        });
+      }
+
+      // 2. Custom Toast Notification Helper
+      function showNotification(title: string, message: string) {
+        const toast = document.getElementById('pwa-toast');
+        const toastTitle = document.getElementById('pwa-toast-title');
+        const toastDesc = document.getElementById('pwa-toast-desc');
+
+        if (toast && toastTitle && toastDesc) {
+          toastTitle.textContent = title;
+          toastDesc.textContent = message;
+          
+          toast.classList.remove('hidden');
+          setTimeout(() => {
+            toast.classList.remove('-translate-y-24', 'opacity-0');
+          }, 100);
+
+          setTimeout(() => {
+            toast.classList.add('-translate-y-24', 'opacity-0');
+            setTimeout(() => {
+              toast.classList.add('hidden');
+            }, 500);
+          }, 5000);
+        }
+      }
+
+      // 3. Custom Installation Prompter Banner (Attached Below Header with Reflow-Driven Silky Drop & Full Countdown)
+      let deferredPrompt: any = null;
+      let countdownInterval: any = null;
+
+      const pwaPrompt = document.getElementById('pwa-install-prompt');
+      const installBtn = document.getElementById('pwa-install-btn');
+      const closeBtn = document.getElementById('pwa-close-btn');
+      const countdownNum = document.getElementById('pwa-countdown-num');
+      const countdownRing = document.getElementById('pwa-countdown-ring');
+
+      function shouldShowPwaBanner() {
+        if (!pwaPrompt || pwaPrompt.getAttribute('data-pwa-banner') === 'false') return false;
+        
+        const oncePerDay = pwaPrompt.getAttribute('data-pwa-once-per-day') !== 'false';
+        if (oncePerDay) {
+          try {
+            const lastShown = localStorage.getItem('pwa_banner_last_shown');
+            const today = new Date().toISOString().split('T')[0];
+            if (lastShown === today) {
+              return false; // Already displayed once today
+            }
+          } catch (e) {
+            // localStorage inaccessible
+          }
+        }
+        return true;
+      }
+
+      function showPwaToast() {
+        if (!pwaPrompt || !shouldShowPwaBanner()) return;
+
+        // Clear any pre-existing countdown interval to prevent ticker jump (5 -> 4 -> 5 glitch)
+        if (countdownInterval) {
+          clearInterval(countdownInterval);
+          countdownInterval = null;
+        }
+
+        const oncePerDay = pwaPrompt.getAttribute('data-pwa-once-per-day') !== 'false';
+        if (oncePerDay) {
+          try {
+            const today = new Date().toISOString().split('T')[0];
+            localStorage.setItem('pwa_banner_last_shown', today);
+          } catch (e) {}
+        }
+
+        const displaySecsStr = pwaPrompt.getAttribute('data-pwa-display-seconds');
+        let totalSeconds = displaySecsStr ? parseInt(displaySecsStr, 10) : 5;
+        if (isNaN(totalSeconds) || totalSeconds < 1) totalSeconds = 5;
+        let remainingSeconds = totalSeconds;
+
+        if (countdownNum) countdownNum.textContent = String(remainingSeconds);
+        if (countdownRing) countdownRing.setAttribute('stroke-dasharray', '100, 100');
+
+        // 1. Un-hide element in DOM & ensure clean top starting position
+        pwaPrompt.classList.remove('hidden', 'translate-y-14', 'translate-y-0');
+        pwaPrompt.classList.add('flex', '-translate-y-[180%]', 'opacity-0');
+
+        // 2. Force browser layout reflow flush to ensure CSS transition plays smoothly from initial -translate-y-[180%] state
+        void pwaPrompt.offsetWidth;
+
+        // 3. Trigger silky drop down animation from behind navigation header
+        requestAnimationFrame(() => {
+          pwaPrompt.classList.remove('-translate-y-[180%]', 'translate-y-14', 'opacity-0');
+          pwaPrompt.classList.add('translate-y-0', 'opacity-100');
+        });
+
+        // 4. Live Ticking Countdown Interval (Strictly controls banner dismissal after full timer duration)
+        countdownInterval = setInterval(() => {
+          remainingSeconds -= 1;
+          if (countdownNum) countdownNum.textContent = String(Math.max(0, remainingSeconds));
+          if (countdownRing) {
+            const pct = Math.max(0, (remainingSeconds / totalSeconds) * 100);
+            countdownRing.setAttribute('stroke-dasharray', `${pct}, 100`);
+          }
+
+          if (remainingSeconds <= 0) {
+            clearInterval(countdownInterval);
+            countdownInterval = null;
+            hidePwaToast();
+          }
+        }, 1000);
+      }
+
+      function hidePwaToast() {
+        if (countdownInterval) {
+          clearInterval(countdownInterval);
+          countdownInterval = null;
+        }
+        if (!pwaPrompt) return;
+
+        // Desktop vs Mobile Exit Animation Branching
+        const isDesktop = window.innerWidth >= 768;
+
+        pwaPrompt.classList.remove('translate-y-0', 'opacity-100');
+
+        if (isDesktop) {
+          // Desktop Resolution Exit: Fall Down & Fade Out effect (drops downward while fading out)
+          pwaPrompt.classList.remove('-translate-y-[180%]');
+          pwaPrompt.classList.add('translate-y-14', 'opacity-0');
+        } else {
+          // Mobile & Tablet Resolution Exit: Retreat back UP behind floating navigation header
+          pwaPrompt.classList.remove('translate-y-14');
+          pwaPrompt.classList.add('-translate-y-[180%]', 'opacity-0');
+        }
+
+        setTimeout(() => {
+          pwaPrompt.classList.add('hidden');
+          pwaPrompt.classList.remove('flex');
+          // Reset positioning classes for next entrance
+          pwaPrompt.classList.remove('translate-y-14');
+          pwaPrompt.classList.add('-translate-y-[180%]');
+        }, 1000);
+      }
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+      });
+
+      // Trigger 3 Seconds after page load / hero render
+      document.addEventListener('astro:page-load', () => {
+        setTimeout(() => {
+          showPwaToast();
+        }, 3000);
+      });
+
+      if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+          if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`PWA Installation choice: ${outcome}`);
+            deferredPrompt = null;
+            hidePwaToast();
+          } else {
+            // Fallback for browsers/desktop where beforeinstallprompt was pre-captured or unavailable
+            showNotification('PWA Installation', 'To install this app on your device, use your browser menu or address bar install option.');
+            hidePwaToast();
+          }
+        });
+      }
+
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          hidePwaToast();
+        });
+      }
+
+      // iOS Safari Add to Home Screen Instructions
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+
+      if (isIOS && !isStandalone && shouldShowPwaBanner()) {
+        setTimeout(() => {
+          showPwaToast();
+        }, 1200);
+      }
+
+      // 4. Offline IndexedDB Form Queueing & Sync
+      const DB_NAME = 'offline-forms-db';
+      const STORE_NAME = 'queued-submissions';
+
+      interface QueuedSubmission {
+        id?: number;
+        url: string;
+        method: string;
+        headers: Record<string, string>;
+        body: string;
+        timestamp: number;
+      }
+
+      function openDB(): Promise<IDBDatabase> {
+        return new Promise((resolve, reject) => {
+          const request = indexedDB.open(DB_NAME, 1);
+          request.onupgradeneeded = () => {
+            const db = request.result;
+            if (!db.objectStoreNames.contains(STORE_NAME)) {
+              db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+            }
+          };
+          request.onsuccess = () => resolve(request.result);
+          request.onerror = () => reject(request.error);
+        });
+      }
+
+      async function queueSubmission(url: string, method: string, headers: Record<string, string>, body: string): Promise<boolean> {
+        const db = await openDB();
+        return new Promise((resolve, reject) => {
+          const transaction = db.transaction(STORE_NAME, 'readwrite');
+          const store = transaction.objectStore(STORE_NAME);
+          const request = store.add({
+            url,
+            method,
+            headers,
+            body,
+            timestamp: Date.now()
+          });
+          request.onsuccess = () => resolve(true);
+          request.onerror = () => reject(request.error);
+        });
+      }
+
+      async function getQueuedSubmissions(): Promise<QueuedSubmission[]> {
+        const db = await openDB();
+        return new Promise((resolve, reject) => {
+          const transaction = db.transaction(STORE_NAME, 'readonly');
+          const store = transaction.objectStore(STORE_NAME);
+          const request = store.getAll();
+          request.onsuccess = () => resolve(request.result as QueuedSubmission[]);
+          request.onerror = () => reject(request.error);
+        });
+      }
+
+      async function clearQueuedSubmissions(): Promise<boolean> {
+        const db = await openDB();
+        return new Promise((resolve, reject) => {
+          const transaction = db.transaction(STORE_NAME, 'readwrite');
+          const store = transaction.objectStore(STORE_NAME);
+          const request = store.clear();
+          request.onsuccess = () => resolve(true);
+          request.onerror = () => reject(request.error);
+        });
+      }
+
+      // Intercept offline form submits
+      document.addEventListener('submit', async (event) => {
+        const form = event.target;
+        if (!(form instanceof HTMLFormElement)) return;
+        if (navigator.onLine) return;
+
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const data: Record<string, any> = {};
+        formData.forEach((value, key) => {
+          data[key] = value;
+        });
+
+        const action = form.getAttribute('action') || window.location.href;
+        const method = form.getAttribute('method') || 'POST';
+
+        try {
+          await queueSubmission(action, method, { 'Content-Type': 'application/json' }, JSON.stringify(data));
+          showNotification('Saved Offline', 'You are currently offline. Your form submission has been saved and will be sent automatically when you reconnect.');
+        } catch (err) {
+          console.error('Failed to store offline form submission:', err);
+        }
+      });
+
+      // Synchronize saved forms when coming back online
+      window.addEventListener('online', async () => {
+        try {
+          const submissions = await getQueuedSubmissions();
+          if (submissions.length === 0) return;
+
+          showNotification('Syncing...', 'Internet connection restored. Sending your saved offline forms now...');
+
+          let successCount = 0;
+          for (const sub of submissions) {
+            try {
+              await fetch(sub.url, {
+                method: sub.method,
+                headers: sub.headers,
+                body: sub.body
+              });
+              successCount++;
+            } catch (err) {
+              console.error('Failed to sync saved submission:', err);
+            }
+          }
+
+          if (successCount > 0) {
+            await clearQueuedSubmissions();
+            showNotification('Sync Complete', `${successCount} form submission(s) successfully sent!`);
+          }
+        } catch (err) {
+          console.error('Offline forms sync failed:', err);
+        }
+      });
+
+      // Instant Viewport Hydration on DOM Swap
+      const hydrateViewportOnSwap = () => {
+        document.querySelectorAll('[data-animate]').forEach((el) => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight) {
+            el.classList.add('is-visible');
+          }
+        });
+      };
+      document.addEventListener('astro:before-preparation', hydrateViewportOnSwap);
+      document.addEventListener('astro:after-swap', hydrateViewportOnSwap);
+
+      // Scroll Reveal Observer for Page Entrance Animations
+      document.addEventListener('astro:page-load', () => {
+        const isAnimated = document.documentElement.getAttribute('data-page-animations') !== 'false';
+
+        const animatedElements = document.querySelectorAll('[data-animate]');
+        if (!isAnimated) {
+          animatedElements.forEach((el) => {
+            el.classList.add('is-visible');
+            if (el instanceof HTMLElement) {
+              el.style.opacity = '1';
+              el.style.transform = 'none';
+            }
+          });
+          return;
+        }
+
+        // 1. Automatically calculate 1-by-1 sequential --stagger-index for all container blocks
+        const containers = document.querySelectorAll('section, [data-stagger-parent], main > div');
+        containers.forEach((container) => {
+          const children = container.querySelectorAll('[data-animate]');
+          children.forEach((child, idx) => {
+            if (child instanceof HTMLElement && !child.style.getPropertyValue('--stagger-index')) {
+              child.style.setProperty('--stagger-index', idx.toString());
+            }
+          });
+        });
+
+        // 2. Immediately mark initial viewport elements (top fold / Hero) as visible to prevent flickering
+        animatedElements.forEach((el) => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight) {
+            el.classList.add('is-visible');
+          }
+        });
+
+        // 3. Early Viewport Observer for elements scrolled into view
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.01, rootMargin: '0px 0px 100px 0px' });
+
+        animatedElements.forEach((el) => {
+          if (!el.classList.contains('is-visible')) {
+            observer.observe(el);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+  .font-outfit {
+    font-family: 'Outfit', sans-serif;
+  }
+</style>

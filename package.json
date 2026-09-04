@@ -1,0 +1,26 @@
+{
+  "name": "www-starterkit",
+  "version": "1.0.0",
+  "description": "Welcome WebWorks Agency Starter powered by Astro, Sanity, pnpm Workspaces and Cloudflare Workers",
+  "private": true,
+  "scripts": {
+    "preinstall": "node scripts/only-pnpm.js",
+    "predev": "node scripts/only-pnpm.js",
+    "prebuild": "node scripts/only-pnpm.js",
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "typegen": "pnpm --filter studio exec sanity schema extract --force && pnpm --filter studio exec sanity typegen generate",
+    "web": "pnpm --filter web dev",
+    "studio": "pnpm --filter studio dev"
+  },
+  "packageManager": "pnpm@11.6.0",
+  "engines": {
+    "node": ">=22.16.0",
+    "pnpm": ">=11.6.0"
+  },
+  "type": "module",
+  "devDependencies": {
+    "turbo": "^2.10.10"
+  }
+}

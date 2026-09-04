@@ -1,0 +1,45 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="404 - Page Not Found" description="The page you are looking for does not exist.">
+  <main class="flex-grow flex items-center justify-center py-24 px-6 bg-slate-50/50 dark:bg-slate-950/20">
+    <div class="max-w-md w-full text-center space-y-8 p-8 rounded-3xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl">
+      
+      <div class="inline-flex p-4 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 rounded-full">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="m15 9-6 6"/>
+          <path d="m9 9 6 6"/>
+        </svg>
+      </div>
+
+      <div class="space-y-3">
+        <h1 class="text-4xl font-outfit font-extrabold text-slate-900 dark:text-slate-100">
+          Page Not Found
+        </h1>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+          The requested page could not be located. It may have been moved, deleted, or you might have misconfigured the slug path inside the CMS.
+        </p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center pt-2">
+        <a 
+          href="/" 
+          class="flex-grow py-3 px-5 btn-primary font-semibold rounded-xl text-sm transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer text-center"
+          data-astro-prefetch="hover"
+        >
+          Return Home
+        </a>
+        <a 
+          href="/contact" 
+          class="flex-grow py-3 px-5 btn-outline font-semibold rounded-xl text-sm transition-all cursor-pointer text-center"
+          data-astro-prefetch="hover"
+        >
+          Contact Support
+        </a>
+      </div>
+
+    </div>
+  </main>
+</Layout>
