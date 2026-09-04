@@ -2,9 +2,15 @@ import { createClient } from '@sanity/client';
 import { createImageUrlBuilder } from '@sanity/image-url';
 import client from '../../../../client.json';
 
+const rawProjectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID || (client as any).sanity?.projectId || 'xwuayh4h';
+const cleanProjectId = String(rawProjectId).replace(/["'\s]/g, '').trim() || 'xwuayh4h';
+
+const rawDataset = import.meta.env.PUBLIC_SANITY_DATASET || (client as any).sanity?.dataset || 'production';
+const cleanDataset = String(rawDataset).replace(/["'\s]/g, '').trim() || 'production';
+
 export const sanityClient = createClient({
-  projectId: import.meta.env.PUBLIC_SANITY_PROJECT_ID || (client as any).sanity?.projectId || 'e894k7c2',
-  dataset: import.meta.env.PUBLIC_SANITY_DATASET || (client as any).sanity?.dataset || 'production',
+  projectId: cleanProjectId,
+  dataset: cleanDataset,
   apiVersion: '2024-03-11',
   useCdn: import.meta.env.PUBLIC_SANITY_USE_CDN === 'false' ? false : true, // Enable CDN edge caching for flash speed by default, allowing local override if needed
 });

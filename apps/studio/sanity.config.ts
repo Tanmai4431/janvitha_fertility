@@ -6,8 +6,8 @@ import { deskStructure } from './deskStructure'
 import { StudioLogo } from './components/StudioLogo'
 import client from '../../client.json'
 
-const projectId = import.meta.env.SANITY_STUDIO_PROJECT_ID || 'e894k7c2'
-const dataset = import.meta.env.SANITY_STUDIO_DATASET || 'production'
+const projectId = import.meta.env.SANITY_STUDIO_PROJECT_ID || (client as any).sanity?.projectId || 'xwuayh4h'
+const dataset = import.meta.env.SANITY_STUDIO_DATASET || (client as any).sanity?.dataset || 'production'
 
 export default defineConfig({
   name: 'default',
