@@ -162,12 +162,23 @@ export const ServicesExplorer: React.FC<ServicesExplorerProps> = ({
           </h2>
         </div>
 
-        {/* Right Description */}
-        <div className="lg:col-span-5 flex flex-col items-start lg:items-end justify-between space-y-3 pt-0.5 text-left">
+        {/* Right Description & View Services Button */}
+        <div className="lg:col-span-5 flex flex-col items-start lg:items-end justify-between space-y-3.5 pt-0.5 text-left">
           <p className="text-secondary text-xs sm:text-[13.5px] leading-relaxed max-w-lg font-sans">
             {siteDescription ||
-              'We offer a complete spectrum of assisted reproductive technologies, combining advanced clean-room embryology with empathetic, tailored care protocols.'}
+              'Janvithas Fertility Center is a specialized fertility and reproductive healthcare center in Ananthapuram, providing world-class fertility evaluations, IVF, IUI, ICSI, PICSI, genetic programs, and fertility preservation with compassionate medical care.'}
           </p>
+
+          <a
+            href="/services"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#E4006E] hover:bg-[#6B21A8] text-white text-xs sm:text-sm font-semibold tracking-wide shadow-[0_2px_10px_rgba(228,0,110,0.25)] hover:shadow-[0_4px_16px_rgba(107,33,168,0.35)] transition-all duration-200 active:scale-95"
+          >
+            <span>View Services</span>
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </a>
         </div>
 
       </div>
@@ -245,76 +256,69 @@ export const ServicesExplorer: React.FC<ServicesExplorerProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5">
             {filteredServices.map((service, index) => {
               const isPink = index % 2 === 0;
-              const cardGradient = isPink 
-                ? 'from-[#9C1D72] via-[#C41E7F] to-[#E4006E]' 
-                : 'from-[#853676] via-[#5C1A50] to-[#1A0B3C]';
 
-              const subList = service.subservices || (service.features || []).map((f) => ({ title: f }));
+              // Alternating Light Pink & Light Purple Theme Variables
+              const cardBg = isPink
+                ? "bg-[#FFF0F6] border-2 border-[#FADCEB] hover:border-[#E4006E] shadow-[0_4px_20px_rgba(228,0,110,0.04)] hover:shadow-[0_8px_30px_rgba(228,0,110,0.12)]"
+                : "bg-[#FAF0F8] border-2 border-[#EEDBF2] hover:border-[#853676] shadow-[0_4px_20px_rgba(133,54,118,0.04)] hover:shadow-[0_8px_30px_rgba(133,54,118,0.12)]";
+
+              const iconStyle = isPink
+                ? "bg-white border border-[#FADCEB] text-[#E4006E] group-hover:bg-[#E4006E] group-hover:text-white"
+                : "bg-white border border-[#EEDBF2] text-[#853676] group-hover:bg-[#853676] group-hover:text-white";
+
+              const badgeStyle = isPink
+                ? "bg-white/90 text-[#E4006E] border border-[#FADCEB]"
+                : "bg-white/90 text-[#853676] border border-[#EEDBF2]";
+
+              const titleHoverColor = isPink ? "group-hover:text-[#E4006E]" : "group-hover:text-[#853676]";
+
+              const borderDivider = isPink ? "border-[#FADCEB]" : "border-[#EEDBF2]";
+
+              const actionIconStyle = isPink
+                ? "bg-white text-[#E4006E] group-hover:bg-[#E4006E] group-hover:text-white border border-[#FADCEB]"
+                : "bg-white text-[#853676] group-hover:bg-[#853676] group-hover:text-white border border-[#EEDBF2]";
 
               return (
                 <a
                   key={service.slug}
                   href={`/services/${service.slug}`}
-                  className={`rounded-[24px] bg-gradient-to-br ${cardGradient} p-5 sm:p-5.5 flex flex-col justify-between h-full shadow-md hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group text-white border border-white/20 text-left`}
+                  className={`rounded-[24px] ${cardBg} p-5 sm:p-5.5 flex flex-col justify-between h-full hover:-translate-y-1 transition-all duration-300 group text-left relative`}
                 >
-                  <div className="space-y-3">
+                  <div className="space-y-3.5">
                     {/* Top Row: Icon + Category Badge */}
                     <div className="flex items-center justify-between gap-2">
-                      <div className="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white shrink-0 group-hover:scale-110 transition-transform">
-                        <ServiceIcon slug={service.slug} className="w-5 h-5 text-white" />
+                      <div className={`w-11 h-11 rounded-2xl ${iconStyle} flex items-center justify-center transition-all duration-300 shrink-0 shadow-2xs group-hover:scale-105`}>
+                        <ServiceIcon slug={service.slug} className="w-5 h-5 text-current transition-colors" />
                       </div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-white/90 bg-white/15 px-2.5 py-0.5 rounded-full border border-white/20 truncate">
+
+                      <span className={`text-[10px] font-bold uppercase tracking-wider ${badgeStyle} px-3 py-1 rounded-full truncate max-w-[160px] shadow-2xs`}>
                         {cleanCategoryName(service.category)}
                       </span>
                     </div>
 
                     {/* Service Title */}
-                    <h3 className="font-heading font-bold text-base sm:text-lg text-white leading-snug group-hover:text-rose-200 transition-colors">
+                    <h3 className={`font-heading font-bold text-base sm:text-lg text-[#1A0B3C] ${titleHoverColor} transition-colors leading-snug pt-1`}>
                       {service.title}
                     </h3>
 
                     {/* Short Description */}
-                    <p className="text-white/85 text-xs leading-relaxed font-sans line-clamp-2">
+                    <p className="text-secondary text-xs sm:text-[13px] leading-relaxed font-sans line-clamp-3">
                       {service.shortDesc}
                     </p>
-
-                    {/* Subservices Pills Preview */}
-                    {subList && subList.length > 0 && (
-                      <div className="pt-1.5 space-y-1">
-                        <p className="text-[10px] font-bold uppercase tracking-wider text-white/75 font-label">
-                          Key Procedures:
-                        </p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {subList.slice(0, 3).map((sub, sIdx) => (
-                            <span
-                              key={sIdx}
-                              className="inline-block text-[10px] font-sans font-medium px-2 py-0.5 rounded-full bg-white/15 text-white border border-white/20 truncate max-w-[170px]"
-                            >
-                              • {typeof sub === 'string' ? sub : sub.title}
-                            </span>
-                          ))}
-                          {subList.length > 3 && (
-                            <span className="text-[10px] font-bold text-white/80 self-center">
-                              +{subList.length - 3} more
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    )}
                   </div>
 
                   {/* Bottom Action Row */}
-                  <div className="mt-4 pt-3 border-t border-white/20 flex items-center justify-between">
-                    <span className="text-xs font-bold text-white group-hover:text-rose-200 font-sans flex items-center gap-1.5">
-                      <span>View Details</span>
+                  <div className={`mt-5 pt-3.5 border-t ${borderDivider} flex items-center justify-between`}>
+                    <span className={`text-xs font-bold text-[#1A0B3C] ${titleHoverColor} font-sans flex items-center gap-1.5 transition-colors`}>
+                      <span>Explore Treatment</span>
                       <svg className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <line x1="5" y1="12" x2="19" y2="12"/>
                         <polyline points="12 5 19 12 12 19"/>
                       </svg>
                     </span>
 
-                    <div className="w-7 h-7 rounded-full bg-white/20 group-hover:bg-white text-white group-hover:text-[#1A0B3C] flex items-center justify-center transition-all duration-200">
-                      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <div className={`w-8 h-8 rounded-full ${actionIconStyle} flex items-center justify-center transition-all duration-200 shadow-2xs`}>
+                      <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="9 18 15 12 9 6" />
                       </svg>
                     </div>

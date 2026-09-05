@@ -170,20 +170,84 @@
       "imageUrl": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80",
       "subservices": [
         {
+          "slug": "ovarian-reserve-profiling",
           "title": "Ovarian Reserve Profiling",
-          "desc": "Precision AMH and antral follicle count diagnostics."
+          "desc": "Precision AMH and antral follicle count diagnostics.",
+          "shortDesc": "Precision AMH and antral follicle count diagnostics.",
+          "fullDescription": "A comprehensive reproductive evaluation measuring the quantity and biological quality of a woman's remaining eggs through high-precision Anti-Müllerian Hormone (AMH) blood assays and high-resolution transvaginal ultrasound imaging.",
+          "procedureSteps": [
+            "Complete reproductive history and menstrual pattern evaluation",
+            "High-precision serum Anti-Müllerian Hormone (AMH) and FSH/LH blood profiling",
+            "High-resolution transvaginal ultrasound to measure Antral Follicle Count (AFC)",
+            "Specialist consultation with Dr. P. Bharathi to interpret ovarian reserve status"
+          ],
+          "benefits": [
+            "Accurate forecasting of reproductive timeline and fertility potential",
+            "Customized medication dosages minimizing any ovarian hyperstimulation risk",
+            "Actionable insights for natural conception, IUI, IVF, or egg freezing"
+          ],
+          "timeline": "Same-day ultrasound & 24-hr lab report",
+          "suitableFor": "Women planning pregnancy, individuals with irregular cycles, or those exploring fertility preservation."
         },
         {
+          "slug": "tubal-patency-testing",
           "title": "Tubal Patency Testing",
-          "desc": "Ultrasound and contrast imaging evaluating fallopian tube health."
+          "desc": "Ultrasound and contrast imaging evaluating fallopian tube health.",
+          "shortDesc": "Ultrasound and contrast imaging evaluating fallopian tube health.",
+          "fullDescription": "Advanced diagnostic evaluation utilizing safe contrast-enhanced ultrasound (HyCoSy / HSG) to verify whether fallopian tubes are open, unobstructed, and capable of natural egg-sperm fertilization.",
+          "procedureSteps": [
+            "Pre-procedure pelvic ultrasound and comfort preparation",
+            "Gentle introduction of biocompatible contrast solution into the uterus",
+            "Real-time ultrasound/fluoroscopic tracking of dye passage through both fallopian tubes",
+            "Immediate discussion of tubal findings and clear therapeutic options"
+          ],
+          "benefits": [
+            "Minimally invasive, outpatient diagnostic procedure with quick recovery",
+            "Direct visualization of uterine cavity shape and bilateral tubal patency",
+            "Essential first-line assessment before recommending IUI or natural conception"
+          ],
+          "timeline": "30-minute outpatient procedure (performed post-menstruation)",
+          "suitableFor": "Couples with unexplained infertility, suspected pelvic infections, or prior pelvic surgeries."
         },
         {
+          "slug": "pcos-endometriosis-care",
           "title": "PCOS & Endometriosis Care",
-          "desc": "Targeted hormonal regulation and lifestyle management."
+          "desc": "Targeted hormonal regulation and lifestyle management.",
+          "shortDesc": "Targeted hormonal regulation and lifestyle management.",
+          "fullDescription": "Multidisciplinary medical management for Polycystic Ovary Syndrome (PCOS) and Endometriosis, combining endocrine balance, metabolic support, pain management, and tailored follicular stimulation.",
+          "procedureSteps": [
+            "Detailed metabolic, insulin resistance, and hormonal panel analysis",
+            "Pelvic mapping ultrasound to identify ovarian morphology and endometriotic lesions",
+            "Integrated medical therapy, cycle regulation, and personalized lifestyle protocol",
+            "Targeted ovulation assistance timed with natural intercourse or assisted reproduction"
+          ],
+          "benefits": [
+            "Restores regular ovulatory cycles and optimizes egg maturation quality",
+            "Reduces pelvic discomfort, chronic inflammation, and metabolic distress",
+            "Significantly boosts natural and assisted conception success rates"
+          ],
+          "timeline": "Ongoing cycle tracking with 3-6 month milestone evaluations",
+          "suitableFor": "Women experiencing irregular cycles, acne/hirsutism, painful periods, or chronic pelvic pain."
         },
         {
+          "slug": "ovulation-induction",
           "title": "Ovulation Induction",
-          "desc": "Personalized follicular stimulation and cycle tracking."
+          "desc": "Personalized follicular stimulation and cycle tracking.",
+          "shortDesc": "Personalized follicular stimulation and cycle tracking.",
+          "fullDescription": "Controlled medical stimulation using oral medications or low-dose gonadotropins designed to encourage the development and timed release of one or two mature, healthy eggs in anovulatory or irregular cycles.",
+          "procedureSteps": [
+            "Baseline ultrasound on Day 2/3 of menstrual cycle to confirm resting ovaries",
+            "Targeted prescription of oral medications (Letrozole/Clomiphene) or gonadotropins",
+            "Serial serial follicular ultrasound scans to monitor egg growth and endometrial lining",
+            "Administration of trigger injection followed by precisely timed intercourse or IUI"
+          ],
+          "benefits": [
+            "First-line, non-invasive, and cost-effective fertility treatment",
+            "Eliminates guesswork with real-time ultrasound cycle tracking",
+            "High success rate for women with anovulatory infertility and PCOS"
+          ],
+          "timeline": "Single 14-day cycle monitoring pathway",
+          "suitableFor": "Women with irregular or absent ovulation, PCOS, or mild ovulatory dysfunction."
         }
       ],
       "features": [
@@ -223,20 +287,84 @@
       "imageUrl": "https://images.unsplash.com/photo-1581594693702-fbdc51b2763b?auto=format&fit=crop&w=1200&q=80",
       "subservices": [
         {
+          "slug": "computerized-semen-analysis",
           "title": "Computerized Semen Analysis",
-          "desc": "Standardized count, motility, and morphological evaluations."
+          "desc": "Standardized count, motility, and morphological evaluations.",
+          "shortDesc": "Standardized count, motility, and morphological evaluations.",
+          "fullDescription": "Automated and microscopic evaluation of semen parameters strictly compliant with the latest WHO clinical guidelines, assessing total sperm count, progressive motility, vitality, pH, and Kruger strict morphology.",
+          "procedureSteps": [
+            "2 to 5 days abstinence guidelines and private collection facility",
+            "Liquefaction and standardized physical parameter testing (volume, viscosity, pH)",
+            "Automated computerized tracking of sperm concentration and progressive motility",
+            "High-magnification stained strict morphological scoring and detailed diagnostic report"
+          ],
+          "benefits": [
+            "Provides an accurate baseline of male reproductive health and fertilization capacity",
+            "Identifies specific sub-factors (oligozoospermia, asthenozoospermia, teratozoospermia)",
+            "Guides the exact selection of optimal ART treatment (IUI vs IVF vs ICSI)"
+          ],
+          "timeline": "Same-day analysis & comprehensive report within 4 hours",
+          "suitableFor": "All men undergoing preliminary fertility evaluation or follow-up post-treatment."
         },
         {
+          "slug": "dna-fragmentation-index",
           "title": "DNA Fragmentation Index (DFI)",
-          "desc": "Assessing sperm genetic integrity for embryo viability."
+          "desc": "Assessing sperm genetic integrity for embryo viability.",
+          "shortDesc": "Assessing sperm genetic integrity for embryo viability.",
+          "fullDescription": "Advanced molecular diagnostic test evaluating breaks and integrity in sperm DNA strands. Elevated DNA fragmentation is strongly linked to fertilization failure, poor blastocyst formation, and recurrent early pregnancy loss.",
+          "procedureSteps": [
+            "Specialized sperm chromatin dispersion or TUNEL laboratory assay",
+            "Measurement of intact versus fragmented DNA in sperm heads",
+            "Calculation of DFI percentage (normal < 15%, moderate 15-25%, elevated > 25%)",
+            "Clinical prescription of antioxidant therapy, lifestyle modifications, or PICSI"
+          ],
+          "benefits": [
+            "Identifies hidden genetic causes of unexplained infertility that standard tests miss",
+            "Helps explain recurrent IVF cycle failures or early miscarriages",
+            "Directs the clinical team to utilize PICSI or magnetic sperm selection (MACS)"
+          ],
+          "timeline": "Laboratory turnaround within 48 hours",
+          "suitableFor": "Couples with recurrent pregnancy loss, prior failed IVF/ICSI cycles, or elevated paternal age."
         },
         {
+          "slug": "sperm-washing-isolation",
           "title": "Sperm Washing & Isolation",
-          "desc": "Density gradient centrifugation for optimal motile sperm yield."
+          "desc": "Density gradient centrifugation for optimal motile sperm yield.",
+          "shortDesc": "Density gradient centrifugation for optimal motile sperm yield.",
+          "fullDescription": "Specialized laboratory processing separating healthy, progressive motile sperm from seminal fluid, debris, non-motile cells, and prostaglandins, preparing an optimal concentrated sample for IUI or IVF.",
+          "procedureSteps": [
+            "Semen sample liquefaction under temperature-controlled laminar airflow",
+            "Multi-layer density gradient centrifugation to separate motile sperm",
+            "Swim-up culture extraction in nutrient-rich physiological media",
+            "Final count and motility verification prior to intrauterine insemination or IVF dish"
+          ],
+          "benefits": [
+            "Eliminates prostaglandins and bacteria to prevent uterine cramping and infection",
+            "Yields the highest concentration of functionally active, forward-swimming sperm",
+            "Significantly boosts fertilization potential in both natural and assisted cycles"
+          ],
+          "timeline": "45-60 minutes specialized laboratory procedure on day of treatment",
+          "suitableFor": "All IUI cycles, IVF fertilizations, and cryopreservation preparations."
         },
         {
+          "slug": "surgical-sperm-retrieval",
           "title": "Surgical Sperm Retrieval (TESA/PESA)",
-          "desc": "Minimally invasive extraction for obstructive azoospermia."
+          "desc": "Minimally invasive extraction for obstructive azoospermia.",
+          "shortDesc": "Minimally invasive extraction for obstructive azoospermia.",
+          "fullDescription": "Minimally invasive micro-surgical procedures (Percutaneous Epididymal Sperm Aspiration - PESA, and Testicular Sperm Aspiration - TESA) performed under local anesthesia to retrieve viable sperm directly from the epididymis or testes.",
+          "procedureSteps": [
+            "Pre-procedure urological assessment, hormonal profiling, and gentle local anesthesia",
+            "Fine-needle aspiration (PESA) from epididymis or tiny testicular biopsy (TESA)",
+            "Immediate real-time embryological microscope verification of retrieved motile sperm",
+            "Direct utilization for ICSI fertilization or ultra-rapid cryopreservation"
+          ],
+          "benefits": [
+            "Offers biological fatherhood for men with zero sperm in ejaculate (azoospermia)",
+            "Virtually painless, daycare outpatient procedure with same-day return home",
+            "Pairs seamlessly with ICSI to achieve high fertilization and pregnancy rates"
+          ],
+          "timeline": "20-minute daycare procedure under local anesthesia",
+          "suitableFor": "Men with obstructive azoospermia (e.g., prior vasectomy, congenital absence of vas deferens) or non-obstructive azoospermia."
         }
       ],
       "features": [
@@ -276,20 +404,84 @@
       "imageUrl": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=1200&q=80",
       "subservices": [
         {
+          "slug": "controlled-ovarian-stimulation",
           "title": "Controlled Ovarian Stimulation",
-          "desc": "Personalized hormone regimens tailored to your reserve."
+          "desc": "Personalized hormone regimens tailored to your reserve.",
+          "shortDesc": "Personalized hormone regimens tailored to your reserve.",
+          "fullDescription": "Customized medication protocol using gonadotropin injections over 10-12 days to stimulate both ovaries to safely recruit multiple mature eggs, closely monitored via serial ultrasounds and hormone tests.",
+          "procedureSteps": [
+            "Baseline ultrasound and hormonal assessment on Day 2 of menstrual cycle",
+            "Administration of tailored subcutaneous gonadotropins (FSH/HMG)",
+            "Serial follicular growth ultrasounds and estradiol level monitoring every 2-3 days",
+            "Precise administration of trigger injection (hCG or GnRH agonist) 36 hours before egg retrieval"
+          ],
+          "benefits": [
+            "Maximizes the number of mature, healthy eggs retrieved in a single cycle",
+            "Carefully calibrated dosages preventing Ovarian Hyperstimulation Syndrome (OHSS)",
+            "Direct oversight by Dr. P. Bharathi for optimal timing and patient comfort"
+          ],
+          "timeline": "10 to 14 days of stimulation and monitoring",
+          "suitableFor": "All patients entering an IVF or ICSI cycle."
         },
         {
+          "slug": "outpatient-egg-retrieval",
           "title": "Outpatient Egg Retrieval",
-          "desc": "Gentle, ultrasound-guided ovum pick-up under mild sedation."
+          "desc": "Gentle, ultrasound-guided ovum pick-up under mild sedation.",
+          "shortDesc": "Gentle, ultrasound-guided ovum pick-up under mild sedation.",
+          "fullDescription": "A quick, comfortable minor procedure performed under short intravenous sedation where mature eggs are gently aspirated from ovarian follicles using a fine ultrasound-guided needle.",
+          "procedureSteps": [
+            "Pre-procedure check-in and gentle intravenous sedation by expert anesthetist",
+            "High-resolution transvaginal ultrasound needle aspiration of each follicular fluid sac",
+            "Immediate transfer of follicular fluid to the embryology clean-room under heated stages",
+            "Embryologist counts and verifies total mature (MII) oocytes retrieved"
+          ],
+          "benefits": [
+            "Completely painless, quick 15-20 minute daycare procedure with no surgical incisions",
+            "Short recovery period allowing patients to return home comfortably after 2 hours",
+            "Direct clean-room handoff ensuring zero temperature or atmospheric shock to oocytes"
+          ],
+          "timeline": "15-20 minutes procedure, total clinic stay approx. 2-3 hours",
+          "suitableFor": "Women undergoing IVF, ICSI, or elective egg freezing."
         },
         {
+          "slug": "clean-room-lab-fertilization",
           "title": "Clean-Room Lab Fertilization",
-          "desc": "HEPA-filtered incubation simulating physiological warmth."
+          "desc": "HEPA-filtered incubation simulating physiological warmth.",
+          "shortDesc": "HEPA-filtered incubation simulating physiological warmth.",
+          "fullDescription": "High-precision fertilization and embryo culture in state-of-the-art class 10,000 embryology clean rooms with tri-gas incubators mimicking natural human fallopian and uterine conditions.",
+          "procedureSteps": [
+            "Sperm preparation and density gradient separation",
+            "Standard IVF co-incubation or ICSI micro-injection of mature oocytes",
+            "Incubation in tri-gas, VOC-filtered incubators providing stable pH and temperature",
+            "Fertilization check at 16-18 hours to confirm normal 2PN diploid zygote formation"
+          ],
+          "benefits": [
+            "ISO-certified clean air filtration eliminates volatile organic compounds (VOCs)",
+            "Simulates physiological maternal environment for optimal embryo cellular division",
+            "High fertilization rates and superior blastocyst development"
+          ],
+          "timeline": "Day 0 fertilization check through Day 5/6 extended embryo culture",
+          "suitableFor": "All IVF and ICSI treatment cycles."
         },
         {
+          "slug": "ultrasound-embryo-transfer",
           "title": "Ultrasound Embryo Transfer",
-          "desc": "Precision placement of viable embryos into the uterine cavity."
+          "desc": "Precision placement of viable embryos into the uterine cavity.",
+          "shortDesc": "Precision placement of viable embryos into the uterine cavity.",
+          "fullDescription": "The final, deeply rewarding milestone of the IVF cycle where one or two selected high-grade embryos are gently placed into the optimal implantation zone of the uterus under real-time abdominal ultrasound guidance.",
+          "procedureSteps": [
+            "Endometrial preparation and ultrasound confirmation of optimal trilaminar thickness",
+            "Embryo selection and loading into a soft, atraumatic catheter by senior embryologist",
+            "Real-time ultrasound guidance to place the embryo precisely 1-2 cm from the uterine fundus",
+            "Microscopic catheter check confirming complete transfer, followed by gentle rest"
+          ],
+          "benefits": [
+            "Completely painless, gentle 10-minute procedure requiring no anesthesia",
+            "Real-time visual confirmation allowing parents to see the embryo placement flash",
+            "Promotes optimal implantation and maximizes single healthy pregnancy rates"
+          ],
+          "timeline": "15-minute procedure followed by 30 minutes rest in recovery suite",
+          "suitableFor": "Fresh or Frozen Embryo Transfer (FET) cycles."
         }
       ],
       "features": [
@@ -330,20 +522,84 @@
       "imageUrl": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=80",
       "subservices": [
         {
+          "slug": "follicular-monitoring",
           "title": "Follicular Monitoring",
-          "desc": "Real-time ultrasound tracking of dominant follicle growth."
+          "desc": "Real-time ultrasound tracking of dominant follicle growth.",
+          "shortDesc": "Real-time ultrasound tracking of dominant follicle growth.",
+          "fullDescription": "Sequential transvaginal ultrasound evaluations to track follicle development, endometrial thickness, and natural ovulation signs to precisely time the insemination procedure.",
+          "procedureSteps": [
+            "Baseline scan on Day 2/3 to assess resting ovaries and endometrium",
+            "Serial ultrasound scans from Day 9/10 to track dominant follicle reaching 18-20 mm",
+            "Measurement of endometrial triple-line pattern",
+            "Administration of trigger injection when dominant follicle reaches optimal maturity"
+          ],
+          "benefits": [
+            "Pinpoints the exact fertile window for maximum conception probability",
+            "Eliminates guesswork in irregular cycles",
+            "Non-invasive and quick in-clinic checkups"
+          ],
+          "timeline": "3 to 4 quick ultrasound visits over 8-10 days",
+          "suitableFor": "Couples undergoing IUI or natural timed intercourse cycles."
         },
         {
+          "slug": "sperm-processing-wash",
           "title": "Sperm Processing & Wash",
-          "desc": "Concentration of highest-motility sperm for insemination."
+          "desc": "Concentration of highest-motility sperm for insemination.",
+          "shortDesc": "Concentration of highest-motility sperm for insemination.",
+          "fullDescription": "Laboratory density-gradient separation isolating the most active, normal-morphology sperm into a concentrated physiological suspension, removing prostaglandins and debris.",
+          "procedureSteps": [
+            "Sample collection in private sterile suite",
+            "Density gradient centrifugation separation",
+            "Sperm pellet washing and suspension in sterile nutrient media",
+            "Post-wash count and motility verification"
+          ],
+          "benefits": [
+            "Concentrates millions of forward-progressive sperm into a small volume",
+            "Removes components that cause uterine contractions or infection",
+            "Increases fertilization chances significantly"
+          ],
+          "timeline": "60 minutes laboratory preparation on the morning of IUI",
+          "suitableFor": "All partner or donor IUI procedures."
         },
         {
+          "slug": "synchronized-insemination",
           "title": "Synchronized Insemination",
-          "desc": "Painless in-clinic placement timed with ovulation trigger."
+          "desc": "Painless in-clinic placement timed with ovulation trigger.",
+          "shortDesc": "Painless in-clinic placement timed with ovulation trigger.",
+          "fullDescription": "A quick, painless in-clinic procedure where washed sperm is gently introduced into the upper uterine cavity via a fine, flexible catheter 36-40 hours after trigger injection.",
+          "procedureSteps": [
+            "Patient positioned comfortably on examination couch (no anesthesia needed)",
+            "Insertion of soft sterile catheter through the cervical canal",
+            "Slow, gentle injection of the concentrated sperm suspension",
+            "Brief 15-minute resting period before resuming normal daily activities"
+          ],
+          "benefits": [
+            "Painless procedure taking less than 10 minutes with zero downtime",
+            "Bypasses cervical mucus hostility or anatomical barriers",
+            "Positions sperm in close physical proximity to released egg"
+          ],
+          "timeline": "10-minute in-clinic procedure",
+          "suitableFor": "Couples with unexplained infertility, mild male factors, or cervical hostility."
         },
         {
+          "slug": "luteal-phase-support",
           "title": "Luteal Phase Support",
-          "desc": "Progesterone support promoting healthy implantation."
+          "desc": "Progesterone support promoting healthy implantation.",
+          "shortDesc": "Progesterone support promoting healthy implantation.",
+          "fullDescription": "Post-insemination medication regimen supporting the uterine endometrium with progesterone to optimize conditions for embryo attachment and early pregnancy maintenance.",
+          "procedureSteps": [
+            "Prescription of natural micronized progesterone support (oral or vaginal)",
+            "Guidance on activity, hydration, and healthy lifestyle during the two-week wait",
+            "Scheduled serum beta-hCG pregnancy blood test at 14 days post-IUI",
+            "Immediate doctor consultation to interpret test results and guide next steps"
+          ],
+          "benefits": [
+            "Strengthens the endometrial lining for firm embryo implantation",
+            "Supports natural progesterone production in stimulated cycles",
+            "Provides clear clinical guidance and reassurance throughout the two-week wait"
+          ],
+          "timeline": "14-day medication support culminating in pregnancy test",
+          "suitableFor": "All women completing an IUI or ovulatory stimulation cycle."
         }
       ],
       "features": [
@@ -383,20 +639,84 @@
       "imageUrl": "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&w=1200&q=80",
       "subservices": [
         {
+          "slug": "high-power-micromanipulation",
           "title": "High-Power Micromanipulation",
-          "desc": "Precision inverted microscope control for injection."
+          "desc": "Precision inverted microscope control for injection.",
+          "shortDesc": "Precision inverted microscope control for injection.",
+          "fullDescription": "Use of high-magnification motorized inverted microscopes equipped with electronic micro-injectors to manipulate individual gametes with sub-micron precision.",
+          "procedureSteps": [
+            "Preparation of heated microscope stage and micro-tools",
+            "Placement of mature oocytes in micro-droplets of buffered media",
+            "Stabilization of egg using a microscopic holding pipette",
+            "Sub-micron alignment for direct injection"
+          ],
+          "benefits": [
+            "Enables precise handling of microscopic cellular structures without trauma",
+            "Bypasses physical sperm-egg binding and penetration barriers",
+            "Conducted by specialized senior embryologists"
+          ],
+          "timeline": "Performed 4-6 hours post-egg retrieval",
+          "suitableFor": "Severe male factor cases, low oocyte count, or prior IVF fertilization failure."
         },
         {
+          "slug": "single-sperm-selection",
           "title": "Single Sperm Selection",
-          "desc": "Morphological isolation of the single best sperm."
+          "desc": "Morphological isolation of the single best sperm.",
+          "shortDesc": "Morphological isolation of the single best sperm.",
+          "fullDescription": "High-magnification morphological scrutiny selecting the single healthiest, progressive, intact sperm for micro-injection, ensuring optimal genetic contribution.",
+          "procedureSteps": [
+            "Sperm sample placement in viscous polyvinylpyrrolidone (PVP) media to slow movement",
+            "Individual morphological evaluation of head symmetry, acrosome, and tail integrity",
+            "Micro-immobilization of the chosen single sperm by touching the tail tip",
+            "Aspiration into the micro-injection pipette"
+          ],
+          "benefits": [
+            "Selects only top-grade, structurally sound spermatozoa",
+            "Improves fertilization rates and embryo cleavage quality",
+            "Minimizes transmission of defective sperm morphology"
+          ],
+          "timeline": "Integral part of the ICSI procedure",
+          "suitableFor": "Cases with low sperm count (oligozoospermia) or abnormal morphology (teratozoospermia)."
         },
         {
+          "slug": "direct-oocyte-micro-injection",
           "title": "Direct Oocyte Micro-Injection",
-          "desc": "Bypassing outer egg barriers for guaranteed entry."
+          "desc": "Bypassing outer egg barriers for guaranteed entry.",
+          "shortDesc": "Bypassing outer egg barriers for guaranteed entry.",
+          "fullDescription": "Direct introduction of the single immobilized sperm through the zona pellucida and oolemma directly into the egg cytoplasm using an ultra-fine glass micro-needle.",
+          "procedureSteps": [
+            "Egg holding with polar body oriented at 6 or 12 o'clock",
+            "Smooth penetration of zona pellucida with micro-injection needle",
+            "Gentle aspiration of cytoplasm to confirm membrane rupture (oolemma break)",
+            "Smooth injection of sperm and careful withdrawal of pipette"
+          ],
+          "benefits": [
+            "Guarantees sperm entry into the egg cytoplasm regardless of outer shell thickness",
+            "Overcomes severe sperm motility or binding deficiencies",
+            "Yields standard fertilization rates of 75-85%"
+          ],
+          "timeline": "Approx. 1-2 minutes per mature egg",
+          "suitableFor": "Couples requiring assisted fertilization."
         },
         {
+          "slug": "fertilization-assessment",
           "title": "Fertilization Assessment",
-          "desc": "Confirming normal two-pronuclei (2PN) fertilization."
+          "desc": "Confirming normal two-pronuclei (2PN) fertilization.",
+          "shortDesc": "Confirming normal two-pronuclei (2PN) fertilization.",
+          "fullDescription": "Microscopic inspection 16-18 hours post-injection to verify normal diploid fertilization evidenced by the clear appearance of two pronuclei and two polar bodies.",
+          "procedureSteps": [
+            "Gentle examination of injected oocytes under heated inverted microscope",
+            "Confirmation of two distinct pronuclei (one maternal, one paternal)",
+            "Transfer of fertilized zygotes into specialized extended cleavage media",
+            "Detailed parent fertilization update provided by clinical coordinator"
+          ],
+          "benefits": [
+            "Confirms successful genetic combination and normal fertilization",
+            "Filters out abnormal multi-pronucleate or unfertilized eggs",
+            "Provides immediate clarity to the clinical team and prospective parents"
+          ],
+          "timeline": "Next morning (Day 1 post-retrieval)",
+          "suitableFor": "All ICSI and IVF treatment cycles."
         }
       ],
       "features": [
@@ -435,20 +755,84 @@
       "imageUrl": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80",
       "subservices": [
         {
+          "slug": "hyaluronan-hydrogel-binding",
           "title": "Hyaluronan Hydrogel Binding",
-          "desc": "Simulating natural zona pellucida receptor binding."
+          "desc": "Simulating natural zona pellucida receptor binding.",
+          "shortDesc": "Simulating natural zona pellucida receptor binding.",
+          "fullDescription": "Utilization of specialized culture dishes micro-coated with hyaluronan hydrogel (a natural component of the egg's cumulus complex) to bind only biochemically mature sperm expressing intact receptors.",
+          "procedureSteps": [
+            "Preparation of specialized PICSI dishes with hyaluronan microdots",
+            "Droplet placement of washed motile sperm onto the hydrogel matrix",
+            "Real-time observation of sperm binding via their head receptors while tails continue beating",
+            "Aspiration of bound sperm for micro-injection"
+          ],
+          "benefits": [
+            "Mimics the natural biological selection mechanism occurring in female fallopian tubes",
+            "Separates biochemically mature sperm from immature spermatozoa",
+            "Significantly reduces chromosomal aneuploidy risk in resulting embryos"
+          ],
+          "timeline": "Conducted concurrently with micro-injection on Day 0",
+          "suitableFor": "Couples with elevated sperm DNA fragmentation or unexplained recurrent IVF failure."
         },
         {
+          "slug": "intact-dna-screening",
           "title": "Intact DNA Screening",
-          "desc": "Selecting sperm with lower chromosomal aneuploidy."
+          "desc": "Selecting sperm with lower chromosomal aneuploidy.",
+          "shortDesc": "Selecting sperm with lower chromosomal aneuploidy.",
+          "fullDescription": "Hyaluronan-bound sperm demonstrate significantly lower rates of DNA strand breakage, normal nuclear chromatin packaging, and reduced frequency of chromosomal aneuploidies.",
+          "procedureSteps": [
+            "Identification of bound sperm demonstrating normal head morphology",
+            "Micro-pipette extraction of bound sperm showing optimal motility dynamics",
+            "Transfer to injection droplet for ICSI procedure",
+            "Documentation of physiological selection parameters in laboratory log"
+          ],
+          "benefits": [
+            "Protects embryo genetic integrity by filtering out damaged paternal DNA",
+            "Reduces early embryonic developmental arrest and pregnancy loss",
+            "Improves blastocyst conversion rates"
+          ],
+          "timeline": "Integrated into PICSI dish workflow",
+          "suitableFor": "Couples with previous poor blastocyst development or elevated paternal age."
         },
         {
+          "slug": "targeted-micro-injection",
           "title": "Targeted Micro-Injection",
-          "desc": "Injecting physiologically mature selected sperm."
+          "desc": "Injecting physiologically mature selected sperm.",
+          "shortDesc": "Injecting physiologically mature selected sperm.",
+          "fullDescription": "Direct micro-injection of the hyaluronan-selected mature sperm into mature oocytes, marrying physiological selection with precision micromanipulation.",
+          "procedureSteps": [
+            "Immobilization of hyaluronan-bound sperm",
+            "Direct intra-cytoplasmic injection into mature MII oocyte",
+            "Incubation in high-purity tri-gas culture suites",
+            "Observation of subsequent zygotic cleavage milestones"
+          ],
+          "benefits": [
+            "Maximizes fertilization potential using biochemically proven competent sperm",
+            "Higher clinical pregnancy rates compared to conventional ICSI in indicated cohorts",
+            "Enhances peace of mind for couples with prior failed cycles"
+          ],
+          "timeline": "Completed on Day 0 of egg retrieval",
+          "suitableFor": "Patients with prior ICSI failure or elevated DFI > 20%."
         },
         {
+          "slug": "recurrent-loss-protocol",
           "title": "Recurrent Loss Protocol",
-          "desc": "Recommended for unexplained prior cycle failures."
+          "desc": "Recommended for unexplained prior cycle failures.",
+          "shortDesc": "Recommended for unexplained prior cycle failures.",
+          "fullDescription": "Comprehensive clinical protocol integrating PICSI with extended blastocyst culture and luteal support specifically tailored for couples coping with recurrent pregnancy loss (RPL).",
+          "procedureSteps": [
+            "Complete paternal and maternal diagnostic audit and genetic carrier screening",
+            "Application of PICSI sperm selection to eliminate paternal DNA fragmentation impact",
+            "Extended culture to Day 5 blastocyst stage with laser-assisted hatching if indicated",
+            "Personalized endometrial receptivity synchronization and immune-modulatory support"
+          ],
+          "benefits": [
+            "Significantly reduces miscarriage rates in recurrent loss couples",
+            "Holistic dual-partner diagnostic and therapeutic optimization",
+            "Guided directly by Dr. P. Bharathi's extensive clinical expertise"
+          ],
+          "timeline": "Full cycle protocol spanning preparation to 12-week pregnancy milestone",
+          "suitableFor": "Couples who have experienced 2 or more unexplained miscarriages or IVF failures."
         }
       ],
       "features": [
@@ -486,20 +870,84 @@
       "imageUrl": "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1200&q=80",
       "subservices": [
         {
+          "slug": "pgt-a-aneuploidy-screening",
           "title": "PGT-A Aneuploidy Screening",
-          "desc": "Testing for 24-chromosome abnormalities before transfer."
+          "desc": "Testing for 24-chromosome abnormalities before transfer.",
+          "shortDesc": "Testing for 24-chromosome abnormalities before transfer.",
+          "fullDescription": "Next-Generation Sequencing (NGS) screening evaluating all 24 human chromosomes (22 autosomes + X/Y) in biopsied blastocyst cells to identify chromosomally normal (euploid) embryos.",
+          "procedureSteps": [
+            "Culture of fertilized embryos to Day 5/6 expanded blastocyst stage",
+            "Precision laser biopsy of 4-6 trophectoderm cells (placenta precursor)",
+            "Ultra-rapid blastocyst vitrification while biopsy samples undergo Next-Generation Sequencing",
+            "Identification of euploid embryos for single, high-success frozen embryo transfer"
+          ],
+          "benefits": [
+            "Significantly improves single embryo transfer success rates (up to 70-80%)",
+            "Dramatically reduces miscarriage rates and time-to-pregnancy",
+            "Eliminates the need for multiple futile transfer cycles"
+          ],
+          "timeline": "Biopsy on Day 5/6; NGS genetic report within 10-14 business days",
+          "suitableFor": "Women over 35, couples with recurrent pregnancy loss, or repeated IVF implantation failure."
         },
         {
+          "slug": "pgt-m-monogenic-testing",
           "title": "PGT-M Monogenic Testing",
-          "desc": "Preventing transmission of known single-gene disorders."
+          "desc": "Preventing transmission of known single-gene disorders.",
+          "shortDesc": "Preventing transmission of known single-gene disorders.",
+          "fullDescription": "Custom molecular genetic testing designed to prevent the inheritance of specific inherited single-gene disorders (e.g., Thalassemia, Cystic Fibrosis, Spinal Muscular Atrophy, Sickle Cell Disease).",
+          "procedureSteps": [
+            "Pre-cycle genetic counseling and custom family probe development (feasibility study)",
+            "Blastocyst trophectoderm laser biopsy during the IVF cycle",
+            "Targeted PCR and sequencing to identify embryos free of the inherited gene mutation",
+            "Selective transfer of mutation-free, healthy embryos"
+          ],
+          "benefits": [
+            "Stops the transmission of severe genetic hereditary conditions to future generations",
+            "Provides certainty and reassurance to carrier parents",
+            "Supported by certified clinical geneticists and counselors"
+          ],
+          "timeline": "Custom probe setup (4-6 weeks) prior to IVF cycle",
+          "suitableFor": "Couples who are known carriers of genetic diseases or have an affected previous child."
         },
         {
+          "slug": "trophectoderm-laser-biopsy",
           "title": "Trophectoderm Laser Biopsy",
-          "desc": "Safe removal of 4-6 placental cells without inner cell damage."
+          "desc": "Safe removal of 4-6 placental cells without inner cell damage.",
+          "shortDesc": "Safe removal of 4-6 placental cells without inner cell damage.",
+          "fullDescription": "High-precision embryological technique using a calibrated infrared laser to safely harvest 4 to 6 cells from the trophectoderm (outer cell layer) without touching or disturbing the inner cell mass that forms the fetus.",
+          "procedureSteps": [
+            "Microscopic alignment of Day-5 expanded blastocyst",
+            "Targeted laser separation of outer trophectoderm cell junctions",
+            "Gentle aspiration into biopsy micro-pipette and sterile transfer to sequencing tubes",
+            "Immediate vitrification of the biopsied blastocyst"
+          ],
+          "benefits": [
+            "100% safe for future fetal development (inner cell mass remains completely untouched)",
+            "Provides highly reliable multi-cell DNA sample for accurate genetic sequencing",
+            "Negligible impact on embryo thawing survival and implantation potential"
+          ],
+          "timeline": "5-10 minutes per blastocyst by experienced biopsy embryologist",
+          "suitableFor": "All PGT-A, PGT-M, and PGT-SR genetic testing protocols."
         },
         {
+          "slug": "genetic-counseling-support",
           "title": "Genetic Counseling Support",
-          "desc": "Expert clinical consultation on diagnostic findings."
+          "desc": "Expert clinical consultation on diagnostic findings.",
+          "shortDesc": "Expert clinical consultation on diagnostic findings.",
+          "fullDescription": "In-depth clinical consultations with reproductive genetic specialists to explain carrier screening results, inheritance probabilities, PGT reports, and individualized family-building pathways.",
+          "procedureSteps": [
+            "Comprehensive review of family medical pedigree and genetic histories",
+            "Pre-test counseling explaining benefits, limitations, and scope of genetic tests",
+            "Detailed post-test explanation of chromosomal findings and mosaicism status",
+            "Shared clinical decision making for embryo prioritization and transfer selection"
+          ],
+          "benefits": [
+            "Empowers prospective parents with transparent, compassionate medical facts",
+            "Clear guidance on complex genetic concepts and embryo grading",
+            "Dedicated emotional support and ethical clarity throughout the journey"
+          ],
+          "timeline": "45-minute structured in-person or virtual consultation",
+          "suitableFor": "All couples considering genetic testing or with familial genetic history."
         }
       ],
       "features": [
@@ -538,20 +986,84 @@
       "imageUrl": "https://images.unsplash.com/photo-1583912267670-6575ad362e4b?auto=format&fit=crop&w=1200&q=80",
       "subservices": [
         {
+          "slug": "elective-egg-freezing",
           "title": "Elective Egg Freezing (Oocyte Vitrification)",
-          "desc": "Preserving egg quality at peak reproductive years."
+          "desc": "Preserving egg quality at peak reproductive years.",
+          "shortDesc": "Preserving egg quality at peak reproductive years.",
+          "fullDescription": "Social and elective cryopreservation allowing women to freeze their mature eggs at their current biological age, pausing the biological clock and preserving high fertility potential for future years.",
+          "procedureSteps": [
+            "Ovarian reserve assessment (AMH & AFC) and individualized stimulation plan",
+            "10-12 days of self-administered subcutaneous hormone stimulation",
+            "Outpatient ultrasound-guided egg retrieval under light comfort sedation",
+            "Ultra-rapid vitrification flash-freezing of mature oocytes in liquid nitrogen at -196°C"
+          ],
+          "benefits": [
+            "Locks in egg quality and quantity at your current age",
+            "Provides autonomy and flexibility over career, education, and life timeline",
+            "Over 90-95% post-thaw survival rate with cutting-edge vitrification"
+          ],
+          "timeline": "Approx. 2-week total cycle duration",
+          "suitableFor": "Women in their 20s or 30s wishing to defer family planning to a later stage in life."
         },
         {
+          "slug": "sperm-cryopreservation",
           "title": "Sperm Cryopreservation",
-          "desc": "Long-term liquid nitrogen storage for male gametes."
+          "desc": "Long-term liquid nitrogen storage for male gametes.",
+          "shortDesc": "Long-term liquid nitrogen storage for male gametes.",
+          "fullDescription": "Long-term secure cryopreservation of semen samples utilizing specialized cryoprotectants and computerized vapor-phase cooling to preserve sperm viability for decades.",
+          "procedureSteps": [
+            "Pre-freeze semen evaluation for volume, count, and motility parameters",
+            "Addition of non-toxic cryoprotectant media to safeguard cellular membranes",
+            "Stepwise cooling and storage in barcoded cryo-straws submerged in liquid nitrogen",
+            "Annual storage certification and secure sample tracking"
+          ],
+          "benefits": [
+            "Guarantees available sperm backup for IVF/IUI cycles if male partner is traveling",
+            "Preserves male fertility prior to vasectomy, surgeries, or medical treatments",
+            "Rapid, non-invasive process completed in a single clinic visit"
+          ],
+          "timeline": "Single 1-hour clinic visit and sample processing",
+          "suitableFor": "Men facing medical therapies, military/travel deployments, or seeking fertility insurance."
         },
         {
+          "slug": "embryo-freezing",
           "title": "Embryo Freezing (Surplus Storage)",
-          "desc": "Safe cryopreservation of top-grade blastocysts."
+          "desc": "Safe cryopreservation of top-grade blastocysts.",
+          "shortDesc": "Safe cryopreservation of top-grade blastocysts.",
+          "fullDescription": "Cryopreservation of surplus top-quality blastocysts created during an IVF cycle, enabling future sibling pregnancies or subsequent frozen embryo transfers without repeating ovarian stimulation.",
+          "procedureSteps": [
+            "Blastocyst extended culture to Day 5/6",
+            "Dehydration and equilibrium in high-grade vitrification cryo-solutions",
+            "Instantaneous cooling on specialized Cryotop devices at -196°C",
+            "Storage in dual-monitored, temperature-alarmed liquid nitrogen dewars"
+          ],
+          "benefits": [
+            "Enables multiple baby chances from a single egg retrieval cycle",
+            "Allows the patient's body to recover fully before performing Frozen Embryo Transfer (FET)",
+            "Exceptional post-thaw survival rate > 98%"
+          ],
+          "timeline": "Executed on Day 5 or Day 6 of the embryology cycle",
+          "suitableFor": "Couples with extra high-quality embryos or those undergoing freeze-all strategies for OHSS prevention."
         },
         {
+          "slug": "oncofertility-support",
           "title": "Onco-Fertility Preservation",
-          "desc": "Urgent fertility preservation prior to chemotherapy/radiation."
+          "desc": "Urgent fertility preservation prior to chemotherapy/radiation.",
+          "shortDesc": "Urgent fertility preservation prior to chemotherapy/radiation.",
+          "fullDescription": "Expedited, urgent fertility preservation protocols coordinated with oncologists for young men and women diagnosed with cancer before commencing gonadotoxic chemotherapy or pelvic radiation.",
+          "procedureSteps": [
+            "Priority fast-track emergency consultation within 24-48 hours of referral",
+            "Random-start ovarian stimulation protocols (no need to wait for menstrual period)",
+            "Gentle egg/sperm/embryo retrieval and immediate ultra-rapid vitrification",
+            "Coordination of medical clearance and handoff back to oncology care team"
+          ],
+          "benefits": [
+            "Preserves the dream of future biological parenthood before cancer treatment starts",
+            "Fast-tracked without delaying vital oncology therapy timelines",
+            "Compassionate, specialized care tailored to oncology patients"
+          ],
+          "timeline": "Emergency fast-track within 10-12 days total",
+          "suitableFor": "Newly diagnosed oncology patients of reproductive age prior to cancer treatment."
         }
       ],
       "features": [
@@ -590,20 +1102,84 @@
       "imageUrl": "https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1200&q=80",
       "subservices": [
         {
+          "slug": "day-5-extended-incubation",
           "title": "Day-5 Extended Incubation",
-          "desc": "Simulating the natural uterine timing of embryo development."
+          "desc": "Simulating the natural uterine timing of embryo development.",
+          "shortDesc": "Simulating the natural uterine timing of embryo development.",
+          "fullDescription": "Culture of fertilized embryos in sequential nutrient media up to Day 5/6 (blastocyst stage consisting of 100-150 cells), allowing embryos to self-select and reach natural physiological uterine synchronization.",
+          "procedureSteps": [
+            "Day 3 cleavage embryo assessment and transfer into blastocyst growth media",
+            "Incubation in uninterrupted benchtop incubators with low oxygen (5% O2) tension",
+            "Observation of compaction, cavitation, and blastocoel expansion on Day 5 and Day 6",
+            "Selection of fully expanded, high-viability blastocysts"
+          ],
+          "benefits": [
+            "Filters out embryos with early developmental arrest (natural physiological selection)",
+            "Aligns embryo development with the receptive window of the uterine endometrium",
+            "Significantly higher implantation rate per transferred embryo"
+          ],
+          "timeline": "Extended culture from Day 3 to Day 5/6 post-fertilization",
+          "suitableFor": "Couples undergoing IVF/ICSI, particularly those with good embryo numbers on Day 3."
         },
         {
+          "slug": "gardner-grading-assessment",
           "title": "Gardner Grading Assessment",
-          "desc": "High-precision inner cell mass & trophectoderm scoring."
+          "desc": "High-precision inner cell mass & trophectoderm scoring.",
+          "shortDesc": "High-precision inner cell mass & trophectoderm scoring.",
+          "fullDescription": "Standardized international Gardner morphological grading evaluating three critical blastocyst parameters: expansion grade (1-6), Inner Cell Mass quality (A, B, C), and Trophectoderm cell quality (A, B, C).",
+          "procedureSteps": [
+            "High-magnification microscopic examination on morning of Day 5 and Day 6",
+            "Assessment of blastocoel cavity expansion and zona thinning (1 to 6)",
+            "Evaluation of Inner Cell Mass (ICM) compaction and cell count (Grade A, B, C)",
+            "Evaluation of Trophectoderm (TE) cellular cohesion and layer continuity (Grade A, B, C)"
+          ],
+          "benefits": [
+            "Provides an objective, clinical metric for selecting the single best embryo",
+            "Detailed grading report shared with parents for complete transparency",
+            "Correlates directly with clinical pregnancy and live birth rates"
+          ],
+          "timeline": "Conducted on Day 5 and Day 6 mornings",
+          "suitableFor": "All blastocyst culture and vitrification cycles."
         },
         {
+          "slug": "single-embryo-transfer-set",
           "title": "Single Embryo Transfer (SET)",
-          "desc": "Maximizing singleton pregnancy success rates."
+          "desc": "Maximizing singleton pregnancy success rates.",
+          "shortDesc": "Maximizing singleton pregnancy success rates.",
+          "fullDescription": "Transfer of a single top-quality blastocyst into the uterus, delivering equivalent pregnancy success rates while completely eliminating the maternal and neonatal risks of multiple gestations (twins/triplets).",
+          "procedureSteps": [
+            "Review of blastocyst grading and selection of the top-ranked embryo",
+            "Atraumatic ultrasound-guided uterine placement into the implantation zone",
+            "Immediate post-transfer care and personalized luteal phase support",
+            "Pregnancy confirmation via serum beta-hCG at Day 12 post-transfer"
+          ],
+          "benefits": [
+            "High live birth rate comparable to multi-embryo transfer",
+            "Eliminates high-risk complications of multiple pregnancies (premature birth, low birth weight)",
+            "Safest standard of care recommended by global fertility guidelines"
+          ],
+          "timeline": "Single transfer procedure day",
+          "suitableFor": "All patients with high-quality blastocysts available."
         },
         {
+          "slug": "surplus-blastocyst-vitrification",
           "title": "Surplus Blastocyst Vitrification",
-          "desc": "Cryostoring remaining viable blastocysts for future cycles."
+          "desc": "Cryostoring remaining viable blastocysts for future cycles.",
+          "shortDesc": "Cryostoring remaining viable blastocysts for future cycles.",
+          "fullDescription": "Ultra-rapid flash-freezing of remaining high-grade blastocysts, safely preserving them for future sibling attempts or subsequent cycles without undergoing repeated egg retrieval.",
+          "procedureSteps": [
+            "Laser-assisted blastocoel artificial shrinkage prior to cryopreservation",
+            "Equilibration in high-purity cryoprotectant media",
+            "Flash-freezing at -196°C on specialized Cryotop storage carriers",
+            "Logged and tracked in dedicated liquid nitrogen cryo-dewars"
+          ],
+          "benefits": [
+            "Maximizes family building opportunities from a single ovarian stimulation",
+            "Over 98% post-thaw survival and implantation retention",
+            "Cost-effective and physically gentle for future child planning"
+          ],
+          "timeline": "Completed immediately following transfer or on Day 6",
+          "suitableFor": "All IVF/ICSI cycles with surplus viable blastocysts."
         }
       ],
       "features": [

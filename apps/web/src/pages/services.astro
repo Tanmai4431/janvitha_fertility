@@ -222,25 +222,30 @@ function getServiceSvg(slug: string) {
               </p>
             </div>
 
-            {/* 3-Column Services Card Grid */}
+            {/* 3-Column Services Card Grid with alternating pink/purple cards */}
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-              {services.map((service) => {
+              {services.map((service, idx) => {
                 const iconSvg = getServiceSvg(service.slug);
                 const subList = service.subservices || [];
+                const isPink = idx % 2 === 0;
+                const cardBg = isPink ? 'bg-[#FFF0F6]/90 border-[#FADCEB]' : 'bg-[#FAF0F8]/90 border-[#E8DDF0]';
+                const badgeBg = isPink ? 'bg-white text-[#E4006E] border-rose-100' : 'bg-white text-[#853676] border-purple-100';
+                const tagBg = isPink ? 'bg-white/80 text-[#E4006E] border-rose-100' : 'bg-white/80 text-[#853676] border-purple-100';
 
                 return (
-                  <div
-                    class="rounded-[26px] bg-white border border-[#F5E0EC] p-6 sm:p-7 flex flex-col justify-between shadow-[0_4px_16px_rgba(26,11,60,0.03)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group text-left relative"
+                  <a
+                    href={`/services/${service.slug}`}
+                    class={`rounded-[26px] ${cardBg} border-2 p-6 sm:p-7 flex flex-col justify-between shadow-[0_4px_16px_rgba(26,11,60,0.03)] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group text-left relative block`}
                     data-animate="fade-up"
                   >
                     <div class="space-y-4">
                       {/* Top Round Icon Badge */}
-                      <div class="w-12 h-12 rounded-full bg-[#FFF0F6] border border-[#FADCEB] text-[#E4006E] flex items-center justify-center group-hover:scale-110 group-hover:bg-[#E4006E] group-hover:text-white transition-all duration-300">
+                      <div class={`w-12 h-12 rounded-full ${badgeBg} border flex items-center justify-center group-hover:scale-110 group-hover:bg-[#E4006E] group-hover:text-white transition-all duration-300 shadow-xs`}>
                         <Fragment set:html={iconSvg} />
                       </div>
 
                       {/* Title */}
-                      <h3 class="text-lg sm:text-xl font-heading font-bold text-[#E4006E] group-hover:text-[#1A0B3C] transition-colors leading-snug">
+                      <h3 class="text-lg sm:text-xl font-heading font-bold text-[#1A0B3C] group-hover:text-[#E4006E] transition-colors leading-snug">
                         {service.title}
                       </h3>
 
@@ -252,8 +257,8 @@ function getServiceSvg(slug: string) {
                       {/* Key Subservices Chips */}
                       {subList && subList.length > 0 && (
                         <div class="pt-2 flex flex-wrap gap-1.5">
-                          {subList.slice(0, 2).map((sub: any) => (
-                            <span class="inline-block text-[11px] font-sans font-medium px-2.5 py-1 rounded-full bg-[#FAF0F8] text-[#853676] border border-purple-100 truncate max-w-[220px]">
+                          {subList.slice(0, 3).map((sub: any) => (
+                            <span class={`inline-block text-[11px] font-sans font-medium px-2.5 py-1 rounded-full ${tagBg} border truncate max-w-[220px]`}>
                               • {typeof sub === 'string' ? sub : sub.title}
                             </span>
                           ))}
@@ -262,28 +267,22 @@ function getServiceSvg(slug: string) {
                     </div>
 
                     {/* Bottom Action Circle Button with Link */}
-                    <div class="mt-6 pt-4 border-t border-[#F8E7F0] flex items-center justify-between">
-                      <a
-                        href={`/services/${service.slug}`}
-                        class="text-xs font-bold text-[#1A0B3C] group-hover:text-[#E4006E] font-sans transition-colors flex items-center gap-1.5"
-                      >
-                        <span>Learn More</span>
+                    <div class="mt-6 pt-4 border-t border-black/5 flex items-center justify-between">
+                      <span class="text-xs font-bold text-[#853676] group-hover:text-[#E4006E] font-sans transition-colors flex items-center gap-1.5">
+                        <span>View Procedures & Roadmap</span>
                         <span>→</span>
-                      </a>
+                      </span>
 
-                      <a
-                        href={`/services/${service.slug}`}
-                        aria-label={`View details for ${service.title}`}
-                        class="w-9 h-9 rounded-full bg-[#853676] group-hover:bg-[#E4006E] text-white flex items-center justify-center shadow-xs transition-all duration-200 group-hover:scale-110"
+                      <div
+                        class="w-9 h-9 rounded-full bg-[#853676] group-hover:bg-[#E4006E] text-white flex items-center justify-center shadow-xs transition-all duration-200 group-hover:scale-110 shrink-0"
                       >
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
                           <line x1="7" y1="17" x2="17" y2="7"/>
                           <polyline points="7 7 17 7 17 17"/>
                         </svg>
-                      </a>
+                      </div>
                     </div>
-
-                  </div>
+                  </a>
                 );
               })}
             </div>

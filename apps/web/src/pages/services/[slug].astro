@@ -14,8 +14,15 @@ export async function getStaticPaths() {
 }
 
 interface SubserviceItem {
+  slug?: string;
   title: string;
   desc?: string;
+  shortDesc?: string;
+  fullDescription?: string;
+  procedureSteps?: string[];
+  benefits?: string[];
+  timeline?: string;
+  suitableFor?: string;
 }
 
 interface ServiceBenefit {
@@ -105,7 +112,7 @@ const otherServices = (client.services || [])
         ]} className="justify-start mb-1" />
       </div>
 
-      {/* ── 1. HERO BANNER (MATCHING REFERENCE THEME) ── */}
+      {/* ── 1. HERO BANNER: WHAT IS [SERVICE_NAME]? + IMAGE ── */}
       <section class="w-full">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="relative overflow-hidden rounded-[32px] sm:rounded-[40px] bg-gradient-to-r from-[#FDE8EE] via-[#FFF1F6] to-[#F5EAF7] border border-[#FADCEB] shadow-[0_10px_35px_rgba(228,0,110,0.06)] p-8 sm:p-12 lg:p-16" data-animate="fade-up">
@@ -116,22 +123,22 @@ const otherServices = (client.services || [])
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
               
-              {/* Left Content */}
+              {/* Left Content: What is {service.title}? */}
               <div class="lg:col-span-7 space-y-5 text-left">
                 <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/80 backdrop-blur-md border border-[#FADCEB] text-xs font-label font-bold uppercase tracking-wider text-[#E4006E]">
                   <span class="w-2 h-2 rounded-full bg-[#E4006E] animate-pulse"></span>
-                  <span>{service.category}</span>
+                  <span>{service.category || 'Specialized Reproductive Care'}</span>
                 </div>
 
-                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-heading font-bold text-[#1A0B3C] tracking-tight leading-[1.15]">
-                  {service.title.split(' ')[0]} <span class="italic font-normal text-[#E4006E]">{service.title.split(' ').slice(1).join(' ')}</span>
+                <h1 class="text-3xl sm:text-5xl lg:text-5.5xl font-heading font-bold text-[#1A0B3C] tracking-tight leading-[1.18]">
+                  What is <span class="italic font-normal text-[#E4006E]">{service.title}</span>?
                 </h1>
 
                 <p class="text-secondary text-sm sm:text-base lg:text-lg font-sans max-w-xl leading-relaxed">
                   {service.fullDescription || service.shortDesc}
                 </p>
 
-                {/* Metrics Badges */}
+                {/* Metrics & Key Highlights */}
                 {service.metrics && service.metrics.length > 0 && (
                   <div class="flex flex-wrap gap-2.5 pt-1">
                     {service.metrics.map((m) => (
@@ -159,22 +166,27 @@ const otherServices = (client.services || [])
                     class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white hover:bg-rose-50 border border-[#FADCEB] text-[#1A0B3C] font-sans font-bold text-sm shadow-xs transition-colors"
                   >
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-[#E4006E]">
-                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 01 4.11 2h3a2 2 0 01 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                     </svg>
                     <span>{primaryPhone}</span>
                   </a>
                 </div>
               </div>
 
-              {/* Right Image */}
+              {/* Right Side: Service Related Image */}
               <div class="lg:col-span-5 relative flex justify-center lg:justify-end">
-                <div class="relative w-full max-w-[420px] aspect-[4/3] sm:aspect-[16/11] rounded-[28px] overflow-hidden shadow-xl border-4 border-white/80">
+                <div class="relative w-full max-w-[440px] aspect-[4/3] sm:aspect-[16/11] rounded-[28px] overflow-hidden shadow-xl border-4 border-white/90 group">
                   <img
-                    src={service.imageUrl || '/assets/about-client-hero.jpg'}
+                    src={service.imageUrl || '/assets/couple-pregnancy-test.jpg'}
                     alt={service.title}
-                    class="w-full h-full object-cover object-center"
+                    class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                     loading="eager"
                   />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
+                  <div class="absolute bottom-3 left-3 right-3 p-3 rounded-2xl bg-white/90 backdrop-blur-md border border-white/50 text-left">
+                    <p class="text-xs font-bold text-[#1A0B3C] font-heading">{service.title}</p>
+                    <p class="text-[11px] text-secondary font-sans truncate">Janvithas Fertility Care • Ananthapuram</p>
+                  </div>
                 </div>
               </div>
 
@@ -184,7 +196,7 @@ const otherServices = (client.services || [])
         </div>
       </section>
 
-      {/* ── 2. SUBSERVICES & KEY PROCEDURES (AURA GRADIENT CONTAINER) ── */}
+      {/* ── 2. SUBSERVICES & PROCEDURES GRID (DEDICATED SEPARATE PAGES) ── */}
       <section class="w-full">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div 
@@ -194,41 +206,89 @@ const otherServices = (client.services || [])
             
             <div class="text-center max-w-2xl mx-auto space-y-2">
               <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 border border-[#FADCEB] text-xs font-bold text-[#E4006E] uppercase tracking-wider font-label">
-                KEY PROCEDURES & PROTOCOLS
+                SPECIALIZED PROCEDURES & PROTOCOLS
               </span>
               <h2 class="text-2xl sm:text-4xl font-heading font-bold text-[#1A0B3C]">
-                What&apos;s Included in {service.title}
+                Procedures Included in {service.title}
               </h2>
               <p class="text-secondary text-xs sm:text-sm font-sans">
-                Each clinical stage is carefully structured to maximize pregnancy success and patient comfort.
+                Click on any procedure card below to open its dedicated page with complete step-by-step roadmap, clinical benefits, timeline, and candidate criteria.
               </p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-              {subservices.map((sub, idx) => (
-                <div
-                  class="rounded-[26px] bg-white border border-[#F5E0EC] p-6 space-y-3 shadow-[0_4px_16px_rgba(26,11,60,0.03)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group text-left flex flex-col justify-between"
-                  data-animate="fade-up"
-                >
-                  <div class="space-y-3">
-                    <div class="w-10 h-10 rounded-full bg-[#FFF0F6] border border-[#FADCEB] text-[#E4006E] flex items-center justify-center font-heading font-bold text-sm group-hover:scale-110 group-hover:bg-[#E4006E] group-hover:text-white transition-all duration-300">
-                      0{idx + 1}
-                    </div>
-                    <h3 class="font-heading font-bold text-base text-[#1A0B3C] group-hover:text-[#E4006E] transition-colors leading-snug">
-                      {sub.title}
-                    </h3>
-                    {sub.desc && (
-                      <p class="text-secondary text-xs sm:text-sm font-sans leading-relaxed">
-                        {sub.desc}
-                      </p>
-                    )}
-                  </div>
+            {/* Subservices 2-Column Responsive Grid with Dedicated Page Links */}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+              {(service.subservices || subservices).map((sub, idx) => {
+                const isPink = idx % 2 === 0;
+                const cardBg = isPink ? 'bg-[#FFF0F6]/95 border-[#FADCEB]' : 'bg-[#FAF0F8]/95 border-[#E8DDF0]';
+                const badgeBg = isPink ? 'bg-white text-[#E4006E] border-rose-100' : 'bg-white text-[#853676] border-purple-100';
+                const subSlug = sub.slug || `procedure-${idx + 1}`;
+                const subUrl = `/services/${service.slug}/${subSlug}`;
+                const stepCount = sub.procedureSteps?.length || 4;
 
-                  <div class="pt-3 border-t border-[#F8E7F0] flex items-center text-xs font-bold text-[#853676]">
-                    <span>Standard Protocol ✓</span>
-                  </div>
-                </div>
-              ))}
+                return (
+                  <a
+                    href={subUrl}
+                    class={`rounded-[26px] ${cardBg} border-2 p-6 sm:p-7 flex flex-col justify-between shadow-[0_4px_18px_rgba(26,11,60,0.04)] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group text-left relative block`}
+                  >
+                    <div class="space-y-4">
+                      {/* Top Badges Row */}
+                      <div class="flex items-center justify-between gap-2">
+                        <div class={`w-10 h-10 rounded-xl ${badgeBg} border flex items-center justify-center font-heading font-bold text-sm shadow-xs group-hover:scale-105 transition-transform`}>
+                          0{idx + 1}
+                        </div>
+                        {sub.timeline && (
+                          <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-white/90 border border-black/5 text-[11.5px] font-sans font-medium text-secondary shadow-2xs">
+                            <span>⏱️</span>
+                            <span class="truncate max-w-[170px]">{sub.timeline}</span>
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Subservice Title */}
+                      <h3 class="text-xl sm:text-2xl font-heading font-bold text-[#1A0B3C] group-hover:text-[#E4006E] transition-colors leading-snug">
+                        {sub.title}
+                      </h3>
+
+                      {/* Short Description */}
+                      <p class="text-secondary text-xs sm:text-sm font-sans leading-relaxed line-clamp-3">
+                        {sub.shortDesc || sub.desc || sub.fullDescription}
+                      </p>
+
+                      {/* Features / Steps Badge */}
+                      <div class="pt-1 flex flex-wrap items-center gap-2">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 text-[11px] font-sans font-semibold text-[#853676] border border-purple-100">
+                          <span>📋</span>
+                          <span>{stepCount}-Step Protocol</span>
+                        </span>
+                        {sub.suitableFor && (
+                          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 text-[11px] font-sans font-semibold text-[#E4006E] border border-rose-100 truncate max-w-[240px]">
+                            <span>🎯</span>
+                            <span class="truncate">{sub.suitableFor}</span>
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Bottom Action Row with Dedicated Link CTA */}
+                    <div class="mt-6 pt-4 border-t border-black/5 flex items-center justify-between">
+                      <span class="text-xs sm:text-sm font-bold text-[#853676] group-hover:text-[#E4006E] font-sans transition-colors flex items-center gap-2">
+                        <span>View Procedure Details</span>
+                        <span class="group-hover:translate-x-1 transition-transform">→</span>
+                      </span>
+
+                      <div
+                        class="w-9 h-9 rounded-full bg-[#853676] group-hover:bg-[#E4006E] text-white flex items-center justify-center shadow-xs transition-all duration-200 group-hover:scale-110 shrink-0"
+                      >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                          <line x1="7" y1="17" x2="17" y2="7"/>
+                          <polyline points="7 7 17 7 17 17"/>
+                        </svg>
+                      </div>
+                    </div>
+                  </a>
+                );
+              })}
             </div>
 
             <div class="text-center pt-2">

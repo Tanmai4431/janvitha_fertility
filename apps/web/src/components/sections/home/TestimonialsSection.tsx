@@ -239,7 +239,7 @@ export function TestimonialsSection({
 
           {/* RIGHT COLUMN: Horizontal Carousel of Light Pink Speech Bubble Cards with Thick Pink Accents */}
           <div 
-            className="lg:col-span-8 overflow-hidden relative"
+            className="lg:col-span-8 overflow-hidden relative py-2"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
             onTouchStart={() => setIsPaused(true)}
@@ -247,7 +247,7 @@ export function TestimonialsSection({
           >
             <div
               ref={scrollContainerRef}
-              className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory py-4 px-2 -mx-2 no-scrollbar"
+              className="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory py-4 px-4 sm:px-6 scroll-pl-4 sm:scroll-pl-6 no-scrollbar"
               style={{
                 scrollbarWidth: "none",
                 msOverflowStyle: "none",

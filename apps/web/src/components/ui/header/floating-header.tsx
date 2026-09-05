@@ -109,6 +109,86 @@ export function getPlatformIcon(item: SocialLinkItem) {
   );
 }
 
+export function getServiceDropdownIcon(slug: string) {
+  switch (slug) {
+    case 'female-infertility':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+          <circle cx="12" cy="8" r="5" />
+          <path d="M12 13v8M9 17h6" />
+        </svg>
+      );
+    case 'male-infertility':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+          <circle cx="10" cy="14" r="5" />
+          <path d="M19 5l-5.5 5.5M14 5h5v5" />
+        </svg>
+      );
+    case 'ivf-treatment':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+          <circle cx="12" cy="12" r="8" />
+          <circle cx="10" cy="10" r="2" />
+          <circle cx="14" cy="14" r="2" />
+        </svg>
+      );
+    case 'iui-insemination':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+          <path d="M18 3l3 3-10 10-4 1 1-4 10-10z" />
+          <path d="M14 7l3 3M3 21l3-3" />
+        </svg>
+      );
+    case 'icsi-procedure':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+          <circle cx="14" cy="12" r="6" />
+          <circle cx="14" cy="12" r="2" />
+          <path d="M2 12h7" />
+        </svg>
+      );
+    case 'picsi-technology':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="M9 12l2 2 4-4" />
+        </svg>
+      );
+    case 'genetic-program':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+          <path d="M4 6c4 0 4 6 8 6s4 6 8 6M4 18c4 0 4-6 8-6s4-6 8-6" />
+          <circle cx="4" cy="6" r="1.5" />
+          <circle cx="20" cy="18" r="1.5" />
+        </svg>
+      );
+    case 'fertility-preservation':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+          <path d="M12 2v20M2 12h20" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+      );
+    case 'blastocyst-culture':
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+          <circle cx="12" cy="12" r="8" />
+          <circle cx="10" cy="10" r="1.5" />
+          <circle cx="14" cy="10" r="1.5" />
+          <circle cx="12" cy="14" r="1.5" />
+        </svg>
+      );
+    default:
+      return (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+          <circle cx="12" cy="12" r="8" />
+          <path d="M12 8v8M8 12h8" />
+        </svg>
+      );
+  }
+}
+
 export function FloatingHeader({
   siteName = client.business.name,
   navLogoUrl,
@@ -131,24 +211,24 @@ export function FloatingHeader({
   const [currentPath, setCurrentPath] = useState('');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [mobileHoveredIndex, setMobileHoveredIndex] = useState<number | null>(null);
-  
-  // Dropdown state for desktop & mobile
+
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
-  const [activeDropdownServiceSlug, setActiveDropdownServiceSlug] = useState(allServices[0]?.slug || 'female-infertility');
-  const [mobileServicesExpanded, setMobileServicesExpanded] = useState(false);
-  const dropdownCloseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [activeHoveredServiceSlug, setActiveHoveredServiceSlug] = useState<string>(allServices[0]?.slug || '');
+  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [mobileExpandedServiceSlug, setMobileExpandedServiceSlug] = useState<string | null>(null);
 
   const handleServicesMouseEnter = () => {
-    if (dropdownCloseTimeoutRef.current) {
-      clearTimeout(dropdownCloseTimeoutRef.current);
+    if (dropdownTimeoutRef.current) {
+      clearTimeout(dropdownTimeoutRef.current);
     }
     setIsServicesDropdownOpen(true);
   };
 
   const handleServicesMouseLeave = () => {
-    dropdownCloseTimeoutRef.current = setTimeout(() => {
+    dropdownTimeoutRef.current = setTimeout(() => {
       setIsServicesDropdownOpen(false);
-    }, 180);
+    }, 200);
   };
 
   useEffect(() => {
@@ -229,6 +309,7 @@ export function FloatingHeader({
     const close = () => {
       setOpen(false);
       setIsServicesDropdownOpen(false);
+      setMobileServicesOpen(false);
       document.body.style.overflow = '';
     };
     document.addEventListener('astro:before-swap', close);
@@ -239,7 +320,8 @@ export function FloatingHeader({
     };
   }, []);
 
-  const currentHoveredService = allServices.find((s) => s.slug === activeDropdownServiceSlug) || allServices[0];
+  const activeServiceData = allServices.find((s) => s.slug === activeHoveredServiceSlug) || allServices[0];
+  const activeSubservices = activeServiceData?.subservices || [];
 
   return (
     <>
@@ -377,25 +459,208 @@ export function FloatingHeader({
               const isActive = isLinkActive(link.href);
               const isHovered = hoveredIndex === i;
               const isPillTarget = hoveredIndex !== null ? isHovered : isActive;
-              const isServicesLink = link.label.toLowerCase() === 'services';
+              const isServices = link.label.toLowerCase() === 'services';
+
+              if (isServices) {
+                return (
+                  <div
+                    key={i}
+                    className="relative flex items-center"
+                    onMouseEnter={() => {
+                      setHoveredIndex(i);
+                      handleServicesMouseEnter();
+                    }}
+                    onMouseLeave={handleServicesMouseLeave}
+                  >
+                    <a
+                      className={cn(
+                        'relative text-sm font-semibold tracking-wide rounded-full px-4 py-1.5 transition-colors duration-300 z-10 flex items-center justify-center font-sans gap-1',
+                        isActive || isHovered || isServicesDropdownOpen
+                          ? 'text-tertiary font-bold'
+                          : 'text-secondary hover:text-tertiary'
+                      )}
+                      href={link.href}
+                      data-analytics-click={`Nav - ${link.label}`}
+                      data-astro-prefetch="hover"
+                    >
+                      {/* Compact Background Bubble */}
+                      {isPillTarget && (
+                        <motion.div
+                          layoutId="desktop-nav-active-pill"
+                          className="absolute inset-0 rounded-full bg-surface border border-border shadow-xs z-[-1]"
+                          transition={{ type: 'spring', stiffness: 380, damping: 28 }}
+                        />
+                      )}
+
+                      <span className="relative z-10 flex items-center gap-1">
+                        <span>{link.label}</span>
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className={cn(
+                            'w-3.5 h-3.5 transition-transform duration-200 shrink-0',
+                            isServicesDropdownOpen ? 'rotate-180 text-tertiary' : 'text-slate-400'
+                          )}
+                        >
+                          <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                      </span>
+                    </a>
+
+                    {/* Services Dropdown Menu: Side-by-Side Two-Panel Flyout */}
+                    <AnimatePresence>
+                      {isServicesDropdownOpen && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 12, scale: 0.96 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                          transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                          className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 z-[100]"
+                          style={{ zIndex: 100 }}
+                          onMouseEnter={handleServicesMouseEnter}
+                          onMouseLeave={handleServicesMouseLeave}
+                        >
+                          <div 
+                            className="bg-white rounded-[24px] border border-[#FADCEB] shadow-[0_16px_45px_rgba(26,11,60,0.16)] overflow-hidden flex divide-x divide-[#F4E2ED] text-left relative z-[100]"
+                            style={{ backgroundColor: '#ffffff', opacity: 1 }}
+                          >
+                            {/* Left Panel: List of Main Services */}
+                            <div 
+                              className="w-64 sm:w-72 p-2.5 space-y-1 max-h-[440px] overflow-y-auto custom-scrollbar bg-white"
+                              style={{ backgroundColor: '#ffffff' }}
+                            >
+                              {allServices.map((service) => {
+                                const isCurrent = service.slug === activeHoveredServiceSlug;
+                                return (
+                                  <a
+                                    key={service.slug}
+                                    href={`/services/${service.slug}`}
+                                    onMouseEnter={() => setActiveHoveredServiceSlug(service.slug)}
+                                    onClick={() => setIsServicesDropdownOpen(false)}
+                                    className={cn(
+                                      "flex items-center justify-between px-3 py-2 rounded-xl text-[13px] font-sans font-semibold transition-all duration-150 group",
+                                      isCurrent
+                                        ? "bg-[#FFF0F6] text-[#E4006E] font-bold shadow-xs"
+                                        : "text-[#1A0B3C] hover:bg-[#FFF0F6]/60 hover:text-[#E4006E]"
+                                    )}
+                                  >
+                                    <div className="flex items-center gap-2.5 min-w-0">
+                                      <span
+                                        className={cn(
+                                          "w-7.5 h-7.5 rounded-full border flex items-center justify-center shrink-0 transition-colors",
+                                          isCurrent
+                                            ? "border-[#E4006E] bg-white text-[#E4006E]"
+                                            : "border-[#FADCEB] bg-[#FFF0F6]/40 text-[#853676] group-hover:border-[#E4006E] group-hover:text-[#E4006E]"
+                                        )}
+                                      >
+                                        {getServiceDropdownIcon(service.slug)}
+                                      </span>
+                                      <span className="truncate">{service.title}</span>
+                                    </div>
+                                    <svg
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      stroke="currentColor"
+                                      strokeWidth="2.5"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      className={cn(
+                                        "w-3.5 h-3.5 shrink-0 transition-transform",
+                                        isCurrent ? "text-[#E4006E] translate-x-0.5" : "text-slate-400 group-hover:text-[#E4006E]"
+                                      )}
+                                    >
+                                      <polyline points="9 18 15 12 9 6" />
+                                    </svg>
+                                  </a>
+                                );
+                              })}
+                            </div>
+
+                            {/* Right Panel: Sub-Services List */}
+                            <div 
+                              className="w-64 sm:w-72 p-4 flex flex-col justify-between bg-white text-left"
+                              style={{ backgroundColor: '#ffffff' }}
+                            >
+                              <div>
+                                <div className="pb-2.5 mb-2.5 border-b border-[#F4E2ED]">
+                                  <a
+                                    href={`/services/${activeServiceData.slug}`}
+                                    onClick={() => setIsServicesDropdownOpen(false)}
+                                    className="font-heading font-bold text-sm text-[#1A0B3C] hover:text-[#E4006E] transition-colors flex items-center justify-between group"
+                                  >
+                                    <span className="truncate">{activeServiceData.title}</span>
+                                    <span className="text-[11px] text-[#E4006E] font-sans font-bold group-hover:translate-x-0.5 transition-transform shrink-0 ml-1">
+                                      View →
+                                    </span>
+                                  </a>
+                                </div>
+
+                                <div className="space-y-1">
+                                  {activeSubservices && activeSubservices.length > 0 ? (
+                                    activeSubservices.map((sub: any, sIdx: number) => {
+                                      const title = typeof sub === 'string' ? sub : sub.title;
+                                      const subSlug = sub?.slug || (typeof sub === 'string' ? undefined : undefined);
+                                      const href = subSlug
+                                        ? `/services/${activeServiceData.slug}/${subSlug}`
+                                        : `/services/${activeServiceData.slug}`;
+
+                                      return (
+                                        <a
+                                          key={sIdx}
+                                          href={href}
+                                          onClick={() => setIsServicesDropdownOpen(false)}
+                                          className="block px-2.5 py-1.5 rounded-lg text-[13px] font-sans font-medium text-slate-700 hover:text-[#E4006E] hover:bg-[#FFF0F6] transition-colors leading-snug"
+                                        >
+                                          {title}
+                                        </a>
+                                      );
+                                    })
+                                  ) : (
+                                    <a
+                                      href={`/services/${activeServiceData.slug}`}
+                                      onClick={() => setIsServicesDropdownOpen(false)}
+                                      className="block px-2.5 py-1.5 rounded-lg text-[13px] font-sans font-medium text-slate-700 hover:text-[#E4006E] hover:bg-[#FFF0F6] transition-colors"
+                                    >
+                                      Explore {activeServiceData.title}
+                                    </a>
+                                  )}
+                                </div>
+                              </div>
+
+                              <div className="pt-3 mt-3 border-t border-[#F8E7F0]">
+                                <a
+                                  href="/services"
+                                  onClick={() => setIsServicesDropdownOpen(false)}
+                                  className="text-xs font-bold font-sans text-[#853676] hover:text-[#E4006E] transition-colors flex items-center justify-between"
+                                >
+                                  <span>All Services Overview</span>
+                                  <span>→</span>
+                                </a>
+                              </div>
+                            </div>
+
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              }
 
               return (
                 <div
                   key={i}
                   className="relative flex items-center"
-                  onMouseEnter={() => {
-                    setHoveredIndex(i);
-                    if (isServicesLink) {
-                      handleServicesMouseEnter();
-                    } else {
-                      setIsServicesDropdownOpen(false);
-                    }
-                  }}
+                  onMouseEnter={() => setHoveredIndex(i)}
                 >
                   <a
                     className={cn(
                       'relative text-sm font-semibold tracking-wide rounded-full px-4 py-1.5 transition-colors duration-300 z-10 flex items-center justify-center font-sans gap-1',
-                      isActive || isHovered || (isServicesLink && isServicesDropdownOpen)
+                      isActive || isHovered
                         ? 'text-tertiary font-bold'
                         : 'text-secondary hover:text-tertiary'
                     )}
@@ -414,164 +679,8 @@ export function FloatingHeader({
 
                     <span className="relative z-10 flex items-center gap-1.5">
                       <span>{link.label}</span>
-                      {isServicesLink && (
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className={cn(
-                            'w-3.5 h-3.5 transition-transform duration-200',
-                            isServicesDropdownOpen ? 'rotate-180 text-[#E4006E]' : 'text-secondary'
-                          )}
-                        >
-                          <polyline points="6 9 12 15 18 9" />
-                        </svg>
-                      )}
                     </span>
                   </a>
-
-                  {/* Mega Dropdown Menu for Services */}
-                  {isServicesLink && (
-                    <AnimatePresence>
-                      {isServicesDropdownOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 12, scale: 0.98 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                          transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-                          onMouseEnter={handleServicesMouseEnter}
-                          onMouseLeave={handleServicesMouseLeave}
-                          className="absolute top-full left-1/2 -translate-x-1/2 pt-3 w-[780px] z-[100]"
-                        >
-                          <div className="bg-white rounded-[28px] border-2 border-[#FDDCEB] p-6 shadow-[0_20px_60px_rgba(26,11,60,0.12)] grid grid-cols-12 gap-6 overflow-hidden">
-                            
-                            {/* Left Column: All 9 Main Services List */}
-                            <div className="col-span-5 border-r border-[#F7E1ED] pr-4 space-y-1.5 max-h-[440px] overflow-y-auto pr-2 custom-scrollbar">
-                              <div className="px-2.5 pb-2 border-b border-rose-100 flex items-center justify-between">
-                                <span className="text-[11px] font-bold uppercase tracking-wider text-[#E4006E] font-label">
-                                  Our Treatments
-                                </span>
-                                <a 
-                                  href="/services" 
-                                  className="text-[11px] font-bold text-[#1A0B3C] hover:text-[#E4006E] transition-colors"
-                                >
-                                  View All (9) →
-                                </a>
-                              </div>
-
-                              <div className="pt-1.5 space-y-1">
-                                {allServices.map((svc) => {
-                                  const isSelected = activeDropdownServiceSlug === svc.slug;
-                                  return (
-                                    <div
-                                      key={svc.slug}
-                                      onMouseEnter={() => setActiveDropdownServiceSlug(svc.slug)}
-                                      className={cn(
-                                        'px-3 py-2 rounded-[14px] cursor-pointer transition-all duration-200 flex items-center justify-between group',
-                                        isSelected
-                                          ? 'bg-[#FFF0F6] text-[#E4006E] font-bold shadow-xs border border-[#FADCEB]'
-                                          : 'text-[#1A0B3C] hover:bg-rose-50/70 font-medium'
-                                      )}
-                                    >
-                                      <a
-                                        href={`/services/${svc.slug}`}
-                                        className="text-xs sm:text-[13px] flex-1 truncate font-heading"
-                                      >
-                                        {svc.title}
-                                      </a>
-                                      <svg
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2.2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        className={cn(
-                                          'w-3.5 h-3.5 transition-transform',
-                                          isSelected ? 'text-[#E4006E] translate-x-0.5' : 'text-gray-400 opacity-0 group-hover:opacity-100'
-                                        )}
-                                      >
-                                        <polyline points="9 18 15 12 9 6" />
-                                      </svg>
-                                    </div>
-                                  );
-                                })}
-                              </div>
-                            </div>
-
-                            {/* Right Column: Hovered Service Subservices & Highlights */}
-                            <div className="col-span-7 pl-1 flex flex-col justify-between">
-                              {currentHoveredService && (
-                                <div className="space-y-4">
-                                  {/* Header Badge & Title */}
-                                  <div className="space-y-1">
-                                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FFF0F6] text-[10px] font-bold uppercase tracking-wider text-[#E4006E] border border-[#FADCEB]">
-                                      <span>{currentHoveredService.category}</span>
-                                    </div>
-                                    <h4 className="text-lg font-heading font-bold text-[#1A0B3C]">
-                                      {currentHoveredService.title}
-                                    </h4>
-                                    <p className="text-secondary text-xs font-sans line-clamp-2 leading-relaxed">
-                                      {currentHoveredService.shortDesc}
-                                    </p>
-                                  </div>
-
-                                  {/* Subservices List */}
-                                  <div className="space-y-2 pt-1">
-                                    <p className="text-[11px] font-bold uppercase tracking-wider text-[#1A0B3C] font-label">
-                                      Included Subservices & Key Care:
-                                    </p>
-                                    <div className="grid grid-cols-2 gap-2.5">
-                                      {(currentHoveredService.subservices || (currentHoveredService.features || []).map((f: string) => ({ title: f, desc: '' }))).map((sub: any, subIdx: number) => (
-                                        <div
-                                          key={subIdx}
-                                          className="p-2.5 rounded-[14px] bg-[#FAF0F8] border border-[#F2D8E6] space-y-0.5 text-left hover:border-[#E4006E] transition-colors"
-                                        >
-                                          <p className="text-xs font-bold text-[#1A0B3C] font-sans truncate">
-                                            • {typeof sub === 'string' ? sub : sub.title}
-                                          </p>
-                                          {typeof sub === 'object' && sub.desc && (
-                                            <p className="text-[10.5px] text-secondary font-sans truncate">
-                                              {sub.desc}
-                                            </p>
-                                          )}
-                                        </div>
-                                      ))}
-                                    </div>
-                                  </div>
-
-                                  {/* Explore Detail Action Button */}
-                                  <div className="pt-2 border-t border-rose-100 flex items-center justify-between">
-                                    <a
-                                      href={`/services/${currentHoveredService.slug}`}
-                                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#E4006E] hover:bg-[#1A0B3C] text-white text-xs font-bold font-sans transition-colors shadow-xs"
-                                    >
-                                      <span>Explore {currentHoveredService.title}</span>
-                                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
-                                        <line x1="5" y1="12" x2="19" y2="12"/>
-                                        <polyline points="12 5 19 12 12 19"/>
-                                      </svg>
-                                    </a>
-
-                                    <a
-                                      href="/contact"
-                                      className="text-xs font-bold text-secondary hover:text-[#E4006E] transition-colors font-sans"
-                                    >
-                                      Book Consultation →
-                                    </a>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  )}
                 </div>
               );
             })}
@@ -643,7 +752,158 @@ export function FloatingHeader({
                 {links.map((link, idx) => {
                   const isActive = isLinkActive(link.href);
                   const isStarTarget = mobileHoveredIndex !== null ? mobileHoveredIndex === idx : isActive;
-                  const isServicesLink = link.label.toLowerCase() === 'services';
+                  const isServices = link.label.toLowerCase() === 'services';
+
+                  if (isServices) {
+                    return (
+                      <motion.li
+                        key={link.label}
+                        initial={{ opacity: 0, y: 28 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -16 }}
+                        transition={{
+                          duration: 0.55,
+                          ease: [0.22, 1, 0.36, 1],
+                          delay: 0.08 + idx * 0.05,
+                        }}
+                        className="w-full text-center"
+                        onMouseEnter={() => setMobileHoveredIndex(idx)}
+                        onMouseLeave={() => setMobileHoveredIndex(null)}
+                      >
+                        <div className="flex flex-col items-center">
+                          <div className="inline-flex items-center justify-center gap-2">
+                            <a
+                              href={link.href}
+                              onClick={() => setOpen(false)}
+                              data-astro-prefetch="hover"
+                              className={cn(
+                                "text-2xl sm:text-3xl font-heading font-bold tracking-tight transition-colors duration-300",
+                                isActive ? "text-tertiary font-bold" : isStarTarget ? "text-tertiary" : "text-primary hover:text-tertiary"
+                              )}
+                            >
+                              {link.label}
+                            </a>
+                            <button
+                              type="button"
+                              onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                              className="p-1.5 rounded-full text-primary hover:text-tertiary transition-colors"
+                              aria-label="Toggle Services List"
+                            >
+                              <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className={cn(
+                                  "w-5 h-5 transition-transform duration-200",
+                                  mobileServicesOpen ? "rotate-180 text-tertiary" : ""
+                                )}
+                              >
+                                <polyline points="6 9 12 15 18 9" />
+                              </svg>
+                            </button>
+                          </div>
+
+                          <AnimatePresence>
+                            {mobileServicesOpen && (
+                              <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                exit={{ opacity: 0, height: 0 }}
+                                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                                className="overflow-hidden w-full max-w-sm mx-auto pt-3 pb-2 text-left bg-white/70 rounded-2xl border border-[#FADCEB] p-2.5 my-2 space-y-1.5"
+                              >
+                                {allServices.map((srv) => {
+                                  const isExpanded = mobileExpandedServiceSlug === srv.slug;
+                                  const subs = srv.subservices || [];
+
+                                  return (
+                                    <div key={srv.slug} className="rounded-xl overflow-hidden">
+                                      <div className="flex items-center justify-between p-2 rounded-xl hover:bg-[#FFF0F6] transition-colors">
+                                        <a
+                                          href={`/services/${srv.slug}`}
+                                          onClick={() => setOpen(false)}
+                                          className="flex items-center gap-2 text-[13px] font-sans font-bold text-[#1A0B3C] hover:text-[#E4006E] transition-colors flex-1"
+                                        >
+                                          <span className="w-6 h-6 rounded-full border border-[#FADCEB] bg-white text-[#E4006E] flex items-center justify-center shrink-0">
+                                            {getServiceDropdownIcon(srv.slug)}
+                                          </span>
+                                          <span className="truncate">{srv.title}</span>
+                                        </a>
+
+                                        {subs.length > 0 && (
+                                          <button
+                                            type="button"
+                                            onClick={(e) => {
+                                              e.preventDefault();
+                                              e.stopPropagation();
+                                              setMobileExpandedServiceSlug(isExpanded ? null : srv.slug);
+                                            }}
+                                            className="p-1 text-slate-400 hover:text-[#E4006E] transition-colors shrink-0"
+                                            aria-label={`Toggle subservices for ${srv.title}`}
+                                          >
+                                            <svg
+                                              viewBox="0 0 24 24"
+                                              fill="none"
+                                              stroke="currentColor"
+                                              strokeWidth="2.5"
+                                              strokeLinecap="round"
+                                              strokeLinejoin="round"
+                                              className={cn(
+                                                "w-3.5 h-3.5 transition-transform duration-200",
+                                                isExpanded ? "rotate-90 text-[#E4006E]" : ""
+                                              )}
+                                            >
+                                              <polyline points="9 18 15 12 9 6" />
+                                            </svg>
+                                          </button>
+                                        )}
+                                      </div>
+
+                                      {isExpanded && subs.length > 0 && (
+                                        <div className="pl-9 pr-2 py-1.5 space-y-1 bg-[#FAF0F8]/50 rounded-lg my-1">
+                                          {subs.map((sub: any, subIdx: number) => {
+                                            const subTitle = typeof sub === 'string' ? sub : sub.title;
+                                            const subSlug = sub?.slug;
+                                            const href = subSlug
+                                              ? `/services/${srv.slug}/${subSlug}`
+                                              : `/services/${srv.slug}`;
+                                            return (
+                                              <a
+                                                key={subIdx}
+                                                href={href}
+                                                onClick={() => setOpen(false)}
+                                                className="block text-xs font-sans font-medium text-slate-700 hover:text-[#E4006E] py-1"
+                                              >
+                                                • {subTitle}
+                                              </a>
+                                            );
+                                          })}
+                                        </div>
+                                      )}
+                                    </div>
+                                  );
+                                })}
+
+                                <div className="pt-2 border-t border-[#F8E7F0] text-center">
+                                  <a
+                                    href="/services"
+                                    onClick={() => setOpen(false)}
+                                    className="text-xs font-bold text-[#853676] hover:text-[#E4006E] font-sans inline-flex items-center gap-1 py-1"
+                                  >
+                                    <span>View All Services</span>
+                                    <span>→</span>
+                                  </a>
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                      </motion.li>
+                    );
+                  }
 
                   return (
                     <motion.li
@@ -660,85 +920,28 @@ export function FloatingHeader({
                       onMouseEnter={() => setMobileHoveredIndex(idx)}
                       onMouseLeave={() => setMobileHoveredIndex(null)}
                     >
-                      <div className="flex items-center justify-center gap-2">
-                        <a
-                          href={link.href}
-                          onClick={() => setOpen(false)}
-                          data-astro-prefetch="hover"
-                          className="inline-flex items-center justify-center gap-3 py-1 text-2xl sm:text-3xl font-heading font-bold tracking-tight transition-all duration-300"
-                        >
-                          {isStarTarget && (
-                            <span className="text-tertiary text-xl inline-block animate-spin shrink-0">
-                              ✱
-                            </span>
-                          )}
-                          <span className={cn(
-                            "transition-colors duration-300",
-                            isActive
-                              ? "text-tertiary font-bold"
-                              : isStarTarget
-                                ? "text-tertiary"
-                                : "text-primary hover:text-tertiary"
-                          )}>
-                            {link.label}
+                      <a
+                        href={link.href}
+                        onClick={() => setOpen(false)}
+                        data-astro-prefetch="hover"
+                        className="inline-flex items-center justify-center gap-3 py-1 text-2xl sm:text-3xl font-heading font-bold tracking-tight transition-all duration-300"
+                      >
+                        {isStarTarget && (
+                          <span className="text-tertiary text-xl inline-block animate-spin shrink-0">
+                            ✱
                           </span>
-                        </a>
-
-                        {isServicesLink && (
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setMobileServicesExpanded(!mobileServicesExpanded);
-                            }}
-                            className="p-1 rounded-full bg-white border border-rose-200 text-[#E4006E] shadow-xs"
-                            aria-label="Toggle subservices"
-                          >
-                            <svg
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              className={cn(
-                                'w-4 h-4 transition-transform duration-200',
-                                mobileServicesExpanded ? 'rotate-180' : ''
-                              )}
-                            >
-                              <polyline points="6 9 12 15 18 9" />
-                            </svg>
-                          </button>
                         )}
-                      </div>
-
-                      {/* Mobile Expandable Subservices Accordion */}
-                      {isServicesLink && mobileServicesExpanded && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          className="pt-3 pb-2 px-4 space-y-2 text-left bg-white/70 rounded-[20px] border border-[#FADCEB] mt-2 max-h-60 overflow-y-auto"
-                        >
-                          {allServices.map((svc) => (
-                            <div key={svc.slug} className="py-1 border-b border-rose-100/70 last:border-none">
-                              <a
-                                href={`/services/${svc.slug}`}
-                                onClick={() => setOpen(false)}
-                                className="text-xs font-bold text-[#1A0B3C] hover:text-[#E4006E] flex items-center justify-between"
-                              >
-                                <span>{svc.title}</span>
-                                <span className="text-[10px] text-[#E4006E]">→</span>
-                              </a>
-                              {svc.subservices && svc.subservices.length > 0 && (
-                                <p className="text-[10.5px] text-secondary font-sans truncate pt-0.5">
-                                  {svc.subservices.map((sub: any) => sub.title).join(' • ')}
-                                </p>
-                              )}
-                            </div>
-                          ))}
-                        </motion.div>
-                      )}
+                        <span className={cn(
+                          "transition-colors duration-300",
+                          isActive
+                            ? "text-tertiary font-bold"
+                            : isStarTarget
+                              ? "text-tertiary"
+                              : "text-primary hover:text-tertiary"
+                        )}>
+                          {link.label}
+                        </span>
+                      </a>
                     </motion.li>
                   );
                 })}

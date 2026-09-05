@@ -179,13 +179,13 @@ export function AboutSection({
                     return (
                       <div
                         key={card.id}
-                        className="flex items-center gap-2 sm:gap-2.5 py-1.5 pl-2 sm:pl-2.5 pr-1 sm:pr-1.5 rounded-[10px] sm:rounded-[12px] bg-white border border-[#F2DEEA] shadow-[0_1px_3px_rgba(0,0,0,0.02)] hover:border-[#E4006E]/40 hover:bg-[#FFF0F6]/30 transition-all duration-150"
+                        className="group flex items-center gap-2 sm:gap-2.5 py-2 pl-2.5 sm:pl-3 pr-2 rounded-[12px] sm:rounded-[14px] bg-white border-2 border-[#F2DEEA] shadow-[0_1px_3px_rgba(0,0,0,0.02)] hover:bg-[#FAF0F8] hover:border-[#853676] hover:shadow-md transition-all duration-200 cursor-pointer"
                       >
-                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-[8px] bg-[#FFF0F6] text-[#E4006E] flex items-center justify-center shrink-0 border border-rose-100/60">
-                          <IconComp className="w-3.5 h-3.5 text-[#E4006E]" />
+                        <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-[8px] bg-[#FFF0F6] text-[#E4006E] group-hover:bg-white group-hover:text-[#853676] group-hover:border-[#853676]/40 flex items-center justify-center shrink-0 border border-rose-100/60 transition-all duration-200">
+                          <IconComp className="w-3.5 h-3.5 text-current transition-colors" />
                         </div>
                         <div className="min-w-0 flex-1">
-                          <h4 className="text-xs sm:text-[12px] font-heading font-bold text-[#111827] leading-tight">
+                          <h4 className="text-xs sm:text-[12px] font-heading font-bold text-[#111827] group-hover:text-[#853676] leading-tight transition-colors">
                             {card.title}
                           </h4>
                           <p className="text-[10px] sm:text-[10.5px] text-[#6B7280] leading-tight font-sans">

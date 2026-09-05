@@ -7,7 +7,10 @@ import {
   ExternalLink, 
   Star,
   Image as ImageIcon,
-  Compass
+  Compass,
+  X,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 import clientData from "../../../../../../client.json";
 
@@ -48,11 +51,33 @@ const DEFAULT_PHOTOS: GalleryPhoto[] = [
 export function HospitalLocationCard() {
   const [activeTab, setActiveTab] = useState<"photo" | "360">("photo");
   const [activePhotoIdx, setActivePhotoIdx] = useState(0);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   const phone = clientData.contact.primaryPhone || "+91 81214 49988";
   const address = "15–381, Opp. Rotary School, Kamala Nagar, Ananthapuram – 515001, Andhra Pradesh, India";
   const mapsUrl = "https://maps.google.com/?q=15-381,+Opp.+Rotary+School,+Kamala+Nagar,+Ananthapuram,+Andhra+Pradesh+515001";
   const embedMapsUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.203363384213!2d77.5956041!3d14.6840656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb14b09cf931b6d%3A0x6b7720bc2085731!2sKamala%20Nagar%2C%20Anantapur%2C%20Andhra%20Pradesh%20515001!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin";
+
+  // Keyboard navigation for lightbox
+  React.useEffect(() => {
+    if (!isLightboxOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsLightboxOpen(false);
+      } else if (e.key === "ArrowRight") {
+        setActivePhotoIdx((prev) => (prev + 1) % DEFAULT_PHOTOS.length);
+      } else if (e.key === "ArrowLeft") {
+        setActivePhotoIdx((prev) => (prev - 1 + DEFAULT_PHOTOS.length) % DEFAULT_PHOTOS.length);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isLightboxOpen]);
+
+  const openPhoto = (idx: number) => {
+    setActivePhotoIdx(idx);
+    setIsLightboxOpen(true);
+  };
 
   return (
     <section id="location" className="w-full py-3 sm:py-4 scroll-mt-24">
@@ -97,49 +122,83 @@ export function HospitalLocationCard() {
               <ImageIcon className="w-3.5 h-3.5" />
               <span>Photo</span>
             </button>
-
-            
           </div>
 
           {/* 3. Hospital Photo Gallery / 360° Virtual Tour Area */}
           {activeTab === "photo" ? (
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-stretch">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-5 items-stretch">
               
-              {/* Main Large Photo */}
-              <div className="md:col-span-8 lg:col-span-9 rounded-2xl overflow-hidden border border-border bg-rose-50/30 relative aspect-[16/10] sm:aspect-[16/9] md:aspect-auto md:min-h-[360px] group shadow-2xs">
+              {/* Main Large Photo (Clickable to open in modal) */}
+              <div 
+                onClick={() => openPhoto(activePhotoIdx)}
+                className="md:col-span-7 lg:col-span-8 rounded-2xl sm:rounded-3xl overflow-hidden border border-border bg-rose-50/30 relative aspect-[16/10] sm:aspect-[16/9] md:aspect-auto md:min-h-[440px] group shadow-2xs cursor-pointer select-none"
+                role="button"
+                tabIndex={0}
+                aria-label="Click to enlarge hospital photo"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    openPhoto(activePhotoIdx);
+                  }
+                }}
+              >
                 <img
                   src={DEFAULT_PHOTOS[activePhotoIdx].url}
                   alt={DEFAULT_PHOTOS[activePhotoIdx].alt}
-                  className="w-full h-full object-cover transition-all duration-500"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent p-4 text-white">
-                  <p className="text-xs sm:text-sm font-sans font-medium text-white/90">
+
+                {/* Hover Expand Overlay Banner */}
+                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+                  <div className="px-4 py-2 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-semibold flex items-center gap-2 border border-white/30 shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+                    </svg>
+                    <span>Click to Enlarge</span>
+                  </div>
+                </div>
+
+                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-4 sm:p-5 text-white flex items-center justify-between">
+                  <p className="text-xs sm:text-sm md:text-base font-sans font-semibold text-white/95">
                     {DEFAULT_PHOTOS[activePhotoIdx].title}
                   </p>
+                  <span className="text-[11px] text-white/90 bg-white/20 px-2.5 py-0.5 rounded-full border border-white/25">
+                    {activePhotoIdx + 1} / {DEFAULT_PHOTOS.length}
+                  </span>
                 </div>
               </div>
 
-              {/* Smaller Thumbnail Photos */}
-              <div className="md:col-span-4 lg:col-span-3 flex md:flex-col gap-3 overflow-x-auto md:overflow-y-auto max-h-[380px] pr-1 scrollbar-thin">
+              {/* Extended Thumbnail Photos Column (Clearly fits 3 cards vertically on desktop / horizontal on mobile) */}
+              <div className="md:col-span-5 lg:col-span-4 flex md:flex-col gap-3 overflow-x-auto md:overflow-y-auto max-h-[460px] pr-1 scrollbar-thin">
                 {DEFAULT_PHOTOS.map((photo, idx) => {
                   const isActive = idx === activePhotoIdx;
                   return (
                     <button
                       key={photo.id}
                       type="button"
-                      onClick={() => setActivePhotoIdx(idx)}
-                      className={`relative rounded-xl overflow-hidden border-2 transition-all shrink-0 w-28 sm:w-36 md:w-full aspect-[16/10] md:aspect-[16/9] group text-left ${
+                      onClick={() => openPhoto(idx)}
+                      className={`relative rounded-xl sm:rounded-2xl overflow-hidden border-2 transition-all shrink-0 w-36 sm:w-44 md:w-full md:h-[132px] group text-left cursor-pointer flex flex-col justify-end p-2.5 ${
                         isActive
-                          ? "border-[#E4006E] ring-2 ring-[#E4006E]/20 shadow-xs"
-                          : "border-border hover:border-[#6B21A8]/50 opacity-80 hover:opacity-100"
+                          ? "border-[#E4006E] ring-2 ring-[#E4006E]/30 shadow-sm"
+                          : "border-border hover:border-[#E4006E]/60 opacity-85 hover:opacity-100"
                       }`}
                     >
                       <img
                         src={photo.url}
                         alt={photo.alt}
-                        className="w-full h-full object-cover"
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                         loading="lazy"
                       />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent pointer-events-none" />
+                      
+                      <div className="relative z-10 flex items-center justify-between w-full">
+                        <span className="text-white text-[11px] sm:text-xs font-semibold font-sans drop-shadow-sm truncate pr-2">
+                          {photo.title}
+                        </span>
+                        {isActive && (
+                          <span className="w-2 h-2 rounded-full bg-[#E4006E] shrink-0"></span>
+                        )}
+                      </div>
                     </button>
                   );
                 })}
@@ -270,6 +329,108 @@ export function HospitalLocationCard() {
         </div>
 
       </div>
+
+      {/* ========================================================================= */}
+      {/* 6. FULLSCREEN HOSPITAL PHOTO LIGHTBOX MODAL DIALOG                        */}
+      {/* ========================================================================= */}
+      {isLightboxOpen && (
+        <div 
+          className="fixed inset-0 z-[99999] bg-black/90 backdrop-blur-md flex flex-col items-center justify-between p-4 sm:p-6 select-none animate-in fade-in duration-200"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Enlarged hospital photo viewer"
+          onClick={() => setIsLightboxOpen(false)}
+        >
+          {/* Top Bar: Title, Counter & Close Button */}
+          <div 
+            className="w-full max-w-5xl flex items-center justify-between text-white py-2 px-2 z-10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex flex-col text-left">
+              <span className="font-heading font-bold text-sm sm:text-base text-white">
+                {DEFAULT_PHOTOS[activePhotoIdx].title}
+              </span>
+              <span className="text-xs text-white/70 font-sans">
+                Photo {activePhotoIdx + 1} of {DEFAULT_PHOTOS.length}
+              </span>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setIsLightboxOpen(false)}
+              aria-label="Close photo viewer"
+              className="p-2.5 rounded-full bg-white/10 hover:bg-white/25 text-white hover:text-white border border-white/20 transition-all cursor-pointer shadow-md"
+            >
+              <X className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
+          </div>
+
+          {/* Main Image Center Stage with Left & Right Nav Arrows */}
+          <div 
+            className="relative w-full max-w-5xl flex-1 flex items-center justify-center my-2 overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Previous Photo Button */}
+            <button
+              type="button"
+              onClick={() => setActivePhotoIdx((prev) => (prev - 1 + DEFAULT_PHOTOS.length) % DEFAULT_PHOTOS.length)}
+              aria-label="Previous photo"
+              className="absolute left-2 sm:left-4 z-20 p-2.5 sm:p-3 rounded-full bg-black/50 hover:bg-[#E4006E] text-white border border-white/20 hover:border-transparent transition-all shadow-lg cursor-pointer"
+            >
+              <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7" />
+            </button>
+
+            {/* Enlarged Image Display */}
+            <div className="max-w-full max-h-[75vh] flex items-center justify-center">
+              <img
+                src={DEFAULT_PHOTOS[activePhotoIdx].url}
+                alt={DEFAULT_PHOTOS[activePhotoIdx].alt}
+                className="max-w-full max-h-[75vh] object-contain rounded-xl sm:rounded-2xl shadow-2xl border border-white/10"
+              />
+            </div>
+
+            {/* Next Photo Button */}
+            <button
+              type="button"
+              onClick={() => setActivePhotoIdx((prev) => (prev + 1) % DEFAULT_PHOTOS.length)}
+              aria-label="Next photo"
+              className="absolute right-2 sm:right-4 z-20 p-2.5 sm:p-3 rounded-full bg-black/50 hover:bg-[#E4006E] text-white border border-white/20 hover:border-transparent transition-all shadow-lg cursor-pointer"
+            >
+              <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7" />
+            </button>
+          </div>
+
+          {/* Bottom Thumbnail Navigation Strip */}
+          <div 
+            className="w-full max-w-xl flex items-center justify-center gap-2 sm:gap-3 py-2 overflow-x-auto z-10 no-scrollbar"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {DEFAULT_PHOTOS.map((photo, idx) => {
+              const isSelected = idx === activePhotoIdx;
+              return (
+                <button
+                  key={photo.id}
+                  type="button"
+                  onClick={() => setActivePhotoIdx(idx)}
+                  className={`relative w-14 sm:w-16 h-10 sm:h-12 rounded-lg overflow-hidden border-2 transition-all shrink-0 cursor-pointer ${
+                    isSelected
+                      ? "border-[#E4006E] ring-2 ring-[#E4006E]/40 scale-105"
+                      : "border-white/30 opacity-60 hover:opacity-100"
+                  }`}
+                >
+                  <img
+                    src={photo.url}
+                    alt={photo.alt}
+                    className="w-full h-full object-cover"
+                  />
+                </button>
+              );
+            })}
+          </div>
+
+        </div>
+      )}
+
     </section>
   );
 }

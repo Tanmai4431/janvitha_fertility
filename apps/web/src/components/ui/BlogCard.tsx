@@ -82,6 +82,13 @@ export function BlogCard({ post, className = '' }: BlogCardProps) {
   const categoryName = post.category || 'Clinical Guidance';
   const articleUrl = `/blog/${post.slug}`;
 
+  const DEFAULT_CARD_IMAGE = 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80';
+  const [currentImageSrc, setCurrentImageSrc] = useState<string>(post.mainImageUrl || DEFAULT_CARD_IMAGE);
+
+  useEffect(() => {
+    setCurrentImageSrc(post.mainImageUrl || DEFAULT_CARD_IMAGE);
+  }, [post.mainImageUrl]);
+
   return (
     <a
       href={articleUrl}
@@ -112,26 +119,21 @@ export function BlogCard({ post, className = '' }: BlogCardProps) {
             <video
               ref={videoRef}
               src={post.videoUrl}
-              poster={post.mainImageUrl}
+              poster={currentImageSrc}
               autoPlay
               loop
               muted
               playsInline
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 shrink-0"
             />
-          ) : post.mainImageUrl ? (
+          ) : (
             <img
-              src={post.mainImageUrl}
+              src={currentImageSrc}
               alt={post.title}
+              onError={() => setCurrentImageSrc(DEFAULT_CARD_IMAGE)}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 shrink-0"
               loading="lazy"
             />
-          ) : (
-            <div className="w-full h-full bg-background flex items-center justify-center border-b border-border">
-              <span className="font-label font-bold uppercase tracking-wider text-tertiary">
-                {client.business.name}
-              </span>
-            </div>
           )}
         </div>
 
