@@ -453,33 +453,28 @@ const finalPosts: BlogCardPost[] = [
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="relative overflow-hidden rounded-[32px] sm:rounded-[40px] bg-[#ECA4C6] p-6 sm:p-10 lg:p-12 text-white shadow-[0_12px_40px_rgba(236,164,198,0.3)] border border-pink-200/50" data-animate="fade-up">
             
-            {/* Background Mother & Smiling Baby Spanning Card */}
+            {/* Background Mother & Smiling Baby Spanning Card for all screens */}
             <img
               src="/assets/pathway-mother-baby.jpg"
               alt="Loving mother smiling with baby"
-              class="absolute inset-0 w-full h-full object-cover object-[80%_center] lg:object-right pointer-events-none opacity-85"
+              class="absolute inset-0 w-full h-full object-cover object-[center_top] sm:object-[80%_center] lg:object-right pointer-events-none opacity-60 sm:opacity-75 lg:opacity-85"
               loading="eager"
             />
 
-            {/* Soft Light Pink Uniform Overlay Matching Right Side Hue */}
-            <div class="absolute inset-0 bg-gradient-to-r from-[#ECA4C6]/80 via-[#EEADC9]/60 to-[#ECA4C6]/45 backdrop-brightness-95 pointer-events-none"></div>
-
-            {/* Ambient Highlights */}
-            <div class="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-white/25 blur-3xl pointer-events-none"></div>
-            <div class="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-white/20 blur-3xl pointer-events-none"></div>
+            {/* Soft Light Pink Uniform Overlay */}
+            <div class="absolute inset-0 bg-gradient-to-b from-[#ECA4C6]/80 via-[#EEADC9]/70 to-[#ECA4C6]/85 sm:bg-gradient-to-r sm:from-[#ECA4C6]/80 sm:via-[#EEADC9]/60 sm:to-[#ECA4C6]/45 backdrop-brightness-95 pointer-events-none"></div>
             
-            {/* Header: Left Title + Right Description (Matching Reference Layout) */}
-            <div class="relative z-10 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-8 sm:mb-12">
+            {/* Header: Left Title + Right Description */}
+            <div class="relative z-10 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6 lg:mb-12">
               <div class="max-w-xl space-y-2 text-left">
-                <span class="inline-flex items-center gap-2 text-xs sm:text-sm font-label font-bold uppercase tracking-wider text-white bg-white/20 backdrop-blur-md px-3.5 py-1 rounded-full border border-white/30 shadow-2xs">
-                  <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+                <span class="inline-flex items-center px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs sm:text-sm font-label font-bold uppercase tracking-wider shadow-2xs">
                   <span>A STEP-BY-STEP PATHWAY</span>
                 </span>
                 <h2 class="text-2xl sm:text-4xl lg:text-[40px] font-heading font-bold text-white leading-tight drop-shadow-xs">
                   Your IVF journey clear supportive <span class="italic font-normal">Steps</span>
                 </h2>
               </div>
-              <p class="text-white/95 text-xs sm:text-sm lg:text-base font-sans max-w-md lg:text-right leading-relaxed pt-2">
+              <p class="text-white/95 text-xs sm:text-sm lg:text-base font-sans max-w-md lg:text-right leading-relaxed pt-1">
                 Our IVF process is designed to be clear, supportive, and stress-free. From your initial consultation to your successful pregnancy test.
               </p>
             </div>
