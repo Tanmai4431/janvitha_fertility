@@ -20,7 +20,6 @@ export const OurWorksSection: React.FC<OurWorksSectionProps> = ({ works }) => {
           {/* Section Header Block */}
           <div className="text-center max-w-3xl mx-auto space-y-3 font-sans">
             <div className="flex items-center justify-center gap-2">
-              <span className="text-tertiary animate-spin text-sm sm:text-base shrink-0">✱</span>
               <span className="font-label font-bold uppercase tracking-wider text-primary">
                 PATIENT STORIES & CARE SHOWCASE
               </span>

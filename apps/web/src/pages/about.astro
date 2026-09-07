@@ -149,20 +149,30 @@ const finalPosts: BlogCardPost[] = [
           <Breadcrumbs items={[{ label: 'About Us' }]} className="justify-start mb-1" />
 
           {/* 1. HERO BANNER HEADER */}
-          <div class="relative overflow-hidden rounded-[32px] sm:rounded-[40px] bg-gradient-to-r from-[#9C1D72] via-[#C41E7F] to-[#E4006E] p-8 sm:p-12 lg:p-16 text-white text-center shadow-[0_12px_40px_rgba(196,30,127,0.25)]" data-animate="fade-up">
-            {/* Background Decorative Rings */}
-            <div class="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-white/10 blur-2xl pointer-events-none"></div>
-            <div class="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-[#1A0B3C]/20 blur-3xl pointer-events-none"></div>
+          <div class="relative overflow-hidden rounded-[32px] sm:rounded-[40px] bg-[#F472B6] p-8 sm:p-12 lg:p-16 text-white text-center shadow-[0_12px_40px_rgba(244,114,182,0.25)]" data-animate="fade-up">
+            {/* Background Sleeping Baby Image (Clearly Visible) */}
+            <img
+              src="/assets/sleeping-baby-banner.jpg"
+              alt="Sleeping Baby"
+              class="absolute inset-0 w-full h-full object-cover object-[center_35%] pointer-events-none"
+              loading="eager"
+            />
+
+            {/* True Light Pink Translucent Tint Overlay */}
+            <div class="absolute inset-0 bg-gradient-to-r from-[#F472B6]/50 via-[#FF85B3]/40 to-[#F472B6]/50 backdrop-brightness-90 pointer-events-none"></div>
+            
+            {/* Soft Ambient Glows */}
+            <div class="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-white/20 blur-2xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-pink-300/20 blur-3xl pointer-events-none"></div>
             
             <div class="relative z-10 max-w-3xl mx-auto space-y-4">
-              <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-white text-xs sm:text-sm font-label font-bold uppercase tracking-wider">
-                <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+              <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/20 backdrop-blur-md border border-white/40 text-white text-xs sm:text-sm font-label font-bold uppercase tracking-wider shadow-sm">
                 <span>Welcome to Janvithas</span>
               </div>
-              <h1 class="text-3xl sm:text-5xl lg:text-6xl font-heading font-bold tracking-tight text-white leading-tight">
+              <h1 class="text-3xl sm:text-5xl lg:text-6xl font-heading font-bold tracking-tight text-white leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)]">
                 About Our Hospital
               </h1>
-              <p class="text-white/90 text-sm sm:text-base lg:text-lg font-sans max-w-2xl mx-auto leading-relaxed">
+              <p class="text-white text-sm sm:text-base lg:text-lg font-sans max-w-2xl mx-auto leading-relaxed font-medium drop-shadow-[0_1px_8px_rgba(0,0,0,0.5)]">
                 Dedicated to making world-class reproductive medicine and compassionate fertility care accessible to every aspiring family in Ananthapuram.
               </p>
             </div>
@@ -441,63 +451,98 @@ const finalPosts: BlogCardPost[] = [
       {/* ── 6. 4-STEP JOURNEY TO PARENTHOOD (WHITE BACKGROUND) ── */}
       <section class="w-full py-14 sm:py-20 lg:py-24 bg-white scroll-mt-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="rounded-[32px] sm:rounded-[40px] bg-gradient-to-br from-[#9C1D72] via-[#C41E7F] to-[#E4006E] p-6 sm:p-10 lg:p-12 text-white shadow-[0_12px_40px_rgba(196,30,127,0.25)]" data-animate="fade-up">
+          <div class="relative overflow-hidden rounded-[32px] sm:rounded-[40px] bg-[#ECA4C6] p-6 sm:p-10 lg:p-12 text-white shadow-[0_12px_40px_rgba(236,164,198,0.3)] border border-pink-200/50" data-animate="fade-up">
             
-            <div class="text-center max-w-2xl mx-auto space-y-2 mb-8 sm:mb-10">
-              <span class="text-xs sm:text-sm font-label font-bold uppercase tracking-wider text-white/90 bg-white/20 px-3.5 py-1 rounded-full border border-white/30">
-                A STEP-BY-STEP PATHWAY
-              </span>
-              <h2 class="text-2xl sm:text-4xl font-heading font-bold text-white">
-                Your 4-Step Journey to Parenthood
-              </h2>
-              <p class="text-white/85 text-xs sm:text-sm font-sans">
-                Clear, transparent, and guided medical care from initial assessment to healthy delivery.
+            {/* Background Mother & Smiling Baby Spanning Card */}
+            <img
+              src="/assets/pathway-mother-baby.jpg"
+              alt="Loving mother smiling with baby"
+              class="absolute inset-0 w-full h-full object-cover object-[80%_center] lg:object-right pointer-events-none opacity-85"
+              loading="eager"
+            />
+
+            {/* Soft Light Pink Uniform Overlay Matching Right Side Hue */}
+            <div class="absolute inset-0 bg-gradient-to-r from-[#ECA4C6]/80 via-[#EEADC9]/60 to-[#ECA4C6]/45 backdrop-brightness-95 pointer-events-none"></div>
+
+            {/* Ambient Highlights */}
+            <div class="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-white/25 blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-white/20 blur-3xl pointer-events-none"></div>
+            
+            {/* Header: Left Title + Right Description (Matching Reference Layout) */}
+            <div class="relative z-10 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-8 sm:mb-12">
+              <div class="max-w-xl space-y-2 text-left">
+                <span class="inline-flex items-center gap-2 text-xs sm:text-sm font-label font-bold uppercase tracking-wider text-white bg-white/20 backdrop-blur-md px-3.5 py-1 rounded-full border border-white/30 shadow-2xs">
+                  <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+                  <span>A STEP-BY-STEP PATHWAY</span>
+                </span>
+                <h2 class="text-2xl sm:text-4xl lg:text-[40px] font-heading font-bold text-white leading-tight drop-shadow-xs">
+                  Your IVF journey clear supportive <span class="italic font-normal">Steps</span>
+                </h2>
+              </div>
+              <p class="text-white/95 text-xs sm:text-sm lg:text-base font-sans max-w-md lg:text-right leading-relaxed pt-2">
+                Our IVF process is designed to be clear, supportive, and stress-free. From your initial consultation to your successful pregnancy test.
               </p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {/* Horizontal Steps Flow Matching Reference Image */}
+            <div class="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4 items-start">
               
               {/* Step 1 */}
-              <div class="bg-white/10 backdrop-blur-md rounded-[22px] p-5 border border-white/20 space-y-3">
-                <div class="w-9 h-9 rounded-full bg-white text-[#E4006E] font-bold font-heading flex items-center justify-center text-sm shadow-xs">
-                  01
+              <div class="flex flex-col items-center text-center space-y-2 relative group">
+                <div class="w-12 h-12 rounded-full bg-[#E4006E] text-white flex items-center justify-center shadow-md border-2 border-white/40 mb-1">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                  </svg>
                 </div>
+                <span class="text-[11px] uppercase tracking-wider font-bold text-white/80 font-label">Step 1</span>
                 <h3 class="font-heading font-bold text-base text-white">Comprehensive Diagnosis</h3>
-                <p class="text-white/80 text-xs font-sans leading-relaxed">
-                  In-depth dual evaluation, hormonal profiling, ovarian reserve testing, and advanced semen analysis.
+                <p class="text-white/85 text-xs font-sans leading-relaxed max-w-[220px]">
+                  In-depth dual evaluation, hormonal profiling, ovarian reserve testing, and semen analysis.
                 </p>
               </div>
 
               {/* Step 2 */}
-              <div class="bg-white/10 backdrop-blur-md rounded-[22px] p-5 border border-white/20 space-y-3">
-                <div class="w-9 h-9 rounded-full bg-white text-[#E4006E] font-bold font-heading flex items-center justify-center text-sm shadow-xs">
-                  02
+              <div class="flex flex-col items-center text-center space-y-2 relative group">
+                <div class="w-12 h-12 rounded-full bg-[#E4006E] text-white flex items-center justify-center shadow-md border-2 border-white/40 mb-1">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                  </svg>
                 </div>
+                <span class="text-[11px] uppercase tracking-wider font-bold text-white/80 font-label">Step 2</span>
                 <h3 class="font-heading font-bold text-base text-white">Tailored Treatment Plan</h3>
-                <p class="text-white/80 text-xs font-sans leading-relaxed">
-                  Customized protocol selection—from gentle IUI to advanced IVF, ICSI, or PICSI—tailored for you.
+                <p class="text-white/85 text-xs font-sans leading-relaxed max-w-[220px]">
+                  Customized protocol selection—from gentle IUI to IVF, ICSI, or PICSI—tailored for you.
                 </p>
               </div>
 
               {/* Step 3 */}
-              <div class="bg-white/10 backdrop-blur-md rounded-[22px] p-5 border border-white/20 space-y-3">
-                <div class="w-9 h-9 rounded-full bg-white text-[#E4006E] font-bold font-heading flex items-center justify-center text-sm shadow-xs">
-                  03
+              <div class="flex flex-col items-center text-center space-y-2 relative group">
+                <div class="w-12 h-12 rounded-full bg-[#E4006E] text-white flex items-center justify-center shadow-md border-2 border-white/40 mb-1">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                  </svg>
                 </div>
+                <span class="text-[11px] uppercase tracking-wider font-bold text-white/80 font-label">Step 3</span>
                 <h3 class="font-heading font-bold text-base text-white">State-of-the-Art ART</h3>
-                <p class="text-white/80 text-xs font-sans leading-relaxed">
+                <p class="text-white/85 text-xs font-sans leading-relaxed max-w-[220px]">
                   Precision micromanipulation, clean-room embryology, and Day-5 blastocyst culture for max success.
                 </p>
               </div>
 
               {/* Step 4 */}
-              <div class="bg-white/10 backdrop-blur-md rounded-[22px] p-5 border border-white/20 space-y-3">
-                <div class="w-9 h-9 rounded-full bg-white text-[#E4006E] font-bold font-heading flex items-center justify-center text-sm shadow-xs">
-                  04
+              <div class="flex flex-col items-center text-center space-y-2 relative group">
+                <div class="w-12 h-12 rounded-full bg-[#E4006E] text-white flex items-center justify-center shadow-md border-2 border-white/40 mb-1">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                  </svg>
                 </div>
+                <span class="text-[11px] uppercase tracking-wider font-bold text-white/80 font-label">Step 4</span>
                 <h3 class="font-heading font-bold text-base text-white">Care Through Pregnancy</h3>
-                <p class="text-white/80 text-xs font-sans leading-relaxed">
-                  Expert fetal medicine screening, ultrasound monitoring, and empathetic support at every trimester.
+                <p class="text-white/85 text-xs font-sans leading-relaxed max-w-[220px]">
+                  Expert fetal medicine screening, ultrasound monitoring, and empathetic support throughout pregnancy.
                 </p>
               </div>
 
@@ -768,18 +813,21 @@ const finalPosts: BlogCardPost[] = [
       {/* ── 13. BOTTOM HIGH-IMPACT CONSULTATION CTA (PINK BACKGROUND) ── */}
       <section class="w-full py-14 sm:py-20 lg:py-24 bg-[#FFF0F6] border-t border-[#FADCEB]">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="rounded-[32px] sm:rounded-[40px] bg-gradient-to-r from-[#9C1D72] via-[#C41E7F] to-[#E4006E] p-8 sm:p-12 lg:p-16 text-white text-center shadow-[0_12px_40px_rgba(196,30,127,0.25)] space-y-6" data-animate="fade-up">
+          <div class="relative overflow-hidden rounded-[32px] sm:rounded-[40px] bg-[#ECA4C6] p-8 sm:p-12 lg:p-16 text-white text-center shadow-[0_12px_40px_rgba(236,164,198,0.35)] space-y-6 border border-pink-200/50" data-animate="fade-up">
+            {/* Ambient Highlights */}
+            <div class="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-white/25 blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-white/20 blur-3xl pointer-events-none"></div>
             
-            <div class="max-w-2xl mx-auto space-y-3">
-              <h2 class="text-2xl sm:text-4xl lg:text-5xl font-heading font-bold text-white">
+            <div class="relative z-10 max-w-2xl mx-auto space-y-3">
+              <h2 class="text-2xl sm:text-4xl lg:text-5xl font-heading font-bold text-white drop-shadow-xs">
                 Ready to Begin Your Journey?
               </h2>
-              <p class="text-white/90 text-sm sm:text-base font-sans leading-relaxed">
+              <p class="text-white text-sm sm:text-base font-sans leading-relaxed font-medium">
                 Schedule a confidential consultation with Dr. P. Bharathi today at Janvithas Fertility Center, Ananthapuram.
               </p>
             </div>
 
-            <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
+            <div class="relative z-10 flex flex-wrap items-center justify-center gap-4 pt-2">
               <a
                 href="/contact"
                 class="px-8 py-4 rounded-full bg-white text-[#E4006E] hover:bg-[#1A0B3C] hover:text-white font-sans font-bold text-sm sm:text-base shadow-lg transition-all duration-200 active:scale-95"
@@ -796,7 +844,7 @@ const finalPosts: BlogCardPost[] = [
               </a>
             </div>
 
-            <p class="text-white/75 text-xs font-sans">
+            <p class="relative z-10 text-white/90 text-xs font-sans font-medium">
               📍 {locationAddress} • 📞 {primaryPhone}
             </p>
 

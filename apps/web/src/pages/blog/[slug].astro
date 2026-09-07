@@ -826,26 +826,30 @@ const finalRelatedPosts: BlogCardPost[] = [
           CLOSING CONSULTATION BANNER
          ========================================================================= */}
       <section class="w-full pb-8 sm:pb-12" data-animate="fade-up">
-        <div class="rounded-[32px] sm:rounded-[36px] bg-gradient-to-r from-[#9C1D72] via-[#C41E7F] to-[#E4006E] p-6 sm:p-10 lg:p-12 text-white text-center shadow-[0_12px_40px_rgba(196,30,127,0.25)] relative overflow-hidden">
+        <div class="relative overflow-hidden rounded-[32px] sm:rounded-[36px] bg-[#ECA4C6] p-6 sm:p-10 lg:p-12 text-white text-center shadow-[0_12px_40px_rgba(236,164,198,0.35)] border border-pink-200/50">
           
+          {/* Subtle Ambient Decorative Circles */}
+          <div class="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-white/25 blur-3xl pointer-events-none"></div>
+          <div class="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-white/20 blur-3xl pointer-events-none"></div>
+
           <div class="relative z-10 max-w-3xl mx-auto space-y-4">
             <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-label font-bold uppercase tracking-wider">
               <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
               <span>START YOUR CONVERSATION TODAY</span>
             </div>
 
-            <h2 class="text-2xl sm:text-4xl font-heading font-bold text-white tracking-tight leading-tight">
+            <h2 class="text-2xl sm:text-4xl font-heading font-bold text-white tracking-tight leading-tight drop-shadow-xs">
               Ready to Discuss Your Treatment Options?
             </h2>
 
-            <p class="text-white/90 text-xs sm:text-sm md:text-base leading-relaxed font-sans max-w-2xl mx-auto">
+            <p class="text-white text-xs sm:text-sm md:text-base leading-relaxed font-sans max-w-2xl mx-auto font-medium">
               Schedule a private, empathetic consultation with {defaultAuthorName} at {siteName}.
             </p>
 
             <div class="pt-3 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
               <a
                 href="/contact"
-                class="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-white hover:bg-rose-50 text-[#9C1D72] font-sans font-bold text-xs sm:text-sm shadow-lg hover:shadow-xl transition-all duration-200 active:scale-[0.98]"
+                class="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-white hover:bg-rose-50 text-[#E4006E] font-sans font-bold text-xs sm:text-sm shadow-lg hover:shadow-xl transition-all duration-200 active:scale-[0.98]"
               >
                 <span>Schedule Consultation</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
@@ -856,7 +860,7 @@ const finalRelatedPosts: BlogCardPost[] = [
 
               <a
                 href={`tel:${primaryPhone.replace(/[^0-9+]/g, '')}`}
-                class="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-white/15 hover:bg-white/25 backdrop-blur-md border border-white/30 text-white font-sans font-bold text-xs sm:text-sm transition-all duration-200"
+                class="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/35 text-white font-sans font-bold text-xs sm:text-sm transition-all duration-200 shadow-sm"
               >
                 <Phone className="w-4 h-4" />
                 <span>Call Us: {primaryPhone}</span>

@@ -413,17 +413,21 @@ function getServiceSvg(slug: string) {
         </div>
       </section>
 
-      {/* ── 6. BOTTOM CONSULTATION CTA BANNER (MATCHING REFERENCE) ── */}
+      {/* ── 6. BOTTOM CONSULTATION CTA BANNER (LIGHT PINK SLEEPING BABY BACKGROUND) ── */}
       <section class="w-full">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="rounded-[32px] sm:rounded-[40px] bg-gradient-to-r from-[#9C1D72] via-[#C41E7F] to-[#E4006E] p-8 sm:p-12 lg:p-14 text-white shadow-[0_12px_40px_rgba(196,30,127,0.22)]" data-animate="fade-up">
+          <div class="relative overflow-hidden rounded-[32px] sm:rounded-[40px] bg-[#ECA4C6] p-8 sm:p-12 lg:p-14 text-white shadow-[0_12px_40px_rgba(236,164,198,0.35)] border border-pink-200/50" data-animate="fade-up">
             
-            <div class="flex flex-col lg:flex-row items-center justify-between gap-6 text-left">
+            {/* Ambient Highlights */}
+            <div class="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-white/25 blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-white/20 blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6 text-left">
               <div class="space-y-2 max-w-2xl">
-                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-heading font-bold text-white leading-tight">
-                  Schedule your consultation <span class="italic font-normal text-pink-200">Today!</span>
+                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-heading font-bold text-white leading-tight drop-shadow-xs">
+                  Schedule your consultation <span class="italic font-normal text-white">Today!</span>
                 </h2>
-                <p class="text-white/90 text-xs sm:text-base font-sans leading-relaxed">
+                <p class="text-white text-xs sm:text-base font-sans leading-relaxed font-medium">
                   Start your conversation with our fertility experts and take the first step towards your parenthood journey.
                 </p>
               </div>
