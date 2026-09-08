@@ -6,15 +6,10 @@ import HeroSection from '../components/sections/home/HeroSection.astro';
 import { AboutSection } from '../components/sections/home/AboutSection';
 import { HospitalLocationCard } from '../components/sections/home/HospitalLocationCard';
 import ServicesSection from '../components/sections/home/ServicesSection.astro';
-
-import { OurWorksSection } from '../components/sections/home/OurWorksSection';
 import TestimonialsSection from '../components/sections/home/TestimonialsSection';
-
 import { BlogCard, type BlogCardPost } from '../components/ui/BlogCard';
 import InteractiveHoverButton from '../components/ui/buttons/interactive-hover-button';
 import BlogHeadingRoll from '../components/ui/typography/BlogHeadingRoll';
-
-const works = (client.works || []) as any[];
 
 let rawPosts: any[] = [];
 try {
@@ -217,9 +212,6 @@ const finalPosts: BlogCardPost[] = [
 
       <!-- Services Section Block -->
       <ServicesSection />
-
-      <!-- Our Works Video Carousel Showcase Section -->
-      <OurWorksSection client:visible works={works} />
 
       <!-- Testimonials Section -->
       <TestimonialsSection client:visible />

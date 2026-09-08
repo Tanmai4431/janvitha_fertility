@@ -522,14 +522,18 @@ const otherServices = (client.services || [])
       {/* ── 6. BOTTOM CONSULTATION CTA BANNER ── */}
       <section class="w-full">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="rounded-[32px] sm:rounded-[40px] bg-gradient-to-r from-[#9C1D72] via-[#C41E7F] to-[#E4006E] p-8 sm:p-12 lg:p-14 text-white shadow-[0_12px_40px_rgba(196,30,127,0.22)]" data-animate="fade-up">
+          <div class="relative overflow-hidden rounded-[32px] sm:rounded-[40px] bg-[#ECA4C6] p-8 sm:p-12 lg:p-14 text-white shadow-[0_12px_40px_rgba(236,164,198,0.35)] border border-pink-200/50" data-animate="fade-up">
             
-            <div class="flex flex-col lg:flex-row items-center justify-between gap-6 text-left">
+            {/* Ambient Highlights */}
+            <div class="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-white/25 blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-white/20 blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6 text-left">
               <div class="space-y-2 max-w-2xl">
-                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-heading font-bold text-white leading-tight">
-                  Schedule your {service.title} consultation <span class="italic font-normal text-pink-200">Today!</span>
+                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-heading font-bold text-[#5A2149] leading-tight">
+                  Schedule your {service.title} consultation <span class="italic font-normal text-[#5A2149]">Today!</span>
                 </h2>
-                <p class="text-white/90 text-xs sm:text-base font-sans leading-relaxed">
+                <p class="text-[#5A2149]/85 text-xs sm:text-base font-sans leading-relaxed font-medium">
                   Start your conversation with Dr. P. Bharathi and take the first step towards your parenthood journey.
                 </p>
               </div>
@@ -537,7 +541,7 @@ const otherServices = (client.services || [])
               <div class="shrink-0">
                 <a
                   href="/contact"
-                  class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-[#E4006E] hover:bg-[#1A0B3C] hover:text-white font-sans font-bold text-sm sm:text-base shadow-lg transition-all duration-200 active:scale-95"
+                  class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-[#5A2149] hover:bg-[#5A2149] hover:text-white font-sans font-bold text-sm sm:text-base shadow-lg transition-all duration-200 active:scale-95 border border-white/80"
                 >
                   <span>Book an appointment</span>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">

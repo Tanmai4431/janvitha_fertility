@@ -422,17 +422,21 @@ const benefitsList = subservice.benefits && subservice.benefits.length > 0
       {/* ── 5. BOTTOM CLINICAL CONSULTATION CTA CARD ── */}
       <section class="w-full">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="rounded-[32px] sm:rounded-[40px] bg-gradient-to-r from-[#853676] to-[#1A0B3C] p-8 sm:p-12 lg:p-16 text-white text-center sm:text-left relative overflow-hidden shadow-xl" data-animate="fade-up">
+          <div class="relative overflow-hidden rounded-[32px] sm:rounded-[40px] bg-[#ECA4C6] p-8 sm:p-12 lg:p-16 text-white text-center sm:text-left shadow-[0_12px_40px_rgba(236,164,198,0.35)] border border-pink-200/50" data-animate="fade-up">
             
+            {/* Ambient Highlights */}
+            <div class="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-white/25 blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-white/20 blur-3xl pointer-events-none"></div>
+
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
               <div class="lg:col-span-8 space-y-4">
-                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-bold uppercase tracking-wider font-label text-rose-200">
+                <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/60 border border-white/80 text-xs font-bold uppercase tracking-wider font-label text-[#5A2149] backdrop-blur-md">
                   CONSULTATION & GUIDANCE
                 </span>
-                <h2 class="text-2xl sm:text-4xl font-heading font-bold text-white leading-tight">
+                <h2 class="text-2xl sm:text-4xl font-heading font-bold text-[#5A2149] leading-tight">
                   Have Questions About {subservice.title}?
                 </h2>
-                <p class="text-slate-200 text-xs sm:text-sm lg:text-base font-sans max-w-xl leading-relaxed">
+                <p class="text-[#5A2149]/85 text-xs sm:text-sm lg:text-base font-sans max-w-xl leading-relaxed font-medium">
                   Schedule a private, in-depth clinical consultation with Dr. P. Bharathi to review your medical history and determine if {subservice.title} is the optimal choice for your fertility roadmap.
                 </p>
               </div>
@@ -440,14 +444,14 @@ const benefitsList = subservice.benefits && subservice.benefits.length > 0
               <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center lg:justify-end">
                 <a
                   href="/contact"
-                  class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#E4006E] hover:bg-white hover:text-[#1A0B3C] text-white font-sans font-bold text-sm shadow-md transition-all duration-300"
+                  class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-white hover:bg-[#5A2149] text-[#5A2149] hover:text-white font-sans font-bold text-sm shadow-lg hover:shadow-xl transition-all duration-300 active:scale-[0.98] border border-white/80"
                 >
                   <span>Book Appointment Now</span>
                   <span>→</span>
                 </a>
                 <a
                   href={`tel:${primaryPhone.replace(/[^0-9+]/g, '')}`}
-                  class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/30 text-white font-sans font-bold text-sm transition-colors"
+                  class="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-white/60 hover:bg-white/80 backdrop-blur-md border border-white/80 text-[#5A2149] font-sans font-bold text-sm transition-colors shadow-sm"
                 >
                   <span>Call {primaryPhone}</span>
                 </a>

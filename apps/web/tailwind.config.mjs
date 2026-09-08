@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       screens: {
-        'nav-desktop': '1300px',
+        'nav-desktop': '1024px',
       },
       colors: {
         border: 'hsl(var(--border))',

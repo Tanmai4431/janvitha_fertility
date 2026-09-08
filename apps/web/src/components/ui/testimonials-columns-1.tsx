@@ -38,10 +38,20 @@ export const TestimonialsColumn: React.FC<TestimonialsColumnProps> = ({
               >
                 {/* 5-Star Rating & Business Pill Badge */}
                 <div className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-1 text-tertiary">
+                  <div className="flex items-center gap-1 text-amber-500" style={{ color: "#F59E0B" }}>
                     {[...Array(rating)].map((_, starIdx) => (
-                      <svg key={starIdx} className="w-4 h-4 fill-current stroke-none" viewBox="0 0 24 24">
-                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                      <svg
+                        key={starIdx}
+                        className="w-4 h-4 text-amber-500 fill-amber-500 star-gold stroke-none shrink-0"
+                        viewBox="0 0 24 24"
+                        fill="#F59E0B"
+                        style={{ fill: "#F59E0B", color: "#F59E0B" }}
+                      >
+                        <polygon
+                          points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                          fill="#F59E0B"
+                          style={{ fill: "#F59E0B" }}
+                        />
                       </svg>
                     ))}
                   </div>

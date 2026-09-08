@@ -833,23 +833,23 @@ const finalRelatedPosts: BlogCardPost[] = [
           <div class="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-white/20 blur-3xl pointer-events-none"></div>
 
           <div class="relative z-10 max-w-3xl mx-auto space-y-4">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-label font-bold uppercase tracking-wider">
-              <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/60 backdrop-blur-md border border-white/80 text-[#5A2149] text-xs font-label font-bold uppercase tracking-wider">
+              <span class="w-2 h-2 rounded-full bg-[#5A2149] animate-ping"></span>
               <span>START YOUR CONVERSATION TODAY</span>
             </div>
 
-            <h2 class="text-2xl sm:text-4xl font-heading font-bold text-white tracking-tight leading-tight drop-shadow-xs">
+            <h2 class="text-2xl sm:text-4xl font-heading font-bold text-[#5A2149] tracking-tight leading-tight">
               Ready to Discuss Your Treatment Options?
             </h2>
 
-            <p class="text-white text-xs sm:text-sm md:text-base leading-relaxed font-sans max-w-2xl mx-auto font-medium">
+            <p class="text-[#5A2149]/85 text-xs sm:text-sm md:text-base leading-relaxed font-sans max-w-2xl mx-auto font-medium">
               Schedule a private, empathetic consultation with {defaultAuthorName} at {siteName}.
             </p>
 
             <div class="pt-3 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
               <a
                 href="/contact"
-                class="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-white hover:bg-rose-50 text-[#E4006E] font-sans font-bold text-xs sm:text-sm shadow-lg hover:shadow-xl transition-all duration-200 active:scale-[0.98]"
+                class="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-white hover:bg-[#5A2149] text-[#5A2149] hover:text-white font-sans font-bold text-xs sm:text-sm shadow-lg hover:shadow-xl transition-all duration-200 active:scale-[0.98] border border-white/80"
               >
                 <span>Schedule Consultation</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
@@ -860,9 +860,9 @@ const finalRelatedPosts: BlogCardPost[] = [
 
               <a
                 href={`tel:${primaryPhone.replace(/[^0-9+]/g, '')}`}
-                class="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/35 text-white font-sans font-bold text-xs sm:text-sm transition-all duration-200 shadow-sm"
+                class="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-white/60 hover:bg-white/80 backdrop-blur-md border border-white/80 text-[#5A2149] font-sans font-bold text-xs sm:text-sm transition-all duration-200 shadow-sm"
               >
-                <Phone className="w-4 h-4" />
+                <Phone className="w-4 h-4 text-[#5A2149]" />
                 <span>Call Us: {primaryPhone}</span>
               </a>
             </div>

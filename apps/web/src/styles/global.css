@@ -378,3 +378,23 @@ html[data-page-animations="false"] .animate-zoom-in {
 .underline-draw-item.is-animating {
   stroke-dashoffset: 0;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Testimonials & Reviews Gold Rating Stars Specification
+   Ensures gold coloring is preserved across client router, view transitions & SSR
+   ───────────────────────────────────────────────────────────────────────────── */
+#testimonials svg.star-gold,
+#testimonials .star-gold,
+.star-gold,
+[data-testimonial-card] svg {
+  color: #F59E0B !important;
+  fill: #F59E0B !important;
+}
+
+#testimonials svg.star-gold path,
+#testimonials .star-gold path,
+.star-gold path,
+[data-testimonial-card] svg path {
+  fill: #F59E0B !important;
+}
+

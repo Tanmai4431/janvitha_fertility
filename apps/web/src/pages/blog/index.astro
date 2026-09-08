@@ -3,7 +3,6 @@ import Layout from '../../layouts/Layout.astro';
 import { sanityClient, urlFor, getSiteSettings } from '../../utils/sanity';
 import Breadcrumbs from '../../components/ui/navigation/Breadcrumbs.astro';
 import { BlogCard, type BlogCardPost } from '../../components/ui/BlogCard';
-import BlogHeadingRoll from '../../components/ui/typography/BlogHeadingRoll';
 import client from '../../../../../client.json';
 
 const siteSettings = await getSiteSettings();
@@ -60,7 +59,7 @@ const mappedPosts: BlogCardPost[] = (rawPosts || []).map((p) => {
   };
 });
 
-// Fallback clinical guidance posts for Janvithas Fertility Center (same data as Home Page + expanded clinical resources)
+// Fallback clinical guidance posts for Janvithas Fertility Center
 const sampleFallbackPosts: BlogCardPost[] = [
   {
     title: 'Understanding When to Visit a Fertility Specialist: Key Signs & Guidelines',
@@ -142,126 +141,261 @@ const categories = [
   'Male Fertility',
   'Fertility Preservation',
 ];
-
-const primaryPhone = client.contact.primaryPhone || "+91 81214 49988";
 ---
 
 <Layout
   title={`Publications & Clinical Insights | ${siteName}`}
   description={`Explore doctor-authored clinical guides, fertility treatment insights, and reproductive health publications from ${siteName}.`}
 >
-  <main class="flex-grow py-4 sm:py-6 md:py-8 bg-background">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
+  <main class="flex-grow pt-4 sm:pt-6 pb-20 md:pb-28 bg-[#FCFBFA]">
+    <div class="flex flex-col space-y-12 sm:space-y-16 lg:space-y-24">
       
-      <!-- Breadcrumbs Navigation -->
-      <Breadcrumbs items={[{ label: 'Publications & Insights' }]} className="justify-start mb-0" />
-
-      {/* =========================================================================
-          MAIN PARENT CONTAINER: Matching Home Page Publications Feed Section
-         ========================================================================= */}
-      <div 
-        class="rounded-[32px] sm:rounded-[36px] bg-[#FFFDFC] border-2 border-[#FDDCEB] p-5 sm:p-7 lg:p-9 shadow-[0_4px_30px_rgba(228,0,110,0.04)] space-y-8 sm:space-y-10"
-        data-animate="fade-up"
-      >
-        
-        <!-- Centered Section Header Badge & Dynamic Shifting Title -->
-        <div class="flex flex-col items-center text-center space-y-3 max-w-3xl mx-auto font-sans" data-animate="fade-up">
-          <div class="inline-flex items-center justify-center px-3.5 py-1 rounded-full bg-[#FFF0F6] border border-[#FADCEB]">
-            <span class="font-label font-bold uppercase tracking-wider text-[#E4006E] text-xs sm:text-[13px]">
-              PUBLICATIONS & CLINICAL INSIGHTS
-            </span>
-          </div>
-
-          {/* Dynamic Rotating Word Shift Animation Loop across Pillars */}
-          <BlogHeadingRoll client:visible />
-
-          <p class="text-secondary text-sm sm:text-base leading-relaxed max-w-2xl mx-auto pt-0.5 font-sans">
-            Expert articles, patient guides, and clinical insights on <span class="text-tertiary font-bold">IVF treatments</span>, <span class="text-tertiary font-bold">reproductive health</span>, <span class="text-tertiary font-bold">fetal medicine</span>, and <span class="text-tertiary font-bold">fertility preservation</span>.
-          </p>
-        </div>
-
-        <!-- Category Filter Pills Bar -->
-        <div class="flex items-center justify-center gap-2 flex-wrap pt-1" data-animate="fade-up">
-          {categories.map((cat, idx) => (
-            <span
-              class={`px-4 py-2 rounded-[12px] text-xs font-sans font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer select-none ${
-                idx === 0
-                  ? 'bg-[#E4006E] hover:bg-[#6B21A8] text-white shadow-xs'
-                  : 'bg-white text-gray-700 border border-[#FADCEB] hover:border-[#6B21A8]/40 hover:text-[#6B21A8] hover:bg-[#FAF5FF]'
-              }`}
-            >
-              {cat}
-            </span>
-          ))}
-        </div>
-
-        <!-- Blog Cards Grid (Same 3D-Tilt Cards as Home Page) -->
-        <div class="pt-2">
-          {allPosts.length > 0 ? (
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
-              {allPosts.map((post) => (
-                <div class="flex flex-col h-full w-full" data-animate="fade-up">
-                  <BlogCard client:load post={post} />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div class="text-center py-16 px-4 border border-dashed border-border rounded-card bg-surface">
-              <h3 class="font-heading font-bold text-lg text-primary mb-1">No articles found</h3>
-              <p class="text-sm text-secondary max-w-sm mx-auto font-sans">
-                Check back soon or register and publish some posts in the Sanity Studio dashboard!
-              </p>
-            </div>
-          )}
-        </div>
-
+      {/* ── 0. BREADCRUMBS ROW ── */}
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <Breadcrumbs items={[{ label: 'Publications & Insights' }]} className="justify-start mb-1" />
       </div>
 
-      {/* =========================================================================
-          CONSULTATION & INQUIRY BANNER
-         ========================================================================= */}
-      <section class="w-full pb-6 sm:pb-10" data-animate="fade-up">
-        <div class="relative overflow-hidden rounded-[32px] sm:rounded-[36px] bg-[#ECA4C6] p-6 sm:p-10 lg:p-12 text-white text-center shadow-[0_12px_40px_rgba(236,164,198,0.35)] border border-pink-200/50">
-          
-          {/* Subtle Ambient Decorative Circles */}
-          <div class="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-white/25 blur-3xl pointer-events-none"></div>
-          <div class="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-white/20 blur-3xl pointer-events-none"></div>
+      {/* ── 1. HERO BANNER (MATCHING SERVICES SECTION REFERENCE) ── */}
+      <section class="w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="relative overflow-hidden rounded-[32px] sm:rounded-[40px] bg-gradient-to-r from-[#FDE8EE] via-[#FFF1F6] to-[#F5EAF7] border border-[#FADCEB] shadow-[0_10px_35px_rgba(228,0,110,0.06)] p-8 sm:p-12 lg:p-16" data-animate="fade-up">
+            
+            {/* Ambient Background Glow Elements */}
+            <div class="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-pink-200/40 blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-20 -right-20 w-96 h-96 rounded-full bg-purple-200/40 blur-3xl pointer-events-none"></div>
 
-          <div class="relative z-10 max-w-3xl mx-auto space-y-4">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-label font-bold uppercase tracking-wider">
-              <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
-              <span>HAVE QUESTIONS ABOUT YOUR FERTILITY?</span>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
+              
+              {/* Left Content */}
+              <div class="lg:col-span-7 space-y-5 text-left">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/80 backdrop-blur-md border border-[#FADCEB] text-xs font-label font-bold uppercase tracking-wider text-[#E4006E]">
+                  <span class="w-2 h-2 rounded-full bg-[#E4006E] animate-pulse"></span>
+                  <span>Clinical Knowledge & Patient Guidance</span>
+                </div>
+
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-heading font-bold text-[#1A0B3C] tracking-tight leading-[1.15]">
+                  Fertility & Reproductive <span class="italic font-normal text-[#E4006E]">Insights</span>
+                </h1>
+
+                <p class="text-secondary text-sm sm:text-base lg:text-lg font-sans max-w-xl leading-relaxed">
+                  Doctor-authored articles, evidence-based treatment comparisons, and empathetic clinical guidance to help you navigate every step of your parenthood journey.
+                </p>
+
+                <div class="pt-2 flex flex-wrap items-center gap-4">
+                  <a
+                    href="#articles-feed"
+                    class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-[#853676] hover:bg-[#E4006E] text-white font-sans font-bold text-sm shadow-md transition-all duration-300 active:scale-95"
+                  >
+                    <span>Browse Articles</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                      <line x1="12" y1="5" x2="12" y2="19"/>
+                      <polyline points="19 12 12 19 5 12"/>
+                    </svg>
+                  </a>
+                  <a
+                    href="/contact"
+                    class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white hover:bg-rose-50 border border-[#FADCEB] text-[#1A0B3C] font-sans font-bold text-sm shadow-xs transition-colors"
+                  >
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-[#E4006E]">
+                      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                    <span>Consult Dr. Bharathi</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Right Image (Doctor / Clinical Knowledge Frame) */}
+              <div class="lg:col-span-5 relative flex justify-center lg:justify-end">
+                <div class="relative w-full max-w-[420px] aspect-[4/3] sm:aspect-[16/11] rounded-[28px] overflow-hidden shadow-xl border-4 border-white/80 group">
+                  <img
+                    src="/assets/doctor-dr-p-bharathi.jpg"
+                    alt="Dr. P. Bharathi - Specialist in Reproductive Medicine"
+                    class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                    loading="eager"
+                  />
+                  {/* Floating Doctor Badge */}
+                  <div class="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-md p-3 rounded-2xl border border-pink-100 shadow-md flex items-center justify-between text-left">
+                    <div>
+                      <p class="font-heading font-bold text-xs sm:text-sm text-[#1A0B3C]">
+                        Dr. P. Bharathi
+                      </p>
+                      <p class="text-[11px] text-[#853676] font-sans font-medium">
+                        Fellow in Reproductive Medicine, FMF (UK)
+                      </p>
+                    </div>
+                    <span class="px-2 py-1 rounded-full bg-[#FFF0F6] text-[#E4006E] text-[10px] font-bold uppercase tracking-wider shrink-0 border border-rose-100">
+                      Author
+                    </span>
+                  </div>
+                </div>
+              </div>
+
             </div>
 
-            <h2 class="text-2xl sm:text-4xl font-heading font-bold text-white tracking-tight leading-tight drop-shadow-xs">
-              Personalized Guidance for Your Unique Pathway
-            </h2>
+          </div>
+        </div>
+      </section>
 
-            <p class="text-white text-xs sm:text-sm md:text-base leading-relaxed font-sans max-w-2xl mx-auto font-medium">
-              Our specialists are here to answer your questions and guide you with transparent, evidence-based recommendations.
-            </p>
-
-            <div class="pt-3 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-              <a
-                href="/contact"
-                class="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-white hover:bg-rose-50 text-[#E4006E] font-sans font-bold text-xs sm:text-sm shadow-lg hover:shadow-xl transition-all duration-200 active:scale-[0.98]"
-              >
-                <span>Book a Consultation</span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
-                  <line x1="7" y1="17" x2="17" y2="7"/>
-                  <polyline points="7 7 17 7 17 17"/>
+      {/* ── 2. KEY METRICS / TRUST STATS BAR (4 METRICS) ── */}
+      <section class="w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            
+            {/* Metric 1 (Light Pink) */}
+            <div class="p-5 sm:p-6 rounded-[24px] bg-[#FFF0F6] border border-[#FADCEB] shadow-[0_4px_20px_rgba(228,0,110,0.04)] flex items-center gap-4 hover:border-[#E4006E] hover:-translate-y-0.5 transition-all duration-300" data-animate="fade-up">
+              <div class="w-12 h-12 rounded-2xl bg-white text-[#E4006E] flex items-center justify-center shrink-0 border border-rose-100 shadow-2xs">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <line x1="16" y1="13" x2="8" y2="13"/>
+                  <line x1="16" y1="17" x2="8" y2="17"/>
+                  <polyline points="10 9 9 9 8 9"/>
                 </svg>
-              </a>
+              </div>
+              <div class="text-left">
+                <p class="text-2xl sm:text-3xl font-heading font-bold text-[#1A0B3C]">100%</p>
+                <p class="text-xs sm:text-sm text-secondary font-sans font-medium">Evidence-Based Guides</p>
+              </div>
+            </div>
 
-              <a
-                href={`tel:${primaryPhone.replace(/[^0-9+]/g, '')}`}
-                class="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/35 text-white font-sans font-bold text-xs sm:text-sm transition-all duration-200 shadow-sm"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+            {/* Metric 2 (Light Purple) */}
+            <div class="p-5 sm:p-6 rounded-[24px] bg-[#FAF0F8] border border-[#E8DDF0] shadow-[0_4px_20px_rgba(133,54,118,0.04)] flex items-center gap-4 hover:border-[#853676] hover:-translate-y-0.5 transition-all duration-300" data-animate="fade-up">
+              <div class="w-12 h-12 rounded-2xl bg-white text-[#853676] flex items-center justify-center shrink-0 border border-purple-100 shadow-2xs">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
                 </svg>
-                <span>Call: {primaryPhone}</span>
-              </a>
+              </div>
+              <div class="text-left">
+                <p class="text-2xl sm:text-3xl font-heading font-bold text-[#1A0B3C]">15+ Yrs</p>
+                <p class="text-xs sm:text-sm text-secondary font-sans font-medium">FMF (UK) Specialist</p>
+              </div>
+            </div>
+
+            {/* Metric 3 (Light Pink) */}
+            <div class="p-5 sm:p-6 rounded-[24px] bg-[#FFF0F6] border border-[#FADCEB] shadow-[0_4px_20px_rgba(228,0,110,0.04)] flex items-center gap-4 hover:border-[#E4006E] hover:-translate-y-0.5 transition-all duration-300" data-animate="fade-up">
+              <div class="w-12 h-12 rounded-2xl bg-white text-[#E4006E] flex items-center justify-center shrink-0 border border-rose-100 shadow-2xs">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="12" y1="8" x2="12" y2="16"/>
+                  <line x1="8" y1="12" x2="16" y2="12"/>
+                </svg>
+              </div>
+              <div class="text-left">
+                <p class="text-2xl sm:text-3xl font-heading font-bold text-[#1A0B3C]">6 Topics</p>
+                <p class="text-xs sm:text-sm text-secondary font-sans font-medium">Fertility Care Pillars</p>
+              </div>
+            </div>
+
+            {/* Metric 4 (Light Purple) */}
+            <div class="p-5 sm:p-6 rounded-[24px] bg-[#FAF0F8] border border-[#E8DDF0] shadow-[0_4px_20px_rgba(133,54,118,0.04)] flex items-center gap-4 hover:border-[#853676] hover:-translate-y-0.5 transition-all duration-300" data-animate="fade-up">
+              <div class="w-12 h-12 rounded-2xl bg-white text-[#853676] flex items-center justify-center shrink-0 border border-purple-100 shadow-2xs">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              </div>
+              <div class="text-left">
+                <p class="text-2xl sm:text-3xl font-heading font-bold text-[#1A0B3C]">Free</p>
+                <p class="text-xs sm:text-sm text-secondary font-sans font-medium">Patient Education</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── 3. MAIN ARTICLES GRID ON SOFT AURA CONTAINER (MATCHING SERVICES SECTION) ── */}
+      <section id="articles-feed" class="w-full scroll-mt-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div 
+            class="rounded-[36px] sm:rounded-[44px] bg-gradient-to-b from-[#EAE6F9]/70 via-[#FCEDF5]/90 to-[#E3E8FC]/70 border-2 border-[#F3D7E8] p-6 sm:p-10 lg:p-12 shadow-[0_12px_45px_rgba(228,0,110,0.05)] space-y-8 sm:space-y-10"
+            data-animate="fade-up"
+          >
+            
+            {/* Header within container */}
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/90 border border-[#FADCEB] text-xs font-bold text-[#E4006E] uppercase tracking-wider font-label">
+                EXPLORE CLINICAL ARTICLES
+              </span>
+              <h2 class="text-2xl sm:text-4xl font-heading font-bold text-[#1A0B3C]">
+                Educational Guides & Medical Insights
+              </h2>
+              <p class="text-secondary text-xs sm:text-sm font-sans">
+                Evidence-based reproductive knowledge authored and verified by our fertility specialists.
+              </p>
+            </div>
+
+            {/* Category Filter Pills Bar */}
+            <div class="flex items-center justify-center gap-2 flex-wrap pt-1">
+              {categories.map((cat, idx) => (
+                <span
+                  class={`px-4 py-2 rounded-[12px] text-xs font-sans font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer select-none ${
+                    idx === 0
+                      ? 'bg-[#853676] hover:bg-[#E4006E] text-white shadow-xs'
+                      : 'bg-white text-gray-700 border border-[#FADCEB] hover:border-[#853676]/40 hover:text-[#853676] hover:bg-[#FAF0F8]'
+                  }`}
+                >
+                  {cat}
+                </span>
+              ))}
+            </div>
+
+            {/* Blog Cards Grid */}
+            <div class="pt-2">
+              {allPosts.length > 0 ? (
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+                  {allPosts.map((post) => (
+                    <div class="flex flex-col h-full w-full" data-animate="fade-up">
+                      <BlogCard client:load post={post} />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div class="text-center py-16 px-4 border border-dashed border-border rounded-card bg-surface">
+                  <h3 class="font-heading font-bold text-lg text-primary mb-1">No articles found</h3>
+                  <p class="text-sm text-secondary max-w-sm mx-auto font-sans">
+                    Check back soon or register and publish some posts in the Sanity Studio dashboard!
+                  </p>
+                </div>
+              )}
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── 4. BOTTOM CONSULTATION CTA BANNER (MATCHING THEME) ── */}
+      <section class="w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="relative overflow-hidden rounded-[32px] sm:rounded-[40px] bg-[#ECA4C6] p-8 sm:p-12 lg:p-14 text-white shadow-[0_12px_40px_rgba(236,164,198,0.35)] border border-pink-200/50" data-animate="fade-up">
+            
+            {/* Ambient Highlights */}
+            <div class="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-white/25 blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-white/20 blur-3xl pointer-events-none"></div>
+
+            <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6 text-left">
+              <div class="space-y-2 max-w-2xl">
+                <h2 class="text-2xl sm:text-4xl lg:text-5xl font-heading font-bold text-[#5A2149] leading-tight">
+                  Have Questions About Your Fertility? <span class="italic font-normal text-[#5A2149]">Let&apos;s Talk.</span>
+                </h2>
+                <p class="text-[#5A2149]/85 text-xs sm:text-base font-sans leading-relaxed font-medium">
+                  Schedule a private, empathetic consultation with Dr. P. Bharathi and take the first step towards your parenthood journey.
+                </p>
+              </div>
+
+              <div class="shrink-0">
+                <a
+                  href="/contact"
+                  class="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-[#5A2149] hover:bg-[#5A2149] hover:text-white font-sans font-bold text-sm sm:text-base shadow-lg transition-all duration-200 active:scale-95 border border-white/80"
+                >
+                  <span>Book an appointment</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                    <line x1="7" y1="17" x2="17" y2="7"/>
+                    <polyline points="7 7 17 7 17 17"/>
+                  </svg>
+                </a>
+              </div>
             </div>
 
           </div>

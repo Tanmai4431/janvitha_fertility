@@ -151,10 +151,19 @@ export function TestimonialsSection({
           <div className="flex items-center flex-wrap justify-center gap-2 text-sm sm:text-base text-gray-600 pt-1 font-sans">
             <span className="font-bold text-gray-900">{ratingScore}</span>
 
-            {/* Trustpilot Green Star Icon */}
+            {/* Trustpilot Gold Star Icon */}
             <div className="inline-flex items-center gap-1 px-1 py-0.5">
-              <svg className="w-5 h-5 fill-[#00B67A]" viewBox="0 0 24 24">
-                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+              <svg
+                className="w-5 h-5 text-amber-500 fill-amber-500 star-gold shrink-0"
+                viewBox="0 0 24 24"
+                fill="#F59E0B"
+                style={{ fill: "#F59E0B", color: "#F59E0B" }}
+              >
+                <path
+                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                  fill="#F59E0B"
+                  style={{ fill: "#F59E0B" }}
+                />
               </svg>
               <span className="font-bold tracking-tight text-gray-900 text-base">Trustpilot</span>
             </div>
@@ -275,15 +284,21 @@ export function TestimonialsSection({
                         {item.text}
                       </p>
 
-                      {/* 5 Green Stars at Bottom of Bubble (matching heading Trustpilot star) */}
-                      <div className="flex items-center gap-1 pt-6 text-[#00B67A]">
+                      {/* 5 Gold Stars at Bottom of Bubble */}
+                      <div className="flex items-center gap-1 pt-6 text-amber-500" style={{ color: "#F59E0B" }}>
                         {[...Array(ratingCount)].map((_, starIdx) => (
                           <svg
                             key={starIdx}
-                            className="w-4 h-4 sm:w-4.5 sm:h-4.5 fill-current"
+                            className="w-4 h-4 sm:w-4.5 sm:h-4.5 text-amber-500 fill-amber-500 star-gold shrink-0"
                             viewBox="0 0 24 24"
+                            fill="#F59E0B"
+                            style={{ fill: "#F59E0B", color: "#F59E0B" }}
                           >
-                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                            <path
+                              d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                              fill="#F59E0B"
+                              style={{ fill: "#F59E0B" }}
+                            />
                           </svg>
                         ))}
                       </div>

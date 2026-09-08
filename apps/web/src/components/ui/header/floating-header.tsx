@@ -36,7 +36,6 @@ const DEFAULT_LINKS: NavLink[] = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },
   { label: 'Services', href: '/services' },
-  { label: 'Success Stories', href: '/our-works' },
   { label: 'Blog', href: '/blog' },
   { label: 'Contact Us', href: '/contact' },
 ];
@@ -286,7 +285,7 @@ export function FloatingHeader({
 
   useEffect(() => {
     const handleResize = () => {
-      if (typeof window !== 'undefined' && window.innerWidth >= 1300 && open) {
+      if (typeof window !== 'undefined' && window.innerWidth >= 1024 && open) {
         setOpen(false);
       }
     };
@@ -310,13 +309,16 @@ export function FloatingHeader({
       setOpen(false);
       setIsServicesDropdownOpen(false);
       setMobileServicesOpen(false);
+      setHoveredIndex(null);
       document.body.style.overflow = '';
     };
     document.addEventListener('astro:before-swap', close);
     document.addEventListener('astro:after-swap', close);
+    document.addEventListener('astro:page-load', close);
     return () => {
       document.removeEventListener('astro:before-swap', close);
       document.removeEventListener('astro:after-swap', close);
+      document.removeEventListener('astro:page-load', close);
     };
   }, []);
 
@@ -482,12 +484,16 @@ export function FloatingHeader({
                       href={link.href}
                       data-analytics-click={`Nav - ${link.label}`}
                       data-astro-prefetch="hover"
+                      onClick={() => {
+                        setIsServicesDropdownOpen(false);
+                        setHoveredIndex(null);
+                      }}
                     >
                       {/* Compact Background Bubble */}
                       {isPillTarget && (
                         <motion.div
                           layoutId="desktop-nav-active-pill"
-                          className="absolute inset-0 rounded-full bg-surface border border-border shadow-xs z-[-1]"
+                          className="absolute inset-0 rounded-full bg-surface border border-border shadow-xs z-[-1] pointer-events-none"
                           transition={{ type: 'spring', stiffness: 380, damping: 28 }}
                         />
                       )}
@@ -667,12 +673,13 @@ export function FloatingHeader({
                     href={link.href}
                     data-analytics-click={`Nav - ${link.label}`}
                     data-astro-prefetch="hover"
+                    onClick={() => setHoveredIndex(null)}
                   >
                     {/* Compact Background Bubble */}
                     {isPillTarget && (
                       <motion.div
                         layoutId="desktop-nav-active-pill"
-                        className="absolute inset-0 rounded-full bg-surface border border-border shadow-xs z-[-1]"
+                        className="absolute inset-0 rounded-full bg-surface border border-border shadow-xs z-[-1] pointer-events-none"
                         transition={{ type: 'spring', stiffness: 380, damping: 28 }}
                       />
                     )}
