@@ -31,7 +31,7 @@ export function InteractiveHoverButton({
   );
 
   const baseClassName = cn(
-    "group relative w-auto cursor-pointer overflow-hidden text-center font-sans font-semibold text-xs sm:text-sm tracking-wide text-white bg-[#E4006E] hover:bg-[#6B21A8] py-2.5 px-5 rounded-[12px] sm:rounded-[14px] shadow-[0_2px_8px_rgba(228,0,110,0.25)] hover:shadow-[0_4px_14px_rgba(107,33,168,0.35)] transition-all duration-200 active:scale-[0.98] inline-flex items-center justify-center select-none",
+    "group relative w-auto cursor-pointer overflow-hidden text-center font-sans font-semibold text-xs sm:text-sm tracking-wide text-white bg-[#F05698] hover:bg-[#DB2777] py-2.5 px-5 rounded-[12px] sm:rounded-[14px] shadow-[0_2px_8px_rgba(240,86,152,0.25)] hover:shadow-[0_4px_14px_rgba(219,39,119,0.3)] transition-all duration-200 active:scale-[0.98] inline-flex items-center justify-center select-none",
     className
   );
 

@@ -149,11 +149,6 @@ export const ServicesExplorer: React.FC<ServicesExplorerProps> = ({
         
         {/* Left Headline */}
         <div className="lg:col-span-7 space-y-2 text-left">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFF0F6] border border-[#FADCEB] text-[11px] font-bold tracking-wider uppercase text-[#E4006E]">
-            <span className="w-2 h-2 rounded-full bg-[#E4006E] inline-block animate-pulse"></span>
-            COMPREHENSIVE ART CARE
-          </div>
-
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-[#1A0B3C] tracking-tight leading-[1.2]">
             Fertility Treatments & Care at{' '}
             <span className="text-[#E4006E]">
@@ -171,7 +166,7 @@ export const ServicesExplorer: React.FC<ServicesExplorerProps> = ({
 
           <a
             href="/services"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#E4006E] hover:bg-[#6B21A8] text-white text-xs sm:text-sm font-semibold tracking-wide shadow-[0_2px_10px_rgba(228,0,110,0.25)] hover:shadow-[0_4px_16px_rgba(107,33,168,0.35)] transition-all duration-200 active:scale-95"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F05698] hover:bg-[#DB2777] text-white text-xs sm:text-sm font-semibold tracking-wide shadow-[0_2px_10px_rgba(240,86,152,0.25)] hover:shadow-[0_4px_16px_rgba(219,39,119,0.3)] transition-all duration-200 active:scale-95"
           >
             <span>View Services</span>
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

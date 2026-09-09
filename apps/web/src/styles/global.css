@@ -7,7 +7,7 @@
 @layer base {
   :root {
     /* Arcade Neon Pop Brand Tokens */
-    --background: 334 100% 97%;       /* #FFF0F6 */
+    --background: 334 65% 99%;        /* #FFF8FA - Whitish Pink (Crisp White with Soft Blush Tint) */
     --foreground: 258 69% 14%;        /* #1A0B3C */
 
     --card: 0 0% 100%;                /* #FFFFFF */
@@ -53,7 +53,7 @@
   }
 
   .dark {
-    --background: 334 100% 97%;
+    --background: 334 65% 99%;
     --foreground: 258 69% 14%;
     --card: 0 0% 100%;
     --card-foreground: 258 69% 14%;
@@ -78,7 +78,7 @@
     font-family: 'Nunito', sans-serif;
     font-size: 1rem;
     line-height: 1.6;
-    background-color: #FFF0F6;
+    background-color: #FFF8FA;
     color: #1A0B3C;
   }
 
@@ -128,9 +128,9 @@
      ARCADE NEON POP FLAT COMPONENT SUITE
      ========================================== */
 
-  /* Primary Action Button: #E4006E, hover #6B21A8 (Purple), white text, 14px radius */
+  /* Primary Action Button: #F05698, hover #DB2777, white text, 14px radius */
   .btn-primary {
-    background-color: #E4006E;
+    background-color: #F05698;
     color: #FFFFFF;
     font-family: var(--font-sans, system-ui, sans-serif);
     font-weight: 600;
@@ -141,22 +141,22 @@
     justify-content: center;
     gap: 8px;
     border: none;
-    box-shadow: 0 2px 8px rgba(228, 0, 110, 0.25);
+    box-shadow: 0 2px 8px rgba(240, 86, 152, 0.25);
     transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
   }
   .btn-primary:hover {
-    background-color: #6B21A8;
+    background-color: #DB2777;
     transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(107, 33, 168, 0.35);
+    box-shadow: 0 4px 14px rgba(219, 39, 119, 0.3);
   }
   .btn-primary:active {
     transform: scale(0.98);
   }
 
-  /* Secondary Button: White bg, #E4006E border and text, hover purple #6B21A8 */
+  /* Secondary Button: White bg, #F05698 border and text, hover soft rose #FFF0F6 */
   .btn-secondary {
     background-color: #FFFFFF;
-    color: #E4006E;
+    color: #F05698;
     font-family: var(--font-sans, system-ui, sans-serif);
     font-weight: 600;
     border-radius: 14px;
@@ -165,14 +165,14 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    border: 1px solid #E4006E;
+    border: 1px solid #F05698;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
   }
   .btn-secondary:hover {
-    background-color: #FAF5FF;
-    border-color: #6B21A8;
-    color: #6B21A8;
+    background-color: #FFF0F6;
+    border-color: #DB2777;
+    color: #DB2777;
     transform: translateY(-1px);
   }
   .btn-secondary:active {
