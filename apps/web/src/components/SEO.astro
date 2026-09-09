@@ -72,10 +72,14 @@ const tagManagerId = siteSettings?.googleTagManagerId || client.seo.googleTagMan
 // Dynamically resolve sharing image with fallbacks to ensure absolute URLs
 let imageUrl = '';
 if (finalShareImage) {
-  try {
-    imageUrl = urlFor(finalShareImage).width(1200).height(630).fit('crop').url();
-  } catch (e) {
-    console.error('Failed to resolve custom shareImage URL:', e);
+  if (typeof finalShareImage === 'string' && (finalShareImage.startsWith('http://') || finalShareImage.startsWith('https://') || finalShareImage.startsWith('/'))) {
+    imageUrl = finalShareImage;
+  } else {
+    try {
+      imageUrl = urlFor(finalShareImage).width(1200).height(630).fit('crop').url();
+    } catch (e) {
+      console.error('Failed to resolve custom shareImage URL:', e);
+    }
   }
 }
 const siteOrigin = Astro.site?.origin || client.domain.production;

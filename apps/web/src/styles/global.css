@@ -6,8 +6,8 @@
 
 @layer base {
   :root {
-    /* Arcade Neon Pop Brand Tokens */
-    --background: 334 65% 99%;        /* #FFF8FA - Whitish Pink (Crisp White with Soft Blush Tint) */
+    /* Pleasant Crisp White Brand Background Tokens */
+    --background: 0 0% 100%;          /* #FFFFFF - Pleasant Crisp White */
     --foreground: 258 69% 14%;        /* #1A0B3C */
 
     --card: 0 0% 100%;                /* #FFFFFF */
@@ -53,7 +53,7 @@
   }
 
   .dark {
-    --background: 334 65% 99%;
+    --background: 0 0% 100%;
     --foreground: 258 69% 14%;
     --card: 0 0% 100%;
     --card-foreground: 258 69% 14%;
@@ -78,7 +78,7 @@
     font-family: 'Nunito', sans-serif;
     font-size: 1rem;
     line-height: 1.6;
-    background-color: #FFF8FA;
+    background-color: #FFFFFF;
     color: #1A0B3C;
   }
 
@@ -397,4 +397,14 @@ html[data-page-animations="false"] .animate-zoom-in {
 [data-testimonial-card] svg path {
   fill: #F59E0B !important;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Lightning Fast SPA View Transitions (Sub-150ms instant page switching)
+   ───────────────────────────────────────────────────────────────────────────── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.1s !important;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
 

@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import Layout from '../layouts/Layout.astro';
 import { sanityClient, getSiteSettings, getHomePage, urlFor } from '../utils/sanity';
 import client from '../../../../client.json';
@@ -166,9 +168,6 @@ const finalPosts: BlogCardPost[] = [
             <div class="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-pink-300/20 blur-3xl pointer-events-none"></div>
             
             <div class="relative z-10 max-w-3xl mx-auto space-y-4">
-              <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/20 backdrop-blur-md border border-white/40 text-white text-xs sm:text-sm font-label font-bold uppercase tracking-wider shadow-sm">
-                <span>Welcome to Janvithas</span>
-              </div>
               <h1 class="text-3xl sm:text-5xl lg:text-6xl font-heading font-bold tracking-tight text-white leading-tight drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)]">
                 About Our Hospital
               </h1>
@@ -241,8 +240,8 @@ const finalPosts: BlogCardPost[] = [
         </div>
       </section>
 
-      {/* ── 3. CLINIC INTRO / STORY SECTION: OUR PROMISE & PURPOSE (PINK BACKGROUND) ── */}
-      <section class="w-full py-14 sm:py-20 lg:py-24 bg-[#FFF0F6] border-y border-[#FADCEB] scroll-mt-24">
+      {/* ── 3. CLINIC INTRO / STORY SECTION: OUR PROMISE & PURPOSE ── */}
+      <section class="w-full py-14 sm:py-20 lg:py-24 bg-white scroll-mt-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             
@@ -274,13 +273,6 @@ const finalPosts: BlogCardPost[] = [
 
             {/* RIGHT: STORY & CLINICAL PROMISE */}
             <div class="lg:col-span-7 space-y-5 sm:space-y-6 text-left" data-animate="fade-up">
-              <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-[#FADCEB]">
-                <span class="w-2 h-2 rounded-full bg-[#E4006E] inline-block animate-pulse"></span>
-                <span class="font-label font-bold uppercase tracking-wider text-[#E4006E] text-xs sm:text-[13px]">
-                  OUR PROMISE & PURPOSE
-                </span>
-              </div>
-
               <h2 class="text-3xl sm:text-4xl lg:text-[40px] font-heading font-bold tracking-tight text-[#1A0B3C] leading-[1.2]">
                 Bringing Dreams to Life with <br class="hidden sm:inline" />
                 <span class="text-[#E4006E]">Care, Precision & Compassion</span>
@@ -397,16 +389,11 @@ const finalPosts: BlogCardPost[] = [
         </div>
       </section>
 
-      {/* ── 5. CORE VALUES & PRINCIPLES (PINK BACKGROUND) ── */}
-      <section class="w-full py-14 sm:py-20 lg:py-24 bg-[#FFF0F6] border-y border-[#FADCEB] scroll-mt-24">
+      {/* ── 5. CORE VALUES & PRINCIPLES ── */}
+      <section class="w-full py-14 sm:py-20 lg:py-24 bg-white scroll-mt-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div class="text-center max-w-3xl mx-auto space-y-3 mb-8 sm:mb-12" data-animate="fade-up">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-[#FADCEB]">
-              <span class="font-label font-bold uppercase tracking-wider text-[#E4006E] text-xs sm:text-[13px]">
-                GUIDING PILLARS
-              </span>
-            </div>
             <h2 class="text-3xl sm:text-4xl font-heading font-bold text-[#1A0B3C]">
               Guided by Integrity & Clinical Excellence
             </h2>
@@ -471,9 +458,6 @@ const finalPosts: BlogCardPost[] = [
             {/* Header: Left Title + Right Description */}
             <div class="relative z-10 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6 lg:mb-12">
               <div class="max-w-xl space-y-2 text-left">
-                <span class="inline-flex items-center px-3.5 py-1 rounded-full bg-white border border-white/80 text-[#1A0B3C] text-xs sm:text-sm font-label font-bold uppercase tracking-wider shadow-xs">
-                  <span>A STEP-BY-STEP PATHWAY</span>
-                </span>
                 <h2 class="text-2xl sm:text-4xl lg:text-[40px] font-heading font-bold text-white leading-tight drop-shadow-xs">
                   Your IVF journey clear supportive <span class="italic font-normal">Steps</span>
                 </h2>
@@ -494,7 +478,7 @@ const finalPosts: BlogCardPost[] = [
                   </svg>
                 </div>
                 <span class="text-[11px] uppercase tracking-wider font-bold text-white/90 font-label">Step 1</span>
-                <h3 class="font-heading font-bold text-base text-[#1A0B3C]">Comprehensive Diagnosis</h3>
+                <h3 class="font-heading font-bold text-base text-white">Comprehensive Diagnosis</h3>
                 <div class="mt-2 p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white border border-[#FADCEB] shadow-md max-w-[240px] w-full flex-1 flex items-center justify-center">
                   <p class="text-[#1A0B3C] text-xs font-sans leading-relaxed font-semibold">
                     In-depth dual evaluation, hormonal profiling, ovarian reserve testing, and semen analysis.
@@ -513,7 +497,7 @@ const finalPosts: BlogCardPost[] = [
                   </svg>
                 </div>
                 <span class="text-[11px] uppercase tracking-wider font-bold text-white/90 font-label">Step 2</span>
-                <h3 class="font-heading font-bold text-base text-[#1A0B3C]">Tailored Treatment Plan</h3>
+                <h3 class="font-heading font-bold text-base text-white">Tailored Treatment Plan</h3>
                 <div class="mt-2 p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white border border-[#FADCEB] shadow-md max-w-[240px] w-full flex-1 flex items-center justify-center">
                   <p class="text-[#1A0B3C] text-xs font-sans leading-relaxed font-semibold">
                     Customized protocol selection—from gentle IUI to IVF, ICSI, or PICSI—tailored for you.
@@ -529,7 +513,7 @@ const finalPosts: BlogCardPost[] = [
                   </svg>
                 </div>
                 <span class="text-[11px] uppercase tracking-wider font-bold text-white/90 font-label">Step 3</span>
-                <h3 class="font-heading font-bold text-base text-[#1A0B3C]">State-of-the-Art ART</h3>
+                <h3 class="font-heading font-bold text-base text-white">State-of-the-Art ART</h3>
                 <div class="mt-2 p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white border border-[#FADCEB] shadow-md max-w-[240px] w-full flex-1 flex items-center justify-center">
                   <p class="text-[#1A0B3C] text-xs font-sans leading-relaxed font-semibold">
                     Precision micromanipulation, clean-room embryology, and Day-5 blastocyst culture for max success.
@@ -545,7 +529,7 @@ const finalPosts: BlogCardPost[] = [
                   </svg>
                 </div>
                 <span class="text-[11px] uppercase tracking-wider font-bold text-white/90 font-label">Step 4</span>
-                <h3 class="font-heading font-bold text-base text-[#1A0B3C]">Care Through Pregnancy</h3>
+                <h3 class="font-heading font-bold text-base text-white">Care Through Pregnancy</h3>
                 <div class="mt-2 p-3 sm:p-3.5 rounded-xl sm:rounded-2xl bg-white border border-[#FADCEB] shadow-md max-w-[240px] w-full flex-1 flex items-center justify-center">
                   <p class="text-[#1A0B3C] text-xs font-sans leading-relaxed font-semibold">
                     Expert fetal medicine screening, ultrasound monitoring, and empathetic support throughout pregnancy.
@@ -559,8 +543,8 @@ const finalPosts: BlogCardPost[] = [
         </div>
       </section>
 
-      {/* ── 7. MEDICAL SPECIALIST LEADERSHIP SECTION: DR. P. BHARATHI (PINK BACKGROUND) ── */}
-      <section class="w-full py-14 sm:py-20 lg:py-24 bg-[#FFF0F6] border-y border-[#FADCEB] scroll-mt-24">
+      {/* ── 7. MEDICAL SPECIALIST LEADERSHIP SECTION: DR. P. BHARATHI ── */}
+      <section class="w-full py-14 sm:py-20 lg:py-24 bg-white scroll-mt-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center" data-animate="fade-up">
@@ -597,12 +581,6 @@ const finalPosts: BlogCardPost[] = [
             {/* Doctor Bio & Details */}
             <div class="lg:col-span-7 space-y-5 text-left">
               
-              <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-[#FADCEB]">
-                <span class="font-label font-bold uppercase tracking-wider text-[#E4006E] text-xs sm:text-[13px]">
-                  CLINICAL LEADERSHIP
-                </span>
-              </div>
-
               <h2 class="text-2xl sm:text-3xl lg:text-4xl font-heading font-bold text-[#1A0B3C]">
                 Meet {doctorName}
               </h2>
@@ -654,11 +632,6 @@ const finalPosts: BlogCardPost[] = [
           
           <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 sm:mb-12" data-animate="fade-up">
             <div class="space-y-2 text-left">
-              <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FFF0F6] border border-[#FADCEB]">
-                <span class="font-label font-bold uppercase tracking-wider text-[#E4006E] text-xs sm:text-[13px]">
-                  SPECIALIZED PROCEDURES
-                </span>
-              </div>
               <h2 class="text-3xl sm:text-4xl font-heading font-bold text-[#1A0B3C]">
                 Advanced Fertility Treatments
               </h2>
@@ -717,8 +690,8 @@ const finalPosts: BlogCardPost[] = [
         </div>
       </section>
 
-      {/* ── 9. TESTIMONIALS SECTION (PINK BACKGROUND) ── */}
-      <div class="w-full bg-[#FFF0F6] border-y border-[#FADCEB] py-6 sm:py-10">
+      {/* ── 9. TESTIMONIALS SECTION ── */}
+      <div class="w-full bg-white py-6 sm:py-10">
         <TestimonialsSection client:visible />
       </div>
 
@@ -755,12 +728,16 @@ const finalPosts: BlogCardPost[] = [
         </div>
       </section>
 
-      {/* ── 11. ACCREDITATIONS & TRUST BADGES (PINK BACKGROUND) ── */}
-      <section class="w-full py-14 sm:py-20 lg:py-24 bg-[#FFF0F6] border-y border-[#FADCEB]">
+      {/* ── 11. ACCREDITATIONS & TRUST BADGES ── */}
+      <section class="w-full py-14 sm:py-20 lg:py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="text-center space-y-6" data-animate="fade-up">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white border border-[#FADCEB]">
-              <span class="text-xs font-bold uppercase tracking-wider text-[#E4006E] font-label">
+            <div class="inline-flex items-center gap-2.5 px-6 py-2.5 sm:px-8 sm:py-3 rounded-full bg-[#FFF0F6] border-2 border-[#FADCEB] shadow-xs">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 text-[#E4006E] shrink-0">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <polyline points="9 12 11 14 15 10"/>
+              </svg>
+              <span class="text-sm sm:text-base font-bold uppercase tracking-wider text-[#E4006E] font-heading">
                 CLINICAL STANDARDS & ACCREDITATIONS
               </span>
             </div>
@@ -792,11 +769,6 @@ const finalPosts: BlogCardPost[] = [
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div class="text-center space-y-2 mb-8 sm:mb-12" data-animate="fade-up">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FFF0F6] border border-[#FADCEB]">
-              <span class="font-label font-bold uppercase tracking-wider text-[#E4006E] text-xs sm:text-[13px]">
-                COMMON INQUIRIES
-              </span>
-            </div>
             <h2 class="text-2xl sm:text-4xl font-heading font-bold text-[#1A0B3C]">
               Frequently Asked Questions
             </h2>
@@ -824,8 +796,8 @@ const finalPosts: BlogCardPost[] = [
         </div>
       </section>
 
-      {/* ── 13. BOTTOM HIGH-IMPACT CONSULTATION CTA (PINK BACKGROUND) ── */}
-      <section class="w-full py-14 sm:py-20 lg:py-24 bg-[#FFF0F6] border-t border-[#FADCEB]">
+      {/* ── 13. BOTTOM HIGH-IMPACT CONSULTATION CTA ── */}
+      <section class="w-full py-14 sm:py-20 lg:py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="relative overflow-hidden rounded-[32px] sm:rounded-[40px] bg-[#ECA4C6] p-8 sm:p-12 lg:p-16 text-white text-center shadow-[0_12px_40px_rgba(236,164,198,0.35)] space-y-6 border border-pink-200/50" data-animate="fade-up">
             {/* Ambient Highlights */}

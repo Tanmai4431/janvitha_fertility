@@ -53,7 +53,7 @@ export default {
           secondary: '#8A7CA8',
           tertiary: '#FF3DA5',
           accent: '#FF3DA5',
-          background: '#FFF0F6',
+          background: '#FFFFFF',
           surface: '#FFFFFF',
           border: '#F2D8E6',
         },

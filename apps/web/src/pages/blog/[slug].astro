@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import Layout from '../../layouts/Layout.astro';
 import { sanityClient, urlFor, getSiteSettings } from '../../utils/sanity';
 import PortableTextRenderer from '../../components/PortableTextRenderer';
@@ -17,6 +19,29 @@ import {
   HelpCircle
 } from 'lucide-react';
 import client from '../../../../../client.json';
+
+export async function getStaticPaths() {
+  const fallbackSlugs = [
+    'understanding-when-to-visit-a-fertility-specialist',
+    'comparing-iui-ivf-and-icsi-protocols',
+    'role-of-blastocyst-culture-day-5-embryo-incubation',
+    'advances-in-genetic-screening-pgt-a-pgt-m',
+    'comprehensive-guide-to-fertility-preservation-egg-freezing',
+  ];
+
+  let sanitySlugs: string[] = [];
+  try {
+    const posts = await sanityClient.fetch(`*[_type == "post" && defined(slug.current)]{ "slug": slug.current }`);
+    sanitySlugs = (posts || []).map((p: any) => p.slug).filter(Boolean);
+  } catch (e) {
+    console.error('Failed to fetch blog slugs for getStaticPaths:', e);
+  }
+
+  const allSlugs = Array.from(new Set([...sanitySlugs, ...fallbackSlugs]));
+  return allSlugs.map((slug) => ({
+    params: { slug },
+  }));
+}
 
 const { slug } = Astro.params;
 

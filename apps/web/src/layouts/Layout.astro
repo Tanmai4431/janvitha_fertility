@@ -178,6 +178,31 @@ const primaryPhone = siteSettings?.primaryPhone || client.contact?.primaryPhone 
       noindex={noindex}
     />
     <ClientRouter />
+
+    <!-- Instant SPA Speculation Rules for Sub-200ms Navigations -->
+    <script type="speculationrules" is:inline>
+    {
+      "prerender": [
+        {
+          "source": "list",
+          "urls": ["/", "/about", "/services", "/blog", "/contact"],
+          "eagerness": "moderate"
+        }
+      ],
+      "prefetch": [
+        {
+          "source": "document",
+          "where": {
+            "and": [
+              { "href_matches": "/*" },
+              { "not": { "href_matches": "/api/*" } }
+            ]
+          },
+          "eagerness": "moderate"
+        }
+      ]
+    }
+    </script>
   </head>
   <body class="bg-background text-foreground font-sans min-h-screen flex flex-col antialiased min-w-[320px] w-full overflow-x-hidden">
     <!-- Google Tag Manager (noscript) -->

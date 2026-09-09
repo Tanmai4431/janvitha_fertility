@@ -24,7 +24,7 @@ export function urlFor(source: any) {
 
 let cachedSettings: any = null;
 let lastCacheTime = 0;
-const CACHE_TTL = 30000; // 30 seconds cache TTL
+const CACHE_TTL = 300000; // 5 minutes cache TTL
 
 export async function getSiteSettings() {
   const now = Date.now();
@@ -82,7 +82,7 @@ export async function getSiteSettings() {
         whatsAppCustomImage
       }`,
       {},
-      { useCdn: import.meta.env.PROD }
+      { useCdn: true }
     );
     if (settings) {
       const result = {
@@ -186,7 +186,7 @@ export async function getHomePage() {
         }
       }`,
       {},
-      { useCdn: import.meta.env.PROD }
+      { useCdn: true }
     );
     if (data) {
       const result = {
