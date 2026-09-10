@@ -25,11 +25,11 @@ export function CompanyTaglineRoll({ prefix, words }: CompanyTaglineRollProps) {
   const letters = currentWord.split("");
 
   return (
-    <div className="flex items-center justify-center gap-2 py-1 mx-auto text-center select-none">
-      <span className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-primary lowercase shrink-0 leading-none">
+    <div className="flex items-center justify-center gap-2 py-1 mx-auto text-center select-none w-full max-w-full overflow-hidden">
+      <span className="font-heading text-xl sm:text-3xl md:text-4xl font-bold text-primary lowercase shrink-0 leading-none">
         {defaultPrefix}
       </span>
-      <div className="relative font-heading font-bold text-2xl sm:text-3xl md:text-4xl text-tertiary min-w-[140px] sm:min-w-[180px] h-[36px] sm:h-[48px] overflow-hidden inline-flex items-center justify-start text-left">
+      <div className="relative font-heading font-bold text-xl sm:text-3xl md:text-4xl text-tertiary min-w-[120px] sm:min-w-[180px] h-[34px] sm:h-[48px] overflow-hidden inline-flex items-center justify-start text-left">
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.div
             key={currentWord}

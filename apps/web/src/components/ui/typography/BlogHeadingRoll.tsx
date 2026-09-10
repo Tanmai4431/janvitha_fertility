@@ -8,10 +8,11 @@ export interface BlogHeadingRollProps {
   pillars?: string[];
 }
 
-const DEFAULT_PILLARS = ((client.services || []) as any[]).map((s: any) => s.title).slice(0, 5) || [
+const DEFAULT_PILLARS = [
   "IVF Treatment",
   "IUI Insemination",
   "ICSI Procedure",
+  "PICSI Technology",
   "Genetic Programs",
   "Fertility Care",
 ];
@@ -30,14 +31,14 @@ export function BlogHeadingRoll({ pillars }: BlogHeadingRollProps) {
   const currentPillar = activePillars[index] || activePillars[0];
 
   return (
-    <div className="flex flex-col items-center justify-center text-center select-none w-full max-w-3xl mx-auto">
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold tracking-tight text-primary leading-tight text-center">
-        <span>Clinical Insights & Guidance on </span>
-        <span className="inline-block relative overflow-hidden align-bottom h-[1.2em] px-1 text-tertiary">
+    <div className="flex flex-col items-center justify-center text-center select-none w-full max-w-4xl mx-auto px-2 sm:px-4 overflow-hidden">
+      <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-heading font-bold tracking-tight text-primary leading-snug sm:leading-tight text-center max-w-full">
+        <span className="block sm:inline">Clinical Insights & Guidance on </span>
+        <span className="inline-flex items-center justify-center relative overflow-hidden align-middle min-h-[1.35em] max-w-full px-1 text-tertiary">
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.span
               key={currentPillar}
-              className="inline-block whitespace-nowrap font-heading font-bold text-tertiary"
+              className="inline-block font-heading font-bold text-tertiary whitespace-nowrap"
               initial={{ opacity: 0, y: "100%" }}
               animate={{ opacity: 1, y: "0%" }}
               exit={{ opacity: 0, y: "-100%" }}

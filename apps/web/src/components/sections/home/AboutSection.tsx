@@ -201,7 +201,7 @@ export function AboutSection({
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-0.5">
                   <a
                     href="/contact"
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-[12px] sm:rounded-[14px] bg-[#E4006E] hover:bg-[#6B21A8] text-white font-semibold text-xs sm:text-sm tracking-wide shadow-[0_2px_8px_rgba(228,0,110,0.25)] hover:shadow-[0_4px_14px_rgba(107,33,168,0.35)] transition-all duration-200 active:scale-[0.98]"
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-[12px] sm:rounded-[14px] bg-[#F05698] hover:bg-[#6B21A8] text-white font-semibold text-xs sm:text-sm tracking-wide shadow-[0_2px_8px_rgba(240,86,152,0.25)] hover:shadow-[0_4px_14px_rgba(107,33,168,0.35)] transition-all duration-200 active:scale-[0.98]"
                   >
                     <span>Book an Appointment</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -209,7 +209,7 @@ export function AboutSection({
 
                   <a
                     href={`tel:${primaryPhone.replace(/\s+/g, '')}`}
-                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-[12px] sm:rounded-[14px] border border-[#E4006E] hover:border-[#6B21A8] bg-white hover:bg-[#FAF5FF] text-[#E4006E] hover:text-[#6B21A8] font-semibold text-xs sm:text-sm shadow-sm transition-all duration-200 active:scale-[0.98]"
+                    className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-[12px] sm:rounded-[14px] border border-[#F05698] hover:border-[#6B21A8] bg-white hover:bg-[#FAF5FF] text-[#F05698] hover:text-[#6B21A8] font-semibold text-xs sm:text-sm shadow-sm transition-all duration-200 active:scale-[0.98]"
                   >
                     <Phone className="w-3.5 h-3.5 text-current" />
                     <span>Call: {primaryPhone}</span>

@@ -151,7 +151,7 @@ const primaryPhone = siteSettings?.primaryPhone || client.contact?.primaryPhone 
 ---
 
 <!doctype html>
-<html lang="en" data-page-animations={enablePageAnimations ? 'true' : 'false'}>
+<html lang="en" class="overflow-x-clip max-w-full w-full" data-page-animations={enablePageAnimations ? 'true' : 'false'}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
@@ -204,7 +204,7 @@ const primaryPhone = siteSettings?.primaryPhone || client.contact?.primaryPhone 
     }
     </script>
   </head>
-  <body class="bg-background text-foreground font-sans min-h-screen flex flex-col antialiased min-w-[320px] w-full overflow-x-hidden">
+  <body class="bg-background text-foreground font-sans min-h-screen flex flex-col antialiased min-w-[320px] max-w-full w-full overflow-x-clip relative">
     <!-- Google Tag Manager (noscript) -->
     {tagManagerId && (
       <noscript>

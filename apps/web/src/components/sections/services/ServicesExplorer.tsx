@@ -166,7 +166,7 @@ export const ServicesExplorer: React.FC<ServicesExplorerProps> = ({
 
           <a
             href="/services"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F05698] hover:bg-[#DB2777] text-white text-xs sm:text-sm font-semibold tracking-wide shadow-[0_2px_10px_rgba(240,86,152,0.25)] hover:shadow-[0_4px_16px_rgba(219,39,119,0.3)] transition-all duration-200 active:scale-95"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F05698] hover:bg-[#6B21A8] text-white text-xs sm:text-sm font-semibold tracking-wide shadow-[0_2px_10px_rgba(240,86,152,0.25)] hover:shadow-[0_4px_16px_rgba(107,33,168,0.35)] transition-all duration-200 active:scale-95"
           >
             <span>View Services</span>
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -194,8 +194,8 @@ export const ServicesExplorer: React.FC<ServicesExplorerProps> = ({
                   onClick={() => setActiveCategory(cat)}
                   className={`whitespace-nowrap px-3.5 py-2 rounded-full text-xs font-bold transition-all duration-150 shrink-0 ${
                     isActive
-                      ? 'bg-[#E4006E] text-white shadow-xs'
-                      : 'bg-white text-[#1A0B3C] border border-[#FADCEB] hover:text-[#E4006E] hover:bg-[#FFF0F6]'
+                      ? 'bg-[#F05698] text-white shadow-xs'
+                      : 'bg-white text-[#1A0B3C] border border-[#FADCEB] hover:text-[#F05698] hover:bg-[#FFF0F6]'
                   }`}
                 >
                   {cat}
@@ -217,8 +217,8 @@ export const ServicesExplorer: React.FC<ServicesExplorerProps> = ({
                   onClick={() => setActiveCategory(cat)}
                   className={`w-full text-left py-2.5 px-3.5 rounded-[14px] text-xs font-semibold transition-all duration-200 flex items-center justify-between ${
                     isActive
-                      ? 'bg-[#E4006E] text-white font-bold shadow-xs'
-                      : 'text-[#1A0B3C] hover:text-[#E4006E] hover:bg-white'
+                      ? 'bg-[#F05698] text-white font-bold shadow-xs'
+                      : 'text-[#1A0B3C] hover:text-[#F05698] hover:bg-white'
                   }`}
                 >
                   <span className="truncate pr-1">{cat}</span>
@@ -238,7 +238,7 @@ export const ServicesExplorer: React.FC<ServicesExplorerProps> = ({
             </p>
             <a
               href="/contact"
-              className="inline-block text-[11px] font-bold text-[#E4006E] hover:underline"
+              className="inline-block text-[11px] font-bold text-[#F05698] hover:text-[#6B21A8] hover:underline"
             >
               Book an Appointment →
             </a>

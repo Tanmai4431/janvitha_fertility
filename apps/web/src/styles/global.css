@@ -68,10 +68,18 @@
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box;
+  }
+  html {
+    overflow-x: clip;
+    max-width: 100vw;
+    width: 100%;
+    -webkit-text-size-adjust: 100%;
   }
   astro-island {
     display: block;
     width: 100%;
+    max-width: 100%;
   }
   body {
     @apply bg-background text-foreground antialiased;
@@ -80,6 +88,10 @@
     line-height: 1.6;
     background-color: #FFFFFF;
     color: #1A0B3C;
+    overflow-x: clip;
+    max-width: 100vw;
+    width: 100%;
+    position: relative;
   }
 
   /* Candy Shop Typography Hierarchy */
@@ -128,7 +140,7 @@
      ARCADE NEON POP FLAT COMPONENT SUITE
      ========================================== */
 
-  /* Primary Action Button: #F05698, hover #DB2777, white text, 14px radius */
+  /* Primary Action Button: #F05698, hover #6B21A8, white text, 14px radius */
   .btn-primary {
     background-color: #F05698;
     color: #FFFFFF;
@@ -145,15 +157,15 @@
     transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
   }
   .btn-primary:hover {
-    background-color: #DB2777;
+    background-color: #6B21A8;
     transform: translateY(-1px);
-    box-shadow: 0 4px 14px rgba(219, 39, 119, 0.3);
+    box-shadow: 0 4px 14px rgba(107, 33, 168, 0.35);
   }
   .btn-primary:active {
     transform: scale(0.98);
   }
 
-  /* Secondary Button: White bg, #F05698 border and text, hover soft rose #FFF0F6 */
+  /* Secondary Button: White bg, #F05698 border and text, hover soft purple #FAF5FF with #6B21A8 */
   .btn-secondary {
     background-color: #FFFFFF;
     color: #F05698;
@@ -170,9 +182,9 @@
     transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
   }
   .btn-secondary:hover {
-    background-color: #FFF0F6;
-    border-color: #DB2777;
-    color: #DB2777;
+    background-color: #FAF5FF;
+    border-color: #6B21A8;
+    color: #6B21A8;
     transform: translateY(-1px);
   }
   .btn-secondary:active {

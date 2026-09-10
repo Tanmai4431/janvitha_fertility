@@ -232,7 +232,7 @@ export function HospitalLocationCard() {
               href={mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-[12px] sm:rounded-[14px] bg-[#E4006E] hover:bg-[#6B21A8] text-white text-xs sm:text-sm font-semibold tracking-wide shadow-[0_2px_8px_rgba(228,0,110,0.25)] hover:shadow-[0_4px_14px_rgba(107,33,168,0.35)] transition-all duration-200 active:scale-[0.98] shrink-0 self-end sm:self-auto ml-auto sm:ml-0"
+              className="inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-[12px] sm:rounded-[14px] bg-[#F05698] hover:bg-[#DB2777] text-white text-xs sm:text-sm font-semibold tracking-wide shadow-[0_2px_8px_rgba(240,86,152,0.25)] hover:shadow-[0_4px_14px_rgba(219,39,119,0.3)] transition-all duration-200 active:scale-[0.98] shrink-0 self-end sm:self-auto ml-auto sm:ml-0"
             >
               <Navigation className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>Get Direction</span>
@@ -460,7 +460,7 @@ export function HospitalLocationCard() {
               <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-1">
                 <a
                   href="/contact"
-                  className="inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-[12px] bg-[#E4006E] hover:bg-[#6B21A8] text-white text-xs sm:text-sm font-semibold tracking-wide shadow-[0_2px_8px_rgba(228,0,110,0.25)] hover:shadow-[0_4px_14px_rgba(107,33,168,0.35)] transition-all duration-200 active:scale-[0.98] shrink-0"
+                  className="inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-[12px] bg-[#F05698] hover:bg-[#6B21A8] text-white text-xs sm:text-sm font-semibold tracking-wide shadow-[0_2px_8px_rgba(240,86,152,0.25)] hover:shadow-[0_4px_14px_rgba(107,33,168,0.35)] transition-all duration-200 active:scale-[0.98] shrink-0"
                 >
                   <span>Book An Appointment</span>
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -468,7 +468,7 @@ export function HospitalLocationCard() {
 
                 <a
                   href={`tel:${phone.replace(/\s+/g, '')}`}
-                  className="inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-[12px] border border-[#E4006E] hover:border-[#6B21A8] bg-white hover:bg-[#FAF5FF] text-[#E4006E] hover:text-[#6B21A8] font-semibold text-xs sm:text-sm shadow-sm transition-all duration-200 active:scale-[0.98] shrink-0"
+                  className="inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-[12px] border border-[#F05698] hover:border-[#6B21A8] bg-white hover:bg-[#FAF5FF] text-[#F05698] hover:text-[#6B21A8] font-semibold text-xs sm:text-sm shadow-sm transition-all duration-200 active:scale-[0.98] shrink-0"
                 >
                   <Phone className="w-3.5 h-3.5 text-current" />
                   <span>Call</span>
