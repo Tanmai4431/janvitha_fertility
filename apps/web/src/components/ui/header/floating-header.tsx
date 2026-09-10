@@ -739,7 +739,7 @@ export function FloatingHeader({
             transition={{ duration: 0.3 }}
             className="fixed inset-0 h-[100dvh] z-[55] flex flex-col lg:hidden overflow-hidden select-none bg-gradient-to-b from-[#FFF5F9] via-[#FFFDFC] to-[#FAF0F8]"
             style={{
-              paddingTop: '92px',
+              paddingTop: '124px',
               height: '100dvh',
             }}
             aria-modal="true"
@@ -754,10 +754,10 @@ export function FloatingHeader({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -12 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="flex-1 overflow-y-auto px-5 py-4 flex flex-col justify-between custom-scrollbar space-y-6"
+              className="flex-1 overflow-y-auto px-5 pt-3 pb-8 flex flex-col justify-between custom-scrollbar space-y-6"
             >
               {/* Links Stack */}
-              <ul className="flex flex-col gap-2 w-full max-w-md mx-auto">
+              <ul className="flex flex-col gap-2.5 w-full max-w-md mx-auto pt-1">
                 {links.map((link, idx) => {
                   const isActive = isLinkActive(link.href);
                   const isServices = link.label.toLowerCase() === 'services';

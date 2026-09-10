@@ -166,7 +166,7 @@ export const ServicesExplorer: React.FC<ServicesExplorerProps> = ({
 
           <a
             href="/services"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#F05698] hover:bg-[#6B21A8] text-white text-xs sm:text-sm font-semibold tracking-wide shadow-[0_2px_10px_rgba(240,86,152,0.25)] hover:shadow-[0_4px_16px_rgba(107,33,168,0.35)] transition-all duration-200 active:scale-95"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#FFF0F6] lg:bg-[#F05698] text-[#E4006E] lg:text-white border border-[#FADCEB] lg:border-transparent hover:bg-[#6B21A8] hover:text-white text-xs sm:text-sm font-semibold tracking-wide shadow-xs lg:shadow-[0_2px_10px_rgba(240,86,152,0.25)] hover:shadow-[0_4px_16px_rgba(107,33,168,0.35)] transition-all duration-200 active:scale-95"
           >
             <span>View Services</span>
             <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -194,8 +194,8 @@ export const ServicesExplorer: React.FC<ServicesExplorerProps> = ({
                   onClick={() => setActiveCategory(cat)}
                   className={`whitespace-nowrap px-3.5 py-2 rounded-full text-xs font-bold transition-all duration-150 shrink-0 ${
                     isActive
-                      ? 'bg-[#F05698] text-white shadow-xs'
-                      : 'bg-white text-[#1A0B3C] border border-[#FADCEB] hover:text-[#F05698] hover:bg-[#FFF0F6]'
+                      ? 'bg-[#FFF0F6] text-[#E4006E] border-2 border-[#FADCEB] shadow-xs'
+                      : 'bg-white text-[#1A0B3C] border border-[#FADCEB] hover:text-[#E4006E] hover:bg-[#FFF0F6]'
                   }`}
                 >
                   {cat}
