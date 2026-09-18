@@ -378,7 +378,7 @@ export function FloatingHeader({
             'w-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] relative',
             scrolled
               ? 'py-2 sm:py-2.5 px-3 sm:px-6'
-              : 'py-2.5 sm:py-3 px-4 sm:px-6 lg:px-8 bg-white/80 backdrop-blur-md border-b border-[#FADCEB]/70'
+              : 'py-2.5 sm:py-3 px-4 sm:px-6 lg:px-8 bg-white/80 backdrop-blur-md'
           )}
         >
           <div
