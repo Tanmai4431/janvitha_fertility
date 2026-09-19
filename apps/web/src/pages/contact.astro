@@ -1,6 +1,4 @@
 ---
-export const prerender = true;
-
 import Layout from '../layouts/Layout.astro';
 import { getSiteSettings } from '../utils/sanity';
 import client from '../../../../client.json';
@@ -12,12 +10,13 @@ const siteSettings = await getSiteSettings();
 // Resolve contact variables dynamically
 const email = siteSettings?.primaryEmail || client.contact.primaryEmail;
 const supportEmail = siteSettings?.supportEmail || client.contact.supportEmail;
+const primaryPhone = siteSettings?.primaryPhone || client.contact.primaryPhone || '+91 80086 28710';
 const whatsAppPhone =
   siteSettings?.whatsAppPhone ||
   siteSettings?.primaryPhone ||
   (client.contact as any)?.whatsappPhone ||
   client.contact.primaryPhone ||
-  '+91 81214 49988';
+  '+91 80086 28710';
 
 // Environment validation check for developer warning alerts
 const resendKey = siteSettings?.resendApiKey || import.meta.env.RESEND_API_KEY || '';
@@ -236,7 +235,7 @@ const siteDesc = siteSettings?.description || client.business.description;
                       id="phone" 
                       name="phone" 
                       required
-                      placeholder="+91 81214 49988"
+                      placeholder={primaryPhone}
                       class="w-full px-4 py-3 rounded-button border border-border bg-background text-primary text-sm focus:border-tertiary focus:outline-none transition-all duration-200"
                     />
                     <span id="phone-error" class="hidden text-xs text-rose-600 font-medium"></span>

@@ -1,6 +1,4 @@
 ---
-export const prerender = true;
-
 import Layout from '../layouts/Layout.astro';
 import { getSiteSettings } from '../utils/sanity';
 import client from '../../../../client.json';
@@ -10,10 +8,8 @@ import TestimonialsSection from '../components/sections/home/TestimonialsSection
 const siteSettings = await getSiteSettings();
 const siteName = siteSettings?.name || client.business.name;
 const siteDescription = siteSettings?.description || client.business.description;
-const primaryPhone = siteSettings?.primaryPhone || client.contact.primaryPhone;
-const primaryEmail = client.contact.primaryEmail || 'info@janvithasfertility.com';
-const whatsappPhone = client.contact.whatsappPhone || primaryPhone;
-const locationAddress = client.contact.location || 'Opp. Rotary School, Kamala Nagar, Ananthapuram';
+const primaryPhone = siteSettings?.primaryPhone || client.contact.primaryPhone || '+91 80086 28710';
+const primaryEmail = siteSettings?.primaryEmail || client.contact.primaryEmail || 'info@janvithasfertility.com';
 
 // Map services data dynamically from client.json
 const services = (client.services || []).map((s: any, idx: number) => ({

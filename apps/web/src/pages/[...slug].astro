@@ -40,10 +40,10 @@ if (!page) {
 }
 
 // Resolve SEO metadata overrides from Sanity settings page
-const pageTitle = page.seo?.title || page.title;
-const pageDescription = page.seo?.description || undefined;
-const pageShareImage = page.seo?.shareImage || undefined;
-const noindex = page.seo?.noindex || false;
+const pageTitle = page?.seo?.title || page?.title || 'Page';
+const pageDescription = page?.seo?.description || undefined;
+const pageShareImage = page?.seo?.shareImage || undefined;
+const noindex = page?.seo?.noindex || false;
 ---
 
 <Layout 
@@ -59,7 +59,7 @@ const noindex = page.seo?.noindex || false;
       </div>
     )}
 
-    {page.pageBuilder && page.pageBuilder.length > 0 ? (
+    {page?.pageBuilder && page.pageBuilder.length > 0 ? (
       page.pageBuilder.map((block: any) => (
         <SectionMapper block={block} />
       ))

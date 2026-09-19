@@ -798,7 +798,7 @@ export function FloatingHeader({
             <div className="flex-1 overflow-y-auto px-4 py-3.5 space-y-4 custom-scrollbar">
               {/* Navigation Stack */}
               <ul className="flex flex-col gap-2 w-full">
-                {links.map((link, idx) => {
+                {links.map((link) => {
                   const isActive = isLinkActive(link.href);
                   const isServices = link.label.toLowerCase() === 'services';
 

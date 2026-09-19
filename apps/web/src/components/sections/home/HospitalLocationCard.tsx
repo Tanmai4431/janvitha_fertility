@@ -58,7 +58,21 @@ const DEFAULT_PHOTOS: GalleryPhoto[] = [
   },
 ];
 
-export function HospitalLocationCard() {
+export interface HospitalLocationCardProps {
+  phone?: string;
+  address?: string;
+  mapsUrl?: string;
+  embedMapsUrl?: string;
+  siteName?: string;
+}
+
+export function HospitalLocationCard({
+  phone: propPhone,
+  address: propAddress,
+  mapsUrl: propMapsUrl,
+  embedMapsUrl: propEmbedMapsUrl,
+  siteName: _propSiteName,
+}: HospitalLocationCardProps = {}) {
   const [activePhotoIdx, setActivePhotoIdx] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -173,10 +187,10 @@ export function HospitalLocationCard() {
     }
   }, [activePhotoIdx]);
 
-  const phone = clientData.contact.primaryPhone || "+91 81214 49988";
-  const address = "15–381, Opp. Rotary School, Kamala Nagar, Ananthapuram – 515001, Andhra Pradesh, India";
-  const mapsUrl = "https://maps.google.com/?q=15-381,+Opp.+Rotary+School,+Kamala+Nagar,+Ananthapuram,+Andhra+Pradesh+515001";
-  const embedMapsUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.203363384213!2d77.5956041!3d14.6840656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb14b09cf931b6d%3A0x6b7720bc2085731!2sKamala%20Nagar%2C%20Anantapur%2C%20Andhra%20Pradesh%20515001!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin";
+  const phone = propPhone || clientData.contact.primaryPhone || "+91 80086 28710";
+  const address = propAddress || (clientData.contact.address ? `${clientData.contact.address.street}, ${clientData.contact.address.city}, ${clientData.contact.address.state} ${clientData.contact.address.zip}, ${clientData.contact.address.country}` : (clientData.contact.location || "15–381, Opp. Rotary School, Kamala Nagar, Ananthapuram – 515001, Andhra Pradesh, India"));
+  const mapsUrl = propMapsUrl || `https://maps.google.com/?q=${encodeURIComponent(address)}`;
+  const embedMapsUrl = propEmbedMapsUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.203363384213!2d77.5956041!3d14.6840656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb14b09cf931b6d%3A0x6b7720bc2085731!2sKamala%20Nagar%2C%20Anantapur%2C%20Andhra%20Pradesh%20515001!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin";
 
   // Auto-slideshow: display each image on the big frame for 3 seconds
   React.useEffect(() => {

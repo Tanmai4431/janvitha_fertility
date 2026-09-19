@@ -18,17 +18,18 @@ const {
 } = Astro.props;
 
 // Resolve contact details dynamically from Sanity CMS siteSettings with fallback to client.json
-const resolvedAddress = siteSettings?.primaryAddress || (client.contact.address ? `${client.contact.address.street}, ${client.contact.address.city}, ${client.contact.address.state} ${client.contact.address.zip}, ${client.contact.address.country}` : client.contact.location);
+const sanityAddress = (siteSettings?.addressStreet || siteSettings?.addressCity)
+  ? [siteSettings?.addressStreet, siteSettings?.addressCity, siteSettings?.addressState, siteSettings?.addressZip, siteSettings?.addressCountry].filter(Boolean).join(', ')
+  : null;
+const resolvedAddress: string = sanityAddress || (client.contact.address ? `${client.contact.address.street}, ${client.contact.address.city}, ${client.contact.address.state} ${client.contact.address.zip}, ${client.contact.address.country}` : client.contact.location) || '';
 const resolvedEmail = siteSettings?.primaryEmail || client.contact.primaryEmail;
 const resolvedPhone = siteSettings?.primaryPhone || client.contact.primaryPhone;
 const resolvedGst = siteSettings?.gstNumber || (client.business as any).gstNumber;
-const resolvedTagline = siteSettings?.seoDescription || client.business.tagline;
-const resolvedDescription = siteSettings?.seoDescription || client.business.description;
+const resolvedTagline = siteSettings?.tagline || client.business.tagline;
+const resolvedDescription = siteSettings?.description || client.business.description;
 
 // Format multi-line address
-const formattedAddress = typeof resolvedAddress === 'string'
-  ? resolvedAddress
-  : `${resolvedAddress?.street || ''}, ${resolvedAddress?.city || ''}, ${resolvedAddress?.state || ''} ${resolvedAddress?.postalCode || ''}, ${resolvedAddress?.country || ''}`;
+const formattedAddress = resolvedAddress;
 
 // Social SVG Helper
 function getPlatformSvg(platform: string) {

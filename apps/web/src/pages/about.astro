@@ -1,8 +1,6 @@
 ---
-export const prerender = true;
-
 import Layout from '../layouts/Layout.astro';
-import { sanityClient, getSiteSettings, getHomePage, urlFor } from '../utils/sanity';
+import { sanityClient, getSiteSettings, urlFor } from '../utils/sanity';
 import client from '../../../../client.json';
 import Breadcrumbs from '../components/ui/navigation/Breadcrumbs.astro';
 import TestimonialsSection from '../components/sections/home/TestimonialsSection';
@@ -12,7 +10,6 @@ import BlogHeadingRoll from '../components/ui/typography/BlogHeadingRoll';
 
 // Fetch Sanity settings and dynamic data with fallback to client.json
 const siteSettings = await getSiteSettings();
-const homePage = await getHomePage();
 
 const siteName = siteSettings?.name || client.business.name;
 const siteDescription = siteSettings?.description || client.business.description;
@@ -20,15 +17,19 @@ const siteDescription = siteSettings?.description || client.business.description
 const specialist = client.business.specialist;
 const doctorName = specialist?.name || 'Dr. P. Bharathi';
 const doctorDesignation = specialist?.designation || 'Consultant Obstetrician & Gynaecologist';
-const doctorBio = specialist?.bio || client.business.description;
+const doctorBio = specialist?.bio || siteDescription;
 const doctorQualifications = specialist?.qualifications || [
   'Fellow in Fetal Medicine, FMF (UK)',
   'Recognised Fellowship in Reproductive Medicine',
 ];
 
-const primaryPhone = client.contact.primaryPhone || '+91 81214 49988';
-const whatsappPhone = client.contact.whatsappPhone || '+91 81214 49988';
-const locationAddress = client.contact.location || 'Opp. Rotary School, Kamala Nagar, Ananthapuram';
+const primaryPhone = siteSettings?.primaryPhone || client.contact.primaryPhone || '+91 80086 28710';
+const whatsappPhone = siteSettings?.whatsAppPhone || siteSettings?.primaryPhone || client.contact.whatsappPhone || primaryPhone;
+
+const sanityAddress = (siteSettings?.addressStreet || siteSettings?.addressCity)
+  ? [siteSettings?.addressStreet, siteSettings?.addressCity, siteSettings?.addressState, siteSettings?.addressZip, siteSettings?.addressCountry].filter(Boolean).join(', ')
+  : null;
+const locationAddress = sanityAddress || client.contact.location || '15–381, Opp. Rotary School, Kamala Nagar, Ananthapuram';
 
 // Key Services for Treatment Highlights Grid
 const highlightedServices = client.services.slice(0, 6);
@@ -778,7 +779,7 @@ const finalPosts: BlogCardPost[] = [
           </div>
 
           <div class="space-y-4">
-            {faqs.map((faq, idx) => (
+            {faqs.map((faq) => (
               <details class="group p-5 sm:p-6 rounded-[22px] bg-white border border-[#FADCEB] open:border-[#E4006E] shadow-2xs transition-all duration-200" data-animate="fade-up">
                 <summary class="flex items-center justify-between cursor-pointer list-none font-heading font-bold text-base sm:text-lg text-[#1A0B3C] group-hover:text-[#E4006E] transition-colors">
                   <span>{faq.question}</span>

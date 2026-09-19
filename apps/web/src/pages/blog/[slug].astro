@@ -1,6 +1,4 @@
 ---
-export const prerender = true;
-
 import Layout from '../../layouts/Layout.astro';
 import { sanityClient, urlFor, getSiteSettings } from '../../utils/sanity';
 import PortableTextRenderer from '../../components/PortableTextRenderer';
@@ -20,29 +18,6 @@ import {
 } from 'lucide-react';
 import client from '../../../../../client.json';
 
-export async function getStaticPaths() {
-  const fallbackSlugs = [
-    'understanding-when-to-visit-a-fertility-specialist',
-    'comparing-iui-ivf-and-icsi-protocols',
-    'role-of-blastocyst-culture-day-5-embryo-incubation',
-    'advances-in-genetic-screening-pgt-a-pgt-m',
-    'comprehensive-guide-to-fertility-preservation-egg-freezing',
-  ];
-
-  let sanitySlugs: string[] = [];
-  try {
-    const posts = await sanityClient.fetch(`*[_type == "post" && defined(slug.current)]{ "slug": slug.current }`);
-    sanitySlugs = (posts || []).map((p: any) => p.slug).filter(Boolean);
-  } catch (e) {
-    console.error('Failed to fetch blog slugs for getStaticPaths:', e);
-  }
-
-  const allSlugs = Array.from(new Set([...sanitySlugs, ...fallbackSlugs]));
-  return allSlugs.map((slug) => ({
-    params: { slug },
-  }));
-}
-
 const { slug } = Astro.params;
 
 if (!slug) {
@@ -55,7 +30,7 @@ const specialist = client.business.specialist;
 const defaultAuthorName = specialist?.name || "Dr. P. Bharathi";
 const defaultAuthorRole = specialist?.designation || "Consultant Obstetrician & Gynaecologist";
 const doctorImage = specialist?.image || "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80";
-const primaryPhone = client.contact.primaryPhone || "+91 81214 49988";
+const primaryPhone = siteSettings?.primaryPhone || client.contact.primaryPhone || "+91 80086 28710";
 
 // Comprehensive fallback clinical articles for Janvithas Fertility Center
 const sampleFallbackPostsMap: Record<string, any> = {

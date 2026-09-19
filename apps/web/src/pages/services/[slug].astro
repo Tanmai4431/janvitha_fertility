@@ -4,15 +4,6 @@ import { getSiteSettings } from '../../utils/sanity';
 import client from '../../../../../client.json';
 import Breadcrumbs from '../../components/ui/navigation/Breadcrumbs.astro';
 
-export const prerender = true;
-
-export async function getStaticPaths() {
-  return (client.services || []).map((service: any) => ({
-    params: { slug: service.slug },
-    props: { service },
-  }));
-}
-
 interface SubserviceItem {
   slug?: string;
   title: string;
@@ -54,17 +45,20 @@ interface ServiceProps {
 }
 
 interface Props {
-  service: ServiceProps;
+  service?: ServiceProps;
 }
 
-const { service } = Astro.props;
+const { slug } = Astro.params;
+const service = Astro.props.service || (client.services || []).find((s: any) => s.slug === slug);
+
+if (!service) {
+  return Astro.redirect('/services');
+}
 
 const siteSettings = await getSiteSettings();
 const siteName = siteSettings?.name || client.business.name;
-const primaryPhone = siteSettings?.primaryPhone || client.contact.primaryPhone;
-const primaryEmail = client.contact.primaryEmail || 'info@janvithasfertility.com';
-const whatsappPhone = client.contact.whatsappPhone || primaryPhone;
-const locationAddress = client.contact.location || 'Opp. Rotary School, Kamala Nagar, Ananthapuram';
+const primaryPhone = siteSettings?.primaryPhone || client.contact.primaryPhone || '+91 80086 28710';
+const primaryEmail = siteSettings?.primaryEmail || client.contact.primaryEmail || 'info@janvithasfertility.com';
 
 const specialist = client.business.specialist;
 const doctorName = specialist?.name || 'Dr. P. Bharathi';

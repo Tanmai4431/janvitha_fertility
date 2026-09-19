@@ -8,11 +8,15 @@ const cleanProjectId = String(rawProjectId).replace(/["'\s]/g, '').trim() || 'xw
 const rawDataset = import.meta.env.PUBLIC_SANITY_DATASET || (client as any).sanity?.dataset || 'production';
 const cleanDataset = String(rawDataset).replace(/["'\s]/g, '').trim() || 'production';
 
+const isDev = Boolean(import.meta.env.DEV);
+const isCdnExplicitlyDisabled = import.meta.env.PUBLIC_SANITY_USE_CDN === 'false';
+const useCdn = isDev ? false : !isCdnExplicitlyDisabled;
+
 export const sanityClient = createClient({
   projectId: cleanProjectId,
   dataset: cleanDataset,
   apiVersion: '2024-03-11',
-  useCdn: import.meta.env.PUBLIC_SANITY_USE_CDN === 'false' ? false : true, // Enable CDN edge caching for flash speed by default, allowing local override if needed
+  useCdn,
 });
 
 const builder = createImageUrlBuilder(sanityClient);
@@ -21,10 +25,9 @@ export function urlFor(source: any) {
   return builder.image(source);
 }
 
-
 let cachedSettings: any = null;
 let lastCacheTime = 0;
-const CACHE_TTL = 300000; // 5 minutes cache TTL
+const CACHE_TTL = isDev ? 0 : 15000; // 0 ms in development so Sanity updates immediately reflect; 15s in production
 
 export async function getSiteSettings() {
   const now = Date.now();
@@ -82,7 +85,7 @@ export async function getSiteSettings() {
         whatsAppCustomImage
       }`,
       {},
-      { useCdn: true }
+      { useCdn }
     );
     if (settings) {
       const result = {
@@ -186,7 +189,7 @@ export async function getHomePage() {
         }
       }`,
       {},
-      { useCdn: true }
+      { useCdn }
     );
     if (data) {
       const result = {

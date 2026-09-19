@@ -1,10 +1,7 @@
 ---
-export const prerender = true;
-
 import Layout from '../layouts/Layout.astro';
 import { sanityClient, getSiteSettings, getHomePage, urlFor } from '../utils/sanity';
 import client from '../../../../client.json';
-import HeroSection from '../components/sections/home/HeroSection.astro';
 import { AboutSection } from '../components/sections/home/AboutSection';
 import { HospitalLocationCard } from '../components/sections/home/HospitalLocationCard';
 import ServicesSection from '../components/sections/home/ServicesSection.astro';
@@ -155,45 +152,15 @@ const socialLinks = rawSocialLinks.map((item: any) => {
   };
 });
 
-// Resolve orbitItems: Priority 1 = Sanity homePage, Priority 2 = client.json fallback
-const rawOrbitItems = (homePage?.orbitItems && homePage.orbitItems.length > 0)
-  ? homePage.orbitItems
-  : (client.orbitItems || []);
+const siteName = siteSettings?.name || client.business.name;
+const siteDescription = siteSettings?.description || client.business.description;
+const primaryPhone = siteSettings?.primaryPhone || client.contact?.primaryPhone || '+91 80086 28710';
+const whatsAppPhone = siteSettings?.whatsAppPhone || siteSettings?.primaryPhone || client.contact?.whatsappPhone || primaryPhone;
 
-const orbitItems = rawOrbitItems.map((item: any) => {
-  let iconUrl: string | null = null;
-  if (item?.icon) {
-    try {
-      iconUrl = urlFor(item.icon).fit('max').url();
-    } catch (e) {
-      console.error("Failed to resolve orbit item icon URL:", e);
-    }
-  }
-  return {
-    name: item.name || 'Brand Node',
-    ring: item.ring || 'middle',
-    svgCode: item.svgCode || '',
-    iconUrl,
-    color: item.color || '',
-    url: item.url || '',
-  };
-});
-
-// Center logo: resolve from siteSettings brandIcon or logo (global branding)
-let centerLogoUrl: string | null = null;
-if (siteSettings?.brandIcon) {
-  try {
-    centerLogoUrl = urlFor(siteSettings.brandIcon).fit('max').url();
-  } catch (e) {
-    console.error("Failed to resolve center brandIcon URL:", e);
-  }
-} else if (siteSettings?.logo) {
-  try {
-    centerLogoUrl = urlFor(siteSettings.logo).fit('max').url();
-  } catch (e) {
-    console.error("Failed to resolve center logo URL:", e);
-  }
-}
+const sanityAddress = (siteSettings?.addressStreet || siteSettings?.addressCity)
+  ? [siteSettings?.addressStreet, siteSettings?.addressCity, siteSettings?.addressState, siteSettings?.addressZip, siteSettings?.addressCountry].filter(Boolean).join(', ')
+  : null;
+const resolvedAddress = sanityAddress || (client.contact.address ? `${client.contact.address.street}, ${client.contact.address.city}, ${client.contact.address.state} ${client.contact.address.zip}, ${client.contact.address.country}` : client.contact.location);
 
 // Combine posts ensuring exactly 3 posts are displayed on homepage
 const finalPosts: BlogCardPost[] = [
@@ -207,13 +174,31 @@ const finalPosts: BlogCardPost[] = [
     <div class="flex flex-col">
       
       <!-- About Section -->
-      <AboutSection client:visible aboutGallery={aboutGallery} aboutImages={aboutImages} socialLinks={socialLinks} />
+      <AboutSection 
+        client:visible 
+        aboutGallery={aboutGallery} 
+        aboutImages={aboutImages} 
+        socialLinks={socialLinks} 
+        primaryPhone={primaryPhone}
+        whatsappPhone={whatsAppPhone}
+        doctorBio={siteDescription}
+        siteName={siteName}
+      />
 
       <!-- Hospital Location Showcase & Maps Section -->
-      <HospitalLocationCard client:visible />
+      <HospitalLocationCard 
+        client:visible 
+        phone={primaryPhone}
+        address={resolvedAddress}
+        siteName={siteName}
+      />
 
       <!-- Services Section Block -->
-      <ServicesSection />
+      <ServicesSection 
+        siteName={siteName}
+        siteDescription={siteDescription}
+        primaryPhone={primaryPhone}
+      />
 
       <!-- Testimonials Section -->
       <TestimonialsSection client:visible />

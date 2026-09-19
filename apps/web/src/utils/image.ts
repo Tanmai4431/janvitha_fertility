@@ -49,7 +49,6 @@ export function getSanityImageProps(source: SanityImageSource, maxWidth = 1200) 
   
   // Calculate aspect ratio constraints to prevent layout shifts
   const width = dimensions?.width || 800;
-  const height = dimensions?.height || 600;
   const aspectRatio = dimensions?.aspectRatio || 4/3;
 
   // Build responsive widths

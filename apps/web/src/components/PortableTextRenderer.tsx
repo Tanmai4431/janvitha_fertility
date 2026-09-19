@@ -1,6 +1,5 @@
 import React from 'react';
 import { PortableText, type PortableTextComponents } from '@portabletext/react';
-import { urlFor } from '../utils/sanity';
 import { getSanityImageProps } from '../utils/image';
 
 interface PortableTextRendererProps {

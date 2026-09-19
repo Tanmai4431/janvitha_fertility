@@ -36,21 +36,33 @@ export interface AboutSectionProps {
   aboutImages?: string[];
   aboutGallery?: AboutGalleryItemProps[];
   socialLinks?: SocialLinkItem[];
+  primaryPhone?: string;
+  whatsappPhone?: string;
+  doctorName?: string;
+  doctorDesignation?: string;
+  doctorBio?: string;
+  siteName?: string;
 }
 
 export function AboutSection({
   aboutImageUrl,
+  primaryPhone: propPrimaryPhone,
+  whatsappPhone: _propWhatsappPhone,
+  doctorName: propDoctorName,
+  doctorDesignation: propDoctorDesignation,
+  doctorBio: propDoctorBio,
+  siteName: _propSiteName,
 }: AboutSectionProps) {
-  // Doctor details from unified client.json data
+  // Doctor details from unified client.json data or props
   const specialist = clientData.business.specialist;
-  const doctorName = specialist?.name || "Dr. P. Bharathi";
-  const designation = specialist?.designation || "Consultant Obstetrician & Gynaecologist";
+  const doctorName = propDoctorName || specialist?.name || "Dr. P. Bharathi";
+  const designation = propDoctorDesignation || specialist?.designation || "Consultant Obstetrician & Gynaecologist";
   
-  // Concise doctor description
-  const bio = "Specialist in Reproductive & Fetal Medicine (UK), dedicated to personalized fertility solutions, advanced IVF protocols, and compassionate care.";
+  // Doctor description
+  const bio = propDoctorBio || specialist?.bio || "Specialist in Reproductive & Fetal Medicine (UK), dedicated to personalized fertility solutions, advanced IVF protocols, and compassionate care.";
 
   const doctorPhoto = aboutImageUrl || specialist?.image || "/assets/doctor-dr-p-bharathi.jpg";
-  const primaryPhone = clientData.contact.primaryPhone || "+91 81214 49988";
+  const primaryPhone = propPrimaryPhone || clientData.contact.primaryPhone || "+91 80086 28710";
 
   // 4 Feature Cards Data matching reference image
   const featureCards = [

@@ -147,7 +147,8 @@ const socialLinks = rawSocialLinks.map((item: any) => {
   };
 });
 
-const primaryPhone = siteSettings?.primaryPhone || client.contact?.primaryPhone || '+91 94913 09988';
+const primaryPhone = siteSettings?.primaryPhone || client.contact?.primaryPhone || '+91 80086 28710';
+const whatsAppPhone = siteSettings?.whatsAppPhone || siteSettings?.primaryPhone || client.contact?.whatsappPhone || primaryPhone;
 ---
 
 <!doctype html>
@@ -238,10 +239,10 @@ const primaryPhone = siteSettings?.primaryPhone || client.contact?.primaryPhone 
     <BackToTop />
 
     <!-- Desktop Sticky Floating WhatsApp Action Button -->
-    <WhatsAppSticky primaryPhone={primaryPhone} />
+    <WhatsAppSticky primaryPhone={whatsAppPhone} />
 
     <!-- Mobile & Tablet Glassmorphic Sticky Bottom Navigation Bar -->
-    <MobileBottomNav client:load primaryPhone={primaryPhone} whatsappPhone={primaryPhone} transition:persist="mobile-bottom-nav" />
+    <MobileBottomNav client:load primaryPhone={primaryPhone} whatsappPhone={whatsAppPhone} transition:persist="mobile-bottom-nav" />
     <!-- Global Analytics Event Delegation Script -->
     <script is:inline>
       // Page View Tracking on Client-Side Transitions (SPA Routing)
