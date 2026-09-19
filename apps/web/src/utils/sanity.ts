@@ -9,8 +9,8 @@ const rawDataset = import.meta.env.PUBLIC_SANITY_DATASET || (client as any).sani
 const cleanDataset = String(rawDataset).replace(/["'\s]/g, '').trim() || 'production';
 
 const isDev = Boolean(import.meta.env.DEV);
-const isCdnExplicitlyDisabled = import.meta.env.PUBLIC_SANITY_USE_CDN === 'false';
-const useCdn = isDev ? false : !isCdnExplicitlyDisabled;
+// In SSR mode, always query live Sanity API so new logo/data edits reflect instantly on the live site
+const useCdn = false;
 
 export const sanityClient = createClient({
   projectId: cleanProjectId,
@@ -43,10 +43,15 @@ export async function getSiteSettings() {
         tagline,
         description,
         logo,
+        "logoUrl": logo.asset->url,
         invertedLogo,
+        "invertedLogoUrl": invertedLogo.asset->url,
         brandIcon,
+        "brandIconUrl": brandIcon.asset->url,
         favicon,
+        "faviconUrl": favicon.asset->url,
         appleTouchIcon,
+        "appleTouchIconUrl": appleTouchIcon.asset->url,
         primaryEmail,
         supportEmail,
         primaryPhone,
@@ -60,6 +65,7 @@ export async function getSiteSettings() {
         title,
         seoDescription,
         shareImage,
+        "shareImageUrl": shareImage.asset->url,
         googleSiteVerificationId,
         googleAnalyticsId,
         googleTagManagerId,
@@ -72,6 +78,7 @@ export async function getSiteSettings() {
         emailCc,
         enablePageAnimations,
         pwaAppIcon,
+        "pwaAppIconUrl": pwaAppIcon.asset->url,
         enablePwaBanner,
         pwaLimitOncePerDay,
         pwaBannerDisplaySeconds,
@@ -82,10 +89,11 @@ export async function getSiteSettings() {
         whatsAppShowActiveStatus,
         whatsAppIconType,
         whatsAppCustomSvg,
-        whatsAppCustomImage
+        whatsAppCustomImage,
+        "whatsAppCustomImageUrl": whatsAppCustomImage.asset->url
       }`,
       {},
-      { useCdn }
+      { useCdn: false }
     );
     if (settings) {
       const result = {
@@ -94,10 +102,15 @@ export async function getSiteSettings() {
         tagline: settings.tagline || null,
         description: settings.description || null,
         logo: settings.logo || null,
+        logoUrl: settings.logoUrl || null,
         invertedLogo: settings.invertedLogo || null,
+        invertedLogoUrl: settings.invertedLogoUrl || null,
         brandIcon: settings.brandIcon || null,
+        brandIconUrl: settings.brandIconUrl || null,
         favicon: settings.favicon || null,
+        faviconUrl: settings.faviconUrl || null,
         appleTouchIcon: settings.appleTouchIcon || null,
+        appleTouchIconUrl: settings.appleTouchIconUrl || null,
         primaryEmail: settings.primaryEmail || null,
         supportEmail: settings.supportEmail || null,
         primaryPhone: settings.primaryPhone || null,
@@ -111,6 +124,7 @@ export async function getSiteSettings() {
         title: settings.title || null,
         seoDescription: settings.seoDescription || null,
         shareImage: settings.shareImage || null,
+        shareImageUrl: settings.shareImageUrl || null,
         googleSiteVerificationId: settings.googleSiteVerificationId || null,
         googleAnalyticsId: settings.googleAnalyticsId || null,
         googleTagManagerId: settings.googleTagManagerId || null,
@@ -118,6 +132,7 @@ export async function getSiteSettings() {
         pwaOfflineDescription: settings.pwaOfflineDescription || null,
         pwaShortcuts: settings.pwaShortcuts || null,
         pwaAppIcon: settings.pwaAppIcon || null,
+        pwaAppIconUrl: settings.pwaAppIconUrl || null,
         resendApiKey: settings.resendApiKey || null,
         emailFromName: settings.emailFromName || null,
         emailFromAddress: settings.emailFromAddress || null,
@@ -135,6 +150,7 @@ export async function getSiteSettings() {
         whatsAppIconType: settings.whatsAppIconType || 'default',
         whatsAppCustomSvg: settings.whatsAppCustomSvg || null,
         whatsAppCustomImage: settings.whatsAppCustomImage || null,
+        whatsAppCustomImageUrl: settings.whatsAppCustomImageUrl || null,
       };
       cachedSettings = result;
       lastCacheTime = now;
@@ -189,7 +205,7 @@ export async function getHomePage() {
         }
       }`,
       {},
-      { useCdn }
+      { useCdn: false }
     );
     if (data) {
       const result = {

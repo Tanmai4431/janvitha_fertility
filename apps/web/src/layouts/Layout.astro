@@ -52,6 +52,9 @@ if (pwaIconRef) {
     console.error('Failed to resolve pwaAppIconUrl from Sanity:', e);
   }
 }
+if (!pwaAppIconUrl && siteSettings?.pwaAppIconUrl) {
+  pwaAppIconUrl = siteSettings.pwaAppIconUrl;
+}
 
 if (siteSettings?.favicon) {
   try {
@@ -60,6 +63,9 @@ if (siteSettings?.favicon) {
   } catch (e) {
     console.error('Failed to resolve favicon from Sanity:', e);
   }
+} else if (siteSettings?.faviconUrl) {
+  faviconUrl = siteSettings.faviconUrl;
+  faviconSvgUrl = siteSettings.faviconUrl;
 } else if (siteSettings?.brandIcon) {
   try {
     faviconUrl = urlFor(siteSettings.brandIcon).width(64).height(64).format('png').url();
@@ -67,6 +73,9 @@ if (siteSettings?.favicon) {
   } catch (e) {
     console.error('Failed to resolve brandIcon favicon from Sanity:', e);
   }
+} else if (siteSettings?.brandIconUrl) {
+  faviconUrl = siteSettings.brandIconUrl;
+  faviconSvgUrl = siteSettings.brandIconUrl;
 } else if (siteSettings?.logo) {
   try {
     faviconUrl = urlFor(siteSettings.logo).width(64).height(64).format('png').url();
@@ -74,6 +83,9 @@ if (siteSettings?.favicon) {
   } catch (e) {
     console.error('Failed to resolve logo favicon from Sanity:', e);
   }
+} else if (siteSettings?.logoUrl) {
+  faviconUrl = siteSettings.logoUrl;
+  faviconSvgUrl = siteSettings.logoUrl;
 }
 
 if (siteSettings?.appleTouchIcon) {
@@ -82,18 +94,24 @@ if (siteSettings?.appleTouchIcon) {
   } catch (e) {
     console.error('Failed to resolve appleTouchIcon from Sanity:', e);
   }
+} else if (siteSettings?.appleTouchIconUrl) {
+  appleTouchIconUrl = siteSettings.appleTouchIconUrl;
 } else if (siteSettings?.brandIcon) {
   try {
     appleTouchIconUrl = urlFor(siteSettings.brandIcon).width(180).height(180).format('png').url();
   } catch (e) {
     console.error('Failed to resolve brandIcon appleTouchIcon from Sanity:', e);
   }
+} else if (siteSettings?.brandIconUrl) {
+  appleTouchIconUrl = siteSettings.brandIconUrl;
 } else if (siteSettings?.logo) {
   try {
     appleTouchIconUrl = urlFor(siteSettings.logo).width(180).height(180).format('png').url();
   } catch (e) {
     console.error('Failed to resolve logo appleTouchIcon from Sanity:', e);
   }
+} else if (siteSettings?.logoUrl) {
+  appleTouchIconUrl = siteSettings.logoUrl;
 }
 
 if (siteSettings?.logo) {
@@ -103,6 +121,12 @@ if (siteSettings?.logo) {
     console.error('Failed to resolve siteSettings.logo:', e);
   }
 }
+if (!navLogoUrl && siteSettings?.logoUrl) {
+  navLogoUrl = siteSettings.logoUrl;
+}
+if (!navLogoUrl && (client.business as any)?.logo) {
+  navLogoUrl = (client.business as any).logo;
+}
 
 if (siteSettings?.brandIcon) {
   try {
@@ -111,6 +135,12 @@ if (siteSettings?.brandIcon) {
     console.error('Failed to resolve siteSettings.brandIcon:', e);
   }
 }
+if (!navBrandIconUrl && siteSettings?.brandIconUrl) {
+  navBrandIconUrl = siteSettings.brandIconUrl;
+}
+if (!navBrandIconUrl && (client.business as any)?.logoIcon) {
+  navBrandIconUrl = (client.business as any).logoIcon;
+}
 
 if (siteSettings?.invertedLogo) {
   try {
@@ -118,11 +148,15 @@ if (siteSettings?.invertedLogo) {
   } catch (e) {
     console.error('Failed to resolve siteSettings.invertedLogo:', e);
   }
-} else {
-  footerLogoUrl = navLogoUrl || navBrandIconUrl;
+}
+if (!footerLogoUrl && siteSettings?.invertedLogoUrl) {
+  footerLogoUrl = siteSettings.invertedLogoUrl;
+}
+if (!footerLogoUrl) {
+  footerLogoUrl = navLogoUrl || navBrandIconUrl || (client.business as any)?.invertedLogo || (client.business as any)?.logo || null;
 }
 
-const pwaLogoUrl = pwaAppIconUrl || navBrandIconUrl || faviconSvgUrl;
+const pwaLogoUrl = pwaAppIconUrl || navBrandIconUrl || navLogoUrl || faviconSvgUrl;
 
 // Resolve Dynamic Social Profiles from Sanity CMS with client.json Fallback
 const rawSocialLinks = (siteSettings?.socialLinks && siteSettings.socialLinks.length > 0)
