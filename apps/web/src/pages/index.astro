@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { sanityClient, getSiteSettings, getHomePage, urlFor } from '../utils/sanity';
+import { sanityClient, getSiteSettings, getHomePage, getDoctorProfile, urlFor } from '../utils/sanity';
 import client from '../../../../client.json';
 import { AboutSection } from '../components/sections/home/AboutSection';
 import { HospitalLocationCard } from '../components/sections/home/HospitalLocationCard';
@@ -104,9 +104,10 @@ const sampleFallbackPosts: BlogCardPost[] = [
   },
 ];
 
-// Fetch both: siteSettings (branding/logo) and homePage (orbit items & about assets)
+// Fetch siteSettings (branding/logo), homePage (orbit items & about assets), and doctorProfile
 const siteSettings = await getSiteSettings();
 const homePage = await getHomePage();
+const doctorProfile = await getDoctorProfile();
 
 // Resolve About Section Featured Media Gallery (Images & Videos): Priority 1 = Sanity homePage.aboutGallery, Priority 2 = homePage.aboutImages
 const aboutGallery = homePage?.aboutGallery || [];
@@ -154,8 +155,30 @@ const socialLinks = rawSocialLinks.map((item: any) => {
 
 const siteName = siteSettings?.name || client.business.name;
 const siteDescription = siteSettings?.description || client.business.description;
-const primaryPhone = siteSettings?.primaryPhone || client.contact?.primaryPhone || '+91 80086 28710';
+const primaryPhone = doctorProfile?.directPhone || siteSettings?.primaryPhone || client.contact?.primaryPhone || '+91 80086 28710';
 const whatsAppPhone = siteSettings?.whatsAppPhone || siteSettings?.primaryPhone || client.contact?.whatsappPhone || primaryPhone;
+
+// Resolve Dynamic Doctor Image & Specialist Profile: Priority 1 = doctorProfile, Priority 2 = siteSettings, Priority 3 = client.json
+let doctorImageUrl = doctorProfile?.imageUrl || siteSettings?.specialistImageUrl || client.business.specialist?.image || null;
+if (doctorProfile?.image) {
+  try {
+    doctorImageUrl = urlFor(doctorProfile.image).width(800).height(900).format('webp').url();
+  } catch (e) {
+    console.error('Failed to resolve doctorProfile.image URL:', e);
+  }
+} else if (siteSettings?.specialistImage) {
+  try {
+    doctorImageUrl = urlFor(siteSettings.specialistImage).width(800).height(900).format('webp').url();
+  } catch (e) {
+    console.error('Failed to resolve specialistImage URL:', e);
+  }
+}
+const doctorName = doctorProfile?.name || siteSettings?.specialistName || client.business.specialist?.name;
+const doctorDesignation = doctorProfile?.designation || siteSettings?.specialistDesignation || client.business.specialist?.designation;
+const doctorBio = doctorProfile?.bio || siteSettings?.specialistBio || siteSettings?.description || client.business.specialist?.bio || client.business.description;
+
+// Resolve Dynamic Hospital & Clinic Facility Photos
+const facilityPhotos = homePage?.facilityPhotos || [];
 
 const sanityAddress = (siteSettings?.addressStreet || siteSettings?.addressCity)
   ? [siteSettings?.addressStreet, siteSettings?.addressCity, siteSettings?.addressState, siteSettings?.addressZip, siteSettings?.addressCountry].filter(Boolean).join(', ')
@@ -171,39 +194,43 @@ const finalPosts: BlogCardPost[] = [
 
 <Layout>
   <main class="flex-grow pt-4 sm:pt-6 pb-16 md:pb-20 bg-background">
-    <div class="flex flex-col">
+    <div class="flex flex-col space-y-4 sm:space-y-6">
       
-      <!-- About Section -->
+      <!-- 1. About Section -->
       <AboutSection 
         client:visible 
+        aboutImageUrl={doctorImageUrl}
+        doctorName={doctorName}
+        doctorDesignation={doctorDesignation}
+        doctorBio={doctorBio}
         aboutGallery={aboutGallery} 
         aboutImages={aboutImages} 
         socialLinks={socialLinks} 
         primaryPhone={primaryPhone}
         whatsappPhone={whatsAppPhone}
-        doctorBio={siteDescription}
         siteName={siteName}
       />
 
-      <!-- Hospital Location Showcase & Maps Section -->
+      <!-- 2. Hospital Location Showcase & Maps Section -->
       <HospitalLocationCard 
         client:visible 
         phone={primaryPhone}
         address={resolvedAddress}
         siteName={siteName}
+        photos={facilityPhotos}
       />
 
-      <!-- Services Section Block -->
+      <!-- 3. Services / Fertility Treatments Explorer Section -->
       <ServicesSection 
         siteName={siteName}
         siteDescription={siteDescription}
         primaryPhone={primaryPhone}
       />
 
-      <!-- Testimonials Section -->
+      <!-- 4. Patient Testimonials & Google Ratings Section -->
       <TestimonialsSection client:visible />
 
-      <!-- Publications Feed Section (Structured Parent Container matching other sections) -->
+      <!-- 5. Publications Feed & Clinical Guidance Section -->
       <section id="publications" class="w-full py-3 sm:py-4 scroll-mt-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div 
@@ -213,11 +240,11 @@ const finalPosts: BlogCardPost[] = [
             
             <!-- Centered Section Header Badge & Dynamic Shifting Title -->
             <div class="flex flex-col items-center text-center space-y-3 max-w-3xl mx-auto font-sans w-full max-w-full overflow-hidden" data-animate="fade-up">
-              {/* Dynamic Rotating Word Shift Animation Loop across 4 Pillars */}
+              {/* Dynamic Rotating Word Shift Animation Loop across Fertility Pillars */}
               <BlogHeadingRoll client:visible />
 
               <p class="text-secondary text-sm sm:text-base leading-relaxed max-w-2xl mx-auto pt-0.5 font-sans">
-                Expert articles, patient guides, and clinical insights on IVF treatments reproductive health fetal medicine fertility preservation.
+                Expert articles, patient guides, and clinical insights on IVF treatments, reproductive health, fetal medicine, and fertility preservation.
               </p>
             </div>
 

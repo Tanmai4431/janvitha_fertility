@@ -1,8 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { getSiteSettings } from '../../utils/sanity';
+import { getSiteSettings, getServices, urlFor } from '../../utils/sanity';
 import client from '../../../../../client.json';
 import Breadcrumbs from '../../components/ui/navigation/Breadcrumbs.astro';
+import { ServiceCard } from '../../components/ui/ServiceCard';
 
 interface SubserviceItem {
   slug?: string;
@@ -13,6 +14,7 @@ interface SubserviceItem {
   procedureSteps?: string[];
   benefits?: string[];
   timeline?: string;
+  suitability?: string;
   suitableFor?: string;
 }
 
@@ -28,20 +30,26 @@ interface ServiceFAQ {
 }
 
 interface ServiceProps {
-  id: string;
+  id?: string;
   slug: string;
-  category: string;
   title: string;
-  shortDesc: string;
+  badge?: string;
+  category?: string;
+  description?: string;
+  shortDesc?: string;
+  shortDescription?: string;
   fullDescription?: string;
   imageUrl?: string;
-  videoUrl?: string;
+  image?: any;
   subservices?: SubserviceItem[];
-  features?: string[];
-  metrics?: { label: string; value: string }[];
   benefits?: ServiceBenefit[];
   deliverables?: string[];
   faqs?: ServiceFAQ[];
+  features?: string[];
+  overview?: string;
+  timeline?: string;
+  successRate?: string;
+  metrics?: { label: string; value: string }[];
 }
 
 interface Props {
@@ -49,10 +57,20 @@ interface Props {
 }
 
 const { slug } = Astro.params;
-const service = Astro.props.service || (client.services || []).find((s: any) => s.slug === slug);
+const allServices = (await getServices()) || client.services;
+const service: ServiceProps | undefined = Astro.props.service || (allServices || []).find((s: any) => s.slug === slug);
 
 if (!service) {
   return Astro.redirect('/services');
+}
+
+let serviceImageUrl = service.imageUrl || (typeof service.image === 'string' ? service.image : '') || '';
+if (service.image && typeof service.image === 'object') {
+  try {
+    serviceImageUrl = urlFor(service.image).width(1200).height(800).format('webp').url();
+  } catch (e) {
+    console.error('Failed to resolve service image:', e);
+  }
 }
 
 const siteSettings = await getSiteSettings();
@@ -171,7 +189,7 @@ const otherServices = (client.services || [])
               <div class="lg:col-span-5 relative flex justify-center lg:justify-end">
                 <div class="relative w-full max-w-[440px] aspect-[4/3] sm:aspect-[16/11] rounded-[28px] overflow-hidden shadow-xl border-4 border-white/90 group">
                   <img
-                    src={service.imageUrl || '/assets/couple-pregnancy-test.jpg'}
+                    src={serviceImageUrl || service.imageUrl || '/assets/couple-pregnancy-test.jpg'}
                     alt={service.title}
                     class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                     loading="eager"
@@ -488,26 +506,11 @@ const otherServices = (client.services || [])
             </a>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             {otherServices.map((other: any) => (
-              <a
-                href={`/services/${other.slug}`}
-                class="p-6 rounded-[24px] bg-white border border-[#FADCEB] hover:border-[#E4006E] shadow-xs hover:shadow-lg transition-all duration-300 space-y-2.5 text-left group"
-              >
-                <span class="text-[10px] font-bold uppercase tracking-wider text-[#E4006E] bg-[#FFF0F6] px-2.5 py-0.5 rounded-full border border-[#FADCEB]">
-                  {other.category}
-                </span>
-                <h4 class="font-heading font-bold text-base text-[#1A0B3C] group-hover:text-[#E4006E] transition-colors">
-                  {other.title}
-                </h4>
-                <p class="text-secondary text-xs font-sans line-clamp-2">
-                  {other.shortDesc}
-                </p>
-                <div class="pt-2 text-xs font-bold text-[#853676] group-hover:text-[#E4006E] flex items-center gap-1">
-                  <span>Explore Procedure</span>
-                  <span>→</span>
-                </div>
-              </a>
+              <div data-animate="fade-up" class="h-full flex">
+                <ServiceCard client:visible service={other} />
+              </div>
             ))}
           </div>
         </div>

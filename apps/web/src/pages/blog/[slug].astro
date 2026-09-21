@@ -1,6 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { sanityClient, urlFor, getSiteSettings } from '../../utils/sanity';
+import { sanityClient, urlFor, getSiteSettings, getDoctorProfile } from '../../utils/sanity';
 import PortableTextRenderer from '../../components/PortableTextRenderer';
 import Breadcrumbs from '../../components/ui/navigation/Breadcrumbs.astro';
 import { BlogCard, type BlogCardPost } from '../../components/ui/BlogCard';
@@ -25,12 +25,29 @@ if (!slug) {
 }
 
 const siteSettings = await getSiteSettings();
+const doctorProfile = await getDoctorProfile();
 const siteName = siteSettings?.name || client.business.name;
-const specialist = client.business.specialist;
-const defaultAuthorName = specialist?.name || "Dr. P. Bharathi";
-const defaultAuthorRole = specialist?.designation || "Consultant Obstetrician & Gynaecologist";
-const doctorImage = specialist?.image || "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80";
-const primaryPhone = siteSettings?.primaryPhone || client.contact.primaryPhone || "+91 80086 28710";
+
+// Resolve Dynamic Doctor Profile from Sanity
+let doctorImageUrl = doctorProfile?.imageUrl || siteSettings?.specialistImageUrl || client.business.specialist?.image || '/assets/doctor-dr-p-bharathi.jpg';
+if (doctorProfile?.image) {
+  try {
+    doctorImageUrl = urlFor(doctorProfile.image).width(400).height(400).format('webp').url();
+  } catch (e) {
+    console.error('Failed to resolve doctorProfile.image URL:', e);
+  }
+} else if (siteSettings?.specialistImage) {
+  try {
+    doctorImageUrl = urlFor(siteSettings.specialistImage).width(400).height(400).format('webp').url();
+  } catch (e) {
+    console.error('Failed to resolve specialistImage URL:', e);
+  }
+}
+
+const defaultAuthorName = doctorProfile?.name || siteSettings?.specialistName || client.business.specialist?.name || "Dr. P. Bharathi";
+const defaultAuthorRole = doctorProfile?.designation || siteSettings?.specialistDesignation || client.business.specialist?.designation || "Consultant Obstetrician & Gynaecologist";
+const doctorImage = doctorImageUrl;
+const primaryPhone = doctorProfile?.directPhone || siteSettings?.primaryPhone || client.contact.primaryPhone || "+91 80086 28710";
 
 // Comprehensive fallback clinical articles for Janvithas Fertility Center
 const sampleFallbackPostsMap: Record<string, any> = {

@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { sanityClient, getSiteSettings, urlFor } from '../utils/sanity';
+import { sanityClient, getSiteSettings, getDoctorProfile, urlFor } from '../utils/sanity';
 import client from '../../../../client.json';
 import Breadcrumbs from '../components/ui/navigation/Breadcrumbs.astro';
 import TestimonialsSection from '../components/sections/home/TestimonialsSection';
@@ -8,22 +8,40 @@ import { BlogCard, type BlogCardPost } from '../components/ui/BlogCard';
 import InteractiveHoverButton from '../components/ui/buttons/interactive-hover-button';
 import BlogHeadingRoll from '../components/ui/typography/BlogHeadingRoll';
 
-// Fetch Sanity settings and dynamic data with fallback to client.json
+// Fetch Sanity settings and dynamic doctor profile with fallback to client.json
 const siteSettings = await getSiteSettings();
+const doctorProfile = await getDoctorProfile();
 
 const siteName = siteSettings?.name || client.business.name;
 const siteDescription = siteSettings?.description || client.business.description;
 
 const specialist = client.business.specialist;
-const doctorName = specialist?.name || 'Dr. P. Bharathi';
-const doctorDesignation = specialist?.designation || 'Consultant Obstetrician & Gynaecologist';
-const doctorBio = specialist?.bio || siteDescription;
-const doctorQualifications = specialist?.qualifications || [
-  'Fellow in Fetal Medicine, FMF (UK)',
-  'Recognised Fellowship in Reproductive Medicine',
-];
+const doctorName = doctorProfile?.name || siteSettings?.specialistName || specialist?.name || 'Dr. P. Bharathi';
+const doctorDesignation = doctorProfile?.designation || siteSettings?.specialistDesignation || specialist?.designation || 'Consultant Obstetrician & Gynaecologist';
+const doctorBio = doctorProfile?.bio || siteSettings?.specialistBio || specialist?.bio || siteDescription;
+const doctorQualifications = (doctorProfile?.qualifications && doctorProfile.qualifications.length > 0)
+  ? doctorProfile.qualifications
+  : (siteSettings?.specialistQualifications || specialist?.qualifications || [
+      'Fellow in Fetal Medicine, FMF (UK)',
+      'Recognised Fellowship in Reproductive Medicine',
+    ]);
 
-const primaryPhone = siteSettings?.primaryPhone || client.contact.primaryPhone || '+91 80086 28710';
+let doctorImageUrl = doctorProfile?.imageUrl || siteSettings?.specialistImageUrl || specialist?.image || '/assets/doctor-dr-p-bharathi.jpg';
+if (doctorProfile?.image) {
+  try {
+    doctorImageUrl = urlFor(doctorProfile.image).width(800).height(900).format('webp').url();
+  } catch (e) {
+    console.error('Failed to resolve doctorProfile.image URL:', e);
+  }
+} else if (siteSettings?.specialistImage) {
+  try {
+    doctorImageUrl = urlFor(siteSettings.specialistImage).width(800).height(900).format('webp').url();
+  } catch (e) {
+    console.error('Failed to resolve specialistImage URL:', e);
+  }
+}
+
+const primaryPhone = doctorProfile?.directPhone || siteSettings?.primaryPhone || client.contact.primaryPhone || '+91 80086 28710';
 const whatsappPhone = siteSettings?.whatsAppPhone || siteSettings?.primaryPhone || client.contact.whatsappPhone || primaryPhone;
 
 const sanityAddress = (siteSettings?.addressStreet || siteSettings?.addressCity)
@@ -554,7 +572,7 @@ const finalPosts: BlogCardPost[] = [
             <div class="lg:col-span-5 relative flex justify-center">
               <div class="relative w-full max-w-[380px] overflow-hidden rounded-[28px] border-2 border-white shadow-[0_8px_30px_rgba(228,0,110,0.12)] bg-white">
                 <img
-                  src={specialist?.image || '/assets/doctor-dr-p-bharathi.jpg'}
+                  src={doctorImageUrl}
                   alt={doctorName}
                   class="w-full h-[410px] object-cover object-top block"
                   loading="lazy"

@@ -64,6 +64,13 @@ export interface HospitalLocationCardProps {
   mapsUrl?: string;
   embedMapsUrl?: string;
   siteName?: string;
+  photos?: Array<{
+    id?: string;
+    title?: string;
+    alt?: string;
+    url?: string;
+    imageUrl?: string;
+  }>;
 }
 
 export function HospitalLocationCard({
@@ -72,7 +79,17 @@ export function HospitalLocationCard({
   mapsUrl: propMapsUrl,
   embedMapsUrl: propEmbedMapsUrl,
   siteName: _propSiteName,
+  photos: propPhotos,
 }: HospitalLocationCardProps = {}) {
+  const resolvedPhotos: GalleryPhoto[] = (propPhotos && propPhotos.length > 0)
+    ? propPhotos.map((p, idx) => ({
+        id: p.id || `photo-${idx}`,
+        title: p.title || `Hospital Facility ${idx + 1}`,
+        url: p.imageUrl || p.url || "/assets/hospital-facade.jpg",
+        alt: p.alt || p.title || "Janvithas Fertility Center Hospital Facility",
+      }))
+    : DEFAULT_PHOTOS;
+
   const [activePhotoIdx, setActivePhotoIdx] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -208,9 +225,9 @@ export function HospitalLocationCard({
       if (e.key === "Escape") {
         setIsLightboxOpen(false);
       } else if (e.key === "ArrowRight") {
-        setActivePhotoIdx((prev) => (prev + 1) % DEFAULT_PHOTOS.length);
+        setActivePhotoIdx((prev) => (prev + 1) % resolvedPhotos.length);
       } else if (e.key === "ArrowLeft") {
-        setActivePhotoIdx((prev) => (prev - 1 + DEFAULT_PHOTOS.length) % DEFAULT_PHOTOS.length);
+        setActivePhotoIdx((prev) => (prev - 1 + resolvedPhotos.length) % resolvedPhotos.length);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -274,7 +291,7 @@ export function HospitalLocationCard({
                 }
               }}
             >
-              {DEFAULT_PHOTOS.map((photo, idx) => (
+              {resolvedPhotos.map((photo, idx) => (
                 <img
                   key={photo.id}
                   src={photo.url}
@@ -293,7 +310,7 @@ export function HospitalLocationCard({
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
-                  setActivePhotoIdx((prev) => (prev - 1 + DEFAULT_PHOTOS.length) % DEFAULT_PHOTOS.length);
+                  setActivePhotoIdx((prev) => (prev - 1 + resolvedPhotos.length) % resolvedPhotos.length);
                 }}
                 className="md:hidden absolute left-2.5 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-black/40 text-white backdrop-blur-xs active:scale-95 transition-all"
                 aria-label="Previous image"
@@ -304,7 +321,7 @@ export function HospitalLocationCard({
                 type="button"
                 onClick={(e) => {
                   e.stopPropagation();
-                  setActivePhotoIdx((prev) => (prev + 1) % DEFAULT_PHOTOS.length);
+                  setActivePhotoIdx((prev) => (prev + 1) % resolvedPhotos.length);
                 }}
                 className="md:hidden absolute right-2.5 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-black/40 text-white backdrop-blur-xs active:scale-95 transition-all"
                 aria-label="Next image"
@@ -339,7 +356,7 @@ export function HospitalLocationCard({
                   WebkitOverflowScrolling: "touch",
                 }}
               >
-                {DEFAULT_PHOTOS.map((photo, idx) => {
+                {resolvedPhotos.map((photo, idx) => {
                   const isActive = idx === activePhotoIdx;
                   return (
                     <button
@@ -558,10 +575,10 @@ export function HospitalLocationCard({
           >
             <div className="flex flex-col text-left">
               <span className="font-heading font-bold text-sm sm:text-base text-white">
-                {DEFAULT_PHOTOS[activePhotoIdx].title}
+                {resolvedPhotos[activePhotoIdx]?.title}
               </span>
               <span className="text-xs text-white/70 font-sans">
-                Photo {activePhotoIdx + 1} of {DEFAULT_PHOTOS.length}
+                Photo {activePhotoIdx + 1} of {resolvedPhotos.length}
               </span>
             </div>
 
@@ -583,7 +600,7 @@ export function HospitalLocationCard({
             {/* Previous Photo Button */}
             <button
               type="button"
-              onClick={() => setActivePhotoIdx((prev) => (prev - 1 + DEFAULT_PHOTOS.length) % DEFAULT_PHOTOS.length)}
+              onClick={() => setActivePhotoIdx((prev) => (prev - 1 + resolvedPhotos.length) % resolvedPhotos.length)}
               aria-label="Previous photo"
               className="absolute left-2 sm:left-4 z-20 p-2.5 sm:p-3 rounded-full bg-black/50 hover:bg-[#E4006E] text-white border border-white/20 hover:border-transparent transition-all shadow-lg cursor-pointer"
             >
@@ -593,8 +610,8 @@ export function HospitalLocationCard({
             {/* Enlarged Image Display */}
             <div className="max-w-full max-h-[75vh] flex items-center justify-center">
               <img
-                src={DEFAULT_PHOTOS[activePhotoIdx].url}
-                alt={DEFAULT_PHOTOS[activePhotoIdx].alt}
+                src={resolvedPhotos[activePhotoIdx]?.url}
+                alt={resolvedPhotos[activePhotoIdx]?.alt}
                 className="max-w-full max-h-[75vh] object-contain rounded-xl sm:rounded-2xl shadow-2xl border border-white/10"
               />
             </div>
@@ -602,7 +619,7 @@ export function HospitalLocationCard({
             {/* Next Photo Button */}
             <button
               type="button"
-              onClick={() => setActivePhotoIdx((prev) => (prev + 1) % DEFAULT_PHOTOS.length)}
+              onClick={() => setActivePhotoIdx((prev) => (prev + 1) % resolvedPhotos.length)}
               aria-label="Next photo"
               className="absolute right-2 sm:right-4 z-20 p-2.5 sm:p-3 rounded-full bg-black/50 hover:bg-[#E4006E] text-white border border-white/20 hover:border-transparent transition-all shadow-lg cursor-pointer"
             >
@@ -615,7 +632,7 @@ export function HospitalLocationCard({
             className="w-full max-w-xl flex items-center justify-center gap-2 sm:gap-3 py-2 overflow-x-auto z-10 no-scrollbar"
             onClick={(e) => e.stopPropagation()}
           >
-            {DEFAULT_PHOTOS.map((photo, idx) => {
+            {resolvedPhotos.map((photo, idx) => {
               const isSelected = idx === activePhotoIdx;
               return (
                 <button

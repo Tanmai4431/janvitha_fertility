@@ -983,7 +983,7 @@
       "title": "Fertility Preservation",
       "shortDesc": "Cryopreservation of eggs, sperm, and embryos using advanced vitrification technology to safeguard your future family-building choices.",
       "fullDescription": "Cryopreservation of eggs, sperm, and embryos utilizing ultra-rapid vitrification technology. Safeguard your future parenthood choices for elective family planning or before medical treatments.",
-      "imageUrl": "https://images.unsplash.com/photo-1583912267670-6575ad362e4b?auto=format&fit=crop&w=1200&q=80",
+      "imageUrl": "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1200&q=80",
       "subservices": [
         {
           "slug": "elective-egg-freezing",
@@ -1343,6 +1343,60 @@
       "image": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=300&auto=format&fit=crop&q=80",
       "rating": 5,
       "text": "From our first consultation to Day-5 blastocyst transfer, the care we received was exceptional. Janvithas Fertility Center is a true blessing for couples."
+    }
+  ],
+  "works": [
+    {
+      "id": "1",
+      "business": "Natural & Gentle IUI Conception",
+      "client": "Janvithas Fertility",
+      "type": "IUI Protocol",
+      "tag": "Clinical Success",
+      "title": "Natural Cycle Tracking & Dual-Partner IUI",
+      "description": "Tailored follicular monitoring and precise timing leading to successful conception after 3 years of primary infertility.",
+      "domain": "janvithasfertility.com",
+      "href": "/services/iui-insemination",
+      "imageSrc": "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80",
+      "techStack": ["Follicular Tracking", "Sperm Prep", "IUI Insemination"]
+    },
+    {
+      "id": "2",
+      "business": "Day-5 Blastocyst IVF Transfer",
+      "client": "Janvithas Fertility",
+      "type": "IVF Success",
+      "tag": "Advanced Care",
+      "title": "Extended Blastocyst Culture & Single Embryo Transfer",
+      "description": "Achieved successful clinical pregnancy with high-grade Day-5 blastocyst incubation and gentle luteal support.",
+      "domain": "janvithasfertility.com",
+      "href": "/services/ivf-treatment",
+      "imageSrc": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80",
+      "techStack": ["IVF Care", "Day-5 Incubation", "Single ET"]
+    },
+    {
+      "id": "3",
+      "business": "PICSI Physiological Sperm Selection",
+      "client": "Janvithas Fertility",
+      "type": "ICSI / PICSI",
+      "tag": "Precision ART",
+      "title": "Hyaluronan-Bound Sperm Selection for Severe Male Factor",
+      "description": "Optimized fertilization and embryo quality using advanced physiological micro-injection techniques.",
+      "domain": "janvithasfertility.com",
+      "href": "/services/picsi-technology",
+      "imageSrc": "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=800&q=80",
+      "techStack": ["PICSI Tech", "Micro-Selection", "Embryo Care"]
+    },
+    {
+      "id": "4",
+      "business": "PCOS & High-Risk Pregnancy Care",
+      "client": "Janvithas Fertility",
+      "type": "Fetal Medicine",
+      "tag": "Specialist Care",
+      "title": "Comprehensive Endocrine Regulation & Fetal Diagnostics",
+      "description": "Integrated metabolic therapy and specialized fetal medicine scans under Dr. P. Bharathi's direct care.",
+      "domain": "janvithasfertility.com",
+      "href": "/services/female-infertility",
+      "imageSrc": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80",
+      "techStack": ["PCOS Care", "FMF (UK) Scan", "High-Risk OB"]
     }
   ],
   "settings": {

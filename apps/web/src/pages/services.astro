@@ -1,9 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getSiteSettings } from '../utils/sanity';
+import { getSiteSettings, getServices, urlFor } from '../utils/sanity';
 import client from '../../../../client.json';
 import Breadcrumbs from '../components/ui/navigation/Breadcrumbs.astro';
 import TestimonialsSection from '../components/sections/home/TestimonialsSection';
+import { ServiceCard } from '../components/ui/ServiceCard';
 
 const siteSettings = await getSiteSettings();
 const siteName = siteSettings?.name || client.business.name;
@@ -11,19 +12,30 @@ const siteDescription = siteSettings?.description || client.business.description
 const primaryPhone = siteSettings?.primaryPhone || client.contact.primaryPhone || '+91 80086 28710';
 const primaryEmail = siteSettings?.primaryEmail || client.contact.primaryEmail || 'info@janvithasfertility.com';
 
-// Map services data dynamically from client.json
-const services = (client.services || []).map((s: any, idx: number) => ({
-  id: s.id || String(idx + 1),
-  slug: s.slug || `service-${idx + 1}`,
-  category: s.category || 'Specialized Care',
-  title: s.title || '',
-  shortDesc: s.shortDesc || s.description || '',
-  fullDescription: s.fullDescription || s.shortDesc || '',
-  imageUrl: s.imageUrl || '',
-  subservices: s.subservices || (s.features || []).map((f: string) => ({ title: f })),
-  features: s.features || [],
-  metrics: s.metrics || [],
-}));
+// Fetch dynamic treatments from Sanity CMS with fallback to client.json
+const rawServices = (await getServices()) || client.services;
+const services = (rawServices || []).map((s: any, idx: number) => {
+  let imageUrl = s.imageUrl || (typeof s.image === 'string' ? s.image : '') || '';
+  if (s.image && typeof s.image === 'object') {
+    try {
+      imageUrl = urlFor(s.image).width(800).height(600).format('webp').url();
+    } catch (e) {
+      console.error('Failed to resolve service image URL:', e);
+    }
+  }
+  return {
+    id: s.id || String(idx + 1),
+    slug: s.slug || `service-${idx + 1}`,
+    category: s.category || s.badge || 'Specialized Care',
+    title: s.title || '',
+    shortDesc: s.shortDescription || s.shortDesc || s.description || '',
+    fullDescription: s.description || s.fullDescription || s.shortDesc || '',
+    imageUrl,
+    subservices: s.subservices || (s.features || []).map((f: string) => ({ title: f })),
+    features: s.benefits || s.features || [],
+    metrics: s.metrics || [],
+  };
+});
 
 const faqs = client.faqs || [];
 
@@ -220,69 +232,13 @@ function getServiceSvg(slug: string) {
               </p>
             </div>
 
-            {/* 3-Column Services Card Grid with alternating pink/purple cards */}
+            {/* 3-Column Services Card Grid using unified ServiceCard */}
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-              {services.map((service, idx) => {
-                const iconSvg = getServiceSvg(service.slug);
-                const subList = service.subservices || [];
-                const isPink = idx % 2 === 0;
-                const cardBg = isPink ? 'bg-[#FFF0F6]/90 border-[#FADCEB]' : 'bg-[#FAF0F8]/90 border-[#E8DDF0]';
-                const badgeBg = isPink ? 'bg-white text-[#E4006E] border-rose-100' : 'bg-white text-[#853676] border-purple-100';
-                const tagBg = isPink ? 'bg-white/80 text-[#E4006E] border-rose-100' : 'bg-white/80 text-[#853676] border-purple-100';
-
-                return (
-                  <a
-                    href={`/services/${service.slug}`}
-                    class={`rounded-[26px] ${cardBg} border-2 p-6 sm:p-7 flex flex-col justify-between shadow-[0_4px_16px_rgba(26,11,60,0.03)] hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 group text-left relative block`}
-                    data-animate="fade-up"
-                  >
-                    <div class="space-y-4">
-                      {/* Top Round Icon Badge */}
-                      <div class={`w-12 h-12 rounded-full ${badgeBg} border flex items-center justify-center group-hover:scale-110 group-hover:bg-[#E4006E] group-hover:text-white transition-all duration-300 shadow-xs`}>
-                        <Fragment set:html={iconSvg} />
-                      </div>
-
-                      {/* Title */}
-                      <h3 class="text-lg sm:text-xl font-heading font-bold text-[#1A0B3C] group-hover:text-[#E4006E] transition-colors leading-snug">
-                        {service.title}
-                      </h3>
-
-                      {/* Description */}
-                      <p class="text-secondary text-xs sm:text-sm font-sans leading-relaxed line-clamp-3">
-                        {service.shortDesc}
-                      </p>
-
-                      {/* Key Subservices Chips */}
-                      {subList && subList.length > 0 && (
-                        <div class="pt-2 flex flex-wrap gap-1.5">
-                          {subList.slice(0, 3).map((sub: any) => (
-                            <span class={`inline-block text-[11px] font-sans font-medium px-2.5 py-1 rounded-full ${tagBg} border truncate max-w-[220px]`}>
-                              • {typeof sub === 'string' ? sub : sub.title}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Bottom Action Circle Button with Link */}
-                    <div class="mt-6 pt-4 border-t border-black/5 flex items-center justify-between">
-                      <span class="text-xs font-bold text-[#853676] group-hover:text-[#E4006E] font-sans transition-colors flex items-center gap-1.5">
-                        <span>View Procedures & Roadmap</span>
-                        <span>→</span>
-                      </span>
-
-                      <div
-                        class="w-9 h-9 rounded-full bg-[#853676] group-hover:bg-[#E4006E] text-white flex items-center justify-center shadow-xs transition-all duration-200 group-hover:scale-110 shrink-0"
-                      >
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
-                          <line x1="7" y1="17" x2="17" y2="7"/>
-                          <polyline points="7 7 17 7 17 17"/>
-                        </svg>
-                      </div>
-                    </div>
-                  </a>
-                );
-              })}
+              {services.map((service: any) => (
+                <div data-animate="fade-up" class="h-full flex">
+                  <ServiceCard client:visible service={service} />
+                </div>
+              ))}
             </div>
 
             {/* Bottom Callout Inside Aura Canvas */}

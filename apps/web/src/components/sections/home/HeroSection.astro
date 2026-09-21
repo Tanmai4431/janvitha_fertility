@@ -22,51 +22,57 @@ const secondaryCtaHref = client.hero?.secondaryCtaHref || `tel:${client.contact?
 ---
 
 <!-- Hero Section -->
-<section id="hero" class="w-full py-3 sm:py-4 scroll-mt-24 relative space-y-5">
-  
-  <!-- Top Centered Tagline Roll Pill -->
-  <div class="flex justify-center w-full text-center pb-2" data-animate="zoom-in">
-    <CompanyTaglineRoll client:load />
-  </div>
-
-  <!-- Main Hero Content Grid: Left Title/Copy/CTAs + Right Floating Orbit Graphic -->
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-start">
-    
-    <!-- Left/Center Fluid Text Container -->
-    <div class="lg:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left space-y-6 z-10 pt-1">
-      <div data-animate="fade-up" class="w-full">
-        <BlurText
-          client:load
-          text={heroHeadline}
-          delay={100}
-          animateBy="words"
-          direction="top"
-          className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight text-primary leading-tight"
-          highlightWords={highlightWords}
-          highlightClassName="text-tertiary font-heading font-bold tracking-tight px-1.5"
-        />
+<section id="hero" class="w-full py-3 sm:py-4 scroll-mt-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div 
+      class="rounded-[32px] sm:rounded-[36px] bg-[#FFFDFC] border-2 border-[#FDDCEB] p-6 sm:p-8 lg:p-10 shadow-[0_4px_30px_rgba(228,0,110,0.04)] space-y-6"
+      data-animate="fade-up"
+    >
+      <!-- Top Centered Tagline Roll Pill -->
+      <div class="flex justify-center w-full text-center pb-2" data-animate="zoom-in">
+        <CompanyTaglineRoll client:load />
       </div>
-      
-      <p id="hero-description-container" class="text-secondary text-base sm:text-lg max-w-xl leading-relaxed font-sans">
-        {heroSubheadline}
-      </p>
 
-      {/* Dual CTA Button Pair: 1 Capsule Pill + 1 Tilted Square */}
-      <div class="flex flex-wrap gap-4 justify-center lg:justify-start delay-250 w-full" data-animate="fade-up">
-        <InteractiveHoverButton client:load href={primaryCtaHref}>
-          {primaryCta}
-        </InteractiveHoverButton>
-        <InteractiveHoverButton client:load href={secondaryCtaHref} shape="tilted-square">
-          {secondaryCta}
-        </InteractiveHoverButton>
+      <!-- Main Hero Content Grid: Left Title/Copy/CTAs + Right Floating Orbit Graphic -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
+        
+        <!-- Left/Center Fluid Text Container -->
+        <div class="lg:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left space-y-5 z-10 pt-1">
+          <div data-animate="fade-up" class="w-full">
+            <BlurText
+              client:load
+              text={heroHeadline}
+              delay={100}
+              animateBy="words"
+              direction="top"
+              className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight text-primary leading-tight"
+              highlightWords={highlightWords}
+              highlightClassName="text-tertiary font-heading font-bold tracking-tight px-1"
+            />
+          </div>
+          
+          <p id="hero-description-container" class="text-secondary text-sm sm:text-base md:text-lg max-w-xl leading-relaxed font-sans">
+            {heroSubheadline}
+          </p>
+
+          {/* Dual CTA Button Pair: 1 Capsule Pill + 1 Tilted Square */}
+          <div class="flex flex-wrap gap-3.5 justify-center lg:justify-start w-full pt-1" data-animate="fade-up">
+            <InteractiveHoverButton client:load href={primaryCtaHref}>
+              {primaryCta}
+            </InteractiveHoverButton>
+            <InteractiveHoverButton client:load href={secondaryCtaHref} shape="tilted-square">
+              {secondaryCta}
+            </InteractiveHoverButton>
+          </div>
+        </div>
+
+        <!-- Right Side: Floating Specialty Orbit Graphic -->
+        <div class="lg:col-span-6 w-full flex justify-center lg:justify-end items-center overflow-hidden shrink-0 pt-0" data-animate="zoom-in">
+          <TechStackOrbit client:load items={orbitItems} centerLogoUrl={centerLogoUrl} />
+        </div>
+
       </div>
     </div>
-
-    <!-- Right Side: Floating Specialty Orbit Graphic -->
-    <div class="lg:col-span-6 w-full flex justify-center lg:justify-end items-start overflow-hidden shrink-0 lg:-mt-20 xl:-mt-28 pt-0" data-animate="zoom-in">
-      <TechStackOrbit client:load items={orbitItems} centerLogoUrl={centerLogoUrl} />
-    </div>
-
   </div>
 </section>
 

@@ -52,6 +52,13 @@ export async function getSiteSettings() {
         "faviconUrl": favicon.asset->url,
         appleTouchIcon,
         "appleTouchIconUrl": appleTouchIcon.asset->url,
+        specialistName,
+        specialistDesignation,
+        specialistExperience,
+        specialistBio,
+        specialistQualifications,
+        specialistImage,
+        "specialistImageUrl": specialistImage.asset->url,
         primaryEmail,
         supportEmail,
         primaryPhone,
@@ -111,6 +118,13 @@ export async function getSiteSettings() {
         faviconUrl: settings.faviconUrl || null,
         appleTouchIcon: settings.appleTouchIcon || null,
         appleTouchIconUrl: settings.appleTouchIconUrl || null,
+        specialistName: settings.specialistName || null,
+        specialistDesignation: settings.specialistDesignation || null,
+        specialistExperience: settings.specialistExperience || null,
+        specialistBio: settings.specialistBio || null,
+        specialistQualifications: settings.specialistQualifications || null,
+        specialistImage: settings.specialistImage || null,
+        specialistImageUrl: settings.specialistImageUrl || null,
         primaryEmail: settings.primaryEmail || null,
         supportEmail: settings.supportEmail || null,
         primaryPhone: settings.primaryPhone || null,
@@ -202,6 +216,15 @@ export async function getHomePage() {
           "videoFileUrl": videoFile.asset->url,
           videoCdnUrl,
           youtubeUrl
+        },
+        facilityPhotos[] {
+          _key,
+          _type,
+          title,
+          alt,
+          caption,
+          asset,
+          "imageUrl": coalesce(asset->url, image.asset->url)
         }
       }`,
       {},
@@ -212,6 +235,7 @@ export async function getHomePage() {
         orbitItems: data.orbitItems || null,
         aboutImages: data.aboutImages || null,
         aboutGallery: data.aboutGallery || null,
+        facilityPhotos: data.facilityPhotos || null,
       };
       cachedHomePage = result;
       lastHomePageCacheTime = now;
@@ -223,3 +247,90 @@ export async function getHomePage() {
 
   return null;
 }
+
+// ─────────────────────────────────────────────────────────────
+// Dynamic Services & Treatments Fetcher
+// ─────────────────────────────────────────────────────────────
+let cachedServices: any[] | null = null;
+let lastServicesCacheTime = 0;
+
+export async function getServices() {
+  const now = Date.now();
+  if (cachedServices && (now - lastServicesCacheTime < CACHE_TTL)) {
+    return cachedServices;
+  }
+
+  try {
+    const services = await sanityClient.fetch(
+      `*[_type == "service"] | order(order asc, _createdAt asc) {
+        title,
+        "slug": slug.current,
+        badge,
+        order,
+        icon,
+        image,
+        "imageUrl": image.asset->url,
+        shortDescription,
+        description,
+        subservices[] {
+          title,
+          slug,
+          description
+        },
+        benefits
+      }`,
+      {},
+      { useCdn: false }
+    );
+    if (services && services.length > 0) {
+      cachedServices = services;
+      return services;
+    }
+    return null;
+  } catch (e) {
+    console.error('Failed to fetch services from Sanity:', e);
+    return null;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// Dynamic Doctor / Specialist Profile Fetcher
+// ─────────────────────────────────────────────────────────────
+let cachedDoctorProfile: any = null;
+let lastDoctorProfileCacheTime = 0;
+
+export async function getDoctorProfile() {
+  const now = Date.now();
+  if (cachedDoctorProfile && (now - lastDoctorProfileCacheTime < CACHE_TTL)) {
+    return cachedDoctorProfile;
+  }
+
+  try {
+    const data = await sanityClient.fetch(
+      `*[_type == "doctorProfile" && _id == "doctorProfile"][0] {
+        name,
+        designation,
+        experience,
+        bio,
+        image,
+        "imageUrl": image.asset->url,
+        qualifications,
+        specialties,
+        directPhone
+      }`,
+      {},
+      { useCdn: false }
+    );
+    if (data) {
+      cachedDoctorProfile = data;
+      lastDoctorProfileCacheTime = now;
+      return data;
+    }
+  } catch (e) {
+    console.error('Failed to fetch doctor profile from Sanity:', e);
+  }
+
+  return null;
+}
+
+

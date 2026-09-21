@@ -385,7 +385,7 @@ export function FloatingHeader({
             className={cn(
               'mx-auto w-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]',
               scrolled
-                ? 'max-w-6xl rounded-full bg-white/95 supports-[backdrop-filter]:bg-white/90 backdrop-blur-xl border-2 border-[#FADCEB] shadow-[0_8px_32px_rgba(228,0,110,0.08)] px-4 sm:px-6 py-1.5'
+                ? 'max-w-6xl rounded-full bg-white/95 supports-[backdrop-filter]:bg-white/90 backdrop-blur-xl shadow-[0_8px_32px_rgba(228,0,110,0.08)] px-4 sm:px-6 py-1.5'
                 : 'max-w-7xl px-0'
             )}
           >

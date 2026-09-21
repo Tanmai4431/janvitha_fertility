@@ -2,6 +2,7 @@
 // ServicesSection.astro - Home Page & Global Services Section Block
 import client from '../../../../../../client.json';
 import { ServicesExplorer, type ServiceItemData } from '../services/ServicesExplorer';
+import { getServices, urlFor } from '../../../utils/sanity';
 
 export type { ServiceItemData };
 
@@ -17,17 +18,30 @@ const {
   primaryPhone = client.contact.primaryPhone,
 } = Astro.props;
 
-export const servicesData: ServiceItemData[] = ((client.services || []) as any[]).map((s: any, idx: number) => ({
-  id: s.id || String(idx + 1),
-  slug: s.slug || `service-${idx + 1}`,
-  category: s.category || 'Specialized Care',
-  title: s.title || '',
-  shortDesc: s.shortDesc || s.description || '',
-  imageUrl: s.imageUrl || '',
-  videoUrl: s.videoUrl || '',
-  features: s.features || [],
-  metrics: s.metrics || [],
-}));
+const rawServices = (await getServices()) || client.services;
+const servicesData: ServiceItemData[] = (rawServices || []).map((s: any, idx: number) => {
+  let imageUrl = s.imageUrl || (typeof s.image === 'string' ? s.image : '') || '';
+  if (s.image && typeof s.image === 'object') {
+    try {
+      imageUrl = urlFor(s.image).width(800).height(600).format('webp').url();
+    } catch (e) {
+      console.error('Failed to format service image:', e);
+    }
+  }
+  return {
+    id: s.id || String(idx + 1),
+    slug: s.slug || `service-${idx + 1}`,
+    category: s.category || s.badge || 'Specialized Care',
+    title: s.title || '',
+    shortDesc: s.shortDescription || s.shortDesc || s.description || '',
+    fullDescription: s.fullDescription || s.description || '',
+    imageUrl,
+    videoUrl: s.videoUrl || '',
+    subservices: s.subservices || (s.features || []).map((f: string) => ({ title: f })),
+    features: s.benefits || s.features || (s.subservices || []).map((sub: any) => typeof sub === 'string' ? sub : sub.title),
+    metrics: s.metrics || [],
+  };
+});
 ---
 
 <section id="services" class="w-full py-3 sm:py-4 scroll-mt-24">

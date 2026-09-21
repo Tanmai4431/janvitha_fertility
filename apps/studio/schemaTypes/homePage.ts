@@ -17,6 +17,7 @@ export const homePage = defineType({
   groups: [
     { name: 'hero', title: '🚀 Hero Tech Stack Orbit' },
     { name: 'about', title: '📖 About Section Gallery' },
+    { name: 'facility', title: '🏥 Hospital & Facility Showcase' },
   ],
   fields: [
     // ==========================================
@@ -339,6 +340,24 @@ export const homePage = defineType({
                 Boolean(parent?.youtubeUrl && parent?.youtubeUrl.trim().length > 0),
             }),
           ],
+        },
+      ],
+    }),
+
+    // ==========================================
+    // 🏥 HOSPITAL & FACILITY PHOTOS SHOWCASE
+    // ==========================================
+    defineField({
+      name: 'facilityPhotos',
+      title: '🏥 Hospital Clinic & Laboratory Facility Photos',
+      type: 'array',
+      group: 'facility',
+      description:
+        'Upload high-resolution photos of your hospital, clinic entrance, embryology lab, ultrasound diagnostics rooms, and patient counseling lounges.',
+      of: [
+        {
+          type: 'image',
+          options: { hotspot: true },
         },
       ],
     }),

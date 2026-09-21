@@ -1,6 +1,6 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
-import { getSiteSettings } from '../../../utils/sanity';
+import { getSiteSettings, getServices } from '../../../utils/sanity';
 import client from '../../../../../../client.json';
 import Breadcrumbs from '../../../components/ui/navigation/Breadcrumbs.astro';
 
@@ -34,7 +34,8 @@ interface Props {
 }
 
 const { slug, subSlug } = Astro.params;
-const rawService = Astro.props.service || (client.services || []).find((s: any) => s.slug === slug);
+const allServices = (await getServices()) || client.services;
+const rawService = Astro.props.service || (allServices || []).find((s: any) => s.slug === slug);
 const rawSubservices = rawService?.subservices || [];
 const service = rawService;
 const subservice = Astro.props.subservice || rawSubservices.find((sub: any) => sub.slug === subSlug);

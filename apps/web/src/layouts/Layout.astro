@@ -214,6 +214,27 @@ const whatsAppPhone = siteSettings?.whatsAppPhone || siteSettings?.primaryPhone 
     />
     <ClientRouter />
 
+    <!-- Instant Above-the-Fold Viewport Reveal on Initial/Hard Page Load -->
+    <script is:inline>
+      (function() {
+        function revealAboveFold() {
+          var els = document.querySelectorAll('[data-animate]');
+          for (var i = 0; i < els.length; i++) {
+            var rect = els[i].getBoundingClientRect();
+            if (rect.top < window.innerHeight + 150) {
+              els[i].classList.add('is-visible');
+            }
+          }
+        }
+        if (document.readyState !== 'loading') {
+          revealAboveFold();
+        } else {
+          document.addEventListener('DOMContentLoaded', revealAboveFold);
+        }
+        window.addEventListener('load', revealAboveFold);
+      })();
+    </script>
+
     <!-- Instant SPA Speculation Rules for Sub-200ms Navigations -->
     <script type="speculationrules" is:inline>
     {
@@ -838,7 +859,7 @@ const whatsAppPhone = siteSettings?.whatsAppPhone || siteSettings?.primaryPhone 
       const hydrateViewportOnSwap = () => {
         document.querySelectorAll('[data-animate]').forEach((el) => {
           const rect = el.getBoundingClientRect();
-          if (rect.top < window.innerHeight) {
+          if (rect.top < window.innerHeight + 100) {
             el.classList.add('is-visible');
           }
         });
@@ -846,11 +867,11 @@ const whatsAppPhone = siteSettings?.whatsAppPhone || siteSettings?.primaryPhone 
       document.addEventListener('astro:before-preparation', hydrateViewportOnSwap);
       document.addEventListener('astro:after-swap', hydrateViewportOnSwap);
 
-      // Scroll Reveal Observer for Page Entrance Animations
-      document.addEventListener('astro:page-load', () => {
+      // Robust Scroll Reveal Observer for Page Entrance Animations
+      function setupPageAnimations() {
         const isAnimated = document.documentElement.getAttribute('data-page-animations') !== 'false';
-
         const animatedElements = document.querySelectorAll('[data-animate]');
+
         if (!isAnimated) {
           animatedElements.forEach((el) => {
             el.classList.add('is-visible');
@@ -876,7 +897,7 @@ const whatsAppPhone = siteSettings?.whatsAppPhone || siteSettings?.primaryPhone 
         // 2. Immediately mark initial viewport elements (top fold / Hero) as visible to prevent flickering
         animatedElements.forEach((el) => {
           const rect = el.getBoundingClientRect();
-          if (rect.top < window.innerHeight) {
+          if (rect.top < window.innerHeight + 100) {
             el.classList.add('is-visible');
           }
         });
@@ -896,7 +917,15 @@ const whatsAppPhone = siteSettings?.whatsAppPhone || siteSettings?.primaryPhone 
             observer.observe(el);
           }
         });
-      });
+      }
+
+      // Execute on immediate execution, DOMContentLoaded, load, and Astro page load
+      setupPageAnimations();
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupPageAnimations);
+      }
+      window.addEventListener('load', setupPageAnimations);
+      document.addEventListener('astro:page-load', setupPageAnimations);
     </script>
   </body>
 </html>

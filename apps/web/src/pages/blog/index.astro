@@ -1,12 +1,32 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { sanityClient, urlFor, getSiteSettings } from '../../utils/sanity';
+import { sanityClient, urlFor, getSiteSettings, getDoctorProfile } from '../../utils/sanity';
 import Breadcrumbs from '../../components/ui/navigation/Breadcrumbs.astro';
 import { BlogCard, type BlogCardPost } from '../../components/ui/BlogCard';
 import client from '../../../../../client.json';
 
 const siteSettings = await getSiteSettings();
+const doctorProfile = await getDoctorProfile();
 const siteName = siteSettings?.name || client.business.name;
+
+// Resolve Dynamic Doctor Image & Specialist Profile: Priority 1 = doctorProfile, Priority 2 = siteSettings, Priority 3 = client.json
+let doctorImageUrl = doctorProfile?.imageUrl || siteSettings?.specialistImageUrl || client.business.specialist?.image || '/assets/doctor-dr-p-bharathi.jpg';
+if (doctorProfile?.image) {
+  try {
+    doctorImageUrl = urlFor(doctorProfile.image).width(800).height(900).format('webp').url();
+  } catch (e) {
+    console.error('Failed to resolve doctorProfile.image URL:', e);
+  }
+} else if (siteSettings?.specialistImage) {
+  try {
+    doctorImageUrl = urlFor(siteSettings.specialistImage).width(800).height(900).format('webp').url();
+  } catch (e) {
+    console.error('Failed to resolve specialistImage URL:', e);
+  }
+}
+
+const doctorName = doctorProfile?.name || siteSettings?.specialistName || client.business.specialist?.name || 'Dr. P. Bharathi';
+const doctorDesignation = doctorProfile?.designation || siteSettings?.specialistDesignation || client.business.specialist?.designation || 'Specialist in Reproductive Medicine';
 
 let rawPosts: any[] = [];
 try {
@@ -208,8 +228,8 @@ const categories = [
               <div class="lg:col-span-5 relative flex justify-center lg:justify-end">
                 <div class="relative w-full max-w-[420px] aspect-[4/3] sm:aspect-[16/11] rounded-[28px] overflow-hidden shadow-xl border-4 border-white/80 group">
                   <img
-                    src="/assets/doctor-dr-p-bharathi.jpg"
-                    alt="Dr. P. Bharathi - Specialist in Reproductive Medicine"
+                    src={doctorImageUrl}
+                    alt={`${doctorName} - ${doctorDesignation}`}
                     class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                     loading="eager"
                   />
@@ -217,10 +237,10 @@ const categories = [
                   <div class="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-md p-3 rounded-2xl border border-pink-100 shadow-md flex items-center justify-between text-left">
                     <div>
                       <p class="font-heading font-bold text-xs sm:text-sm text-[#1A0B3C]">
-                        Dr. P. Bharathi
+                        {doctorName}
                       </p>
                       <p class="text-[11px] text-[#853676] font-sans font-medium">
-                        Fellow in Reproductive Medicine, FMF (UK)
+                        {doctorDesignation}
                       </p>
                     </div>
                     <span class="px-2 py-1 rounded-full bg-[#FFF0F6] text-[#E4006E] text-[10px] font-bold uppercase tracking-wider shrink-0 border border-rose-100">

@@ -18,6 +18,7 @@ export const siteSettings = defineType({
   },
   groups: [
     { name: 'business', title: '🏢 Business Profile' },
+    { name: 'specialist', title: '👨‍⚕️ Specialist / Doctor Profile' },
     { name: 'branding', title: '🎨 Logo & Brand Assets' },
     { name: 'contact', title: '📞 Contact & Address' },
     { name: 'socials', title: '🌐 Social Profiles' },
@@ -33,6 +34,12 @@ export const siteSettings = defineType({
       type: 'string',
       hidden: true,
       group: 'business',
+    }),
+    defineField({
+      name: 'specialistGuideNote',
+      type: 'string',
+      hidden: true,
+      group: 'specialist',
     }),
     defineField({
       name: 'brandingGuideNote',
@@ -90,6 +97,55 @@ export const siteSettings = defineType({
       rows: 3,
       description: 'Comprehensive business overview used for brand listings, search engine structured snippet summaries, and about previews.',
       group: 'business',
+    }),
+
+    // ==========================================
+    // 👨‍⚕️ SPECIALIST / DOCTOR PROFILE
+    // ==========================================
+    defineField({
+      name: 'specialistName',
+      title: 'Doctor / Specialist Full Name',
+      type: 'string',
+      description: 'Primary doctor or clinical specialist name (e.g. "Dr. P. Bharathi"). Displayed in about sections, hero cards, and blog articles.',
+      group: 'specialist',
+    }),
+    defineField({
+      name: 'specialistDesignation',
+      title: 'Doctor Professional Title / Designation',
+      type: 'string',
+      description: 'Medical title or specialty designation (e.g. "Consultant Obstetrician & Gynaecologist").',
+      group: 'specialist',
+    }),
+    defineField({
+      name: 'specialistExperience',
+      title: 'Experience Highlight / Subtitle',
+      type: 'string',
+      description: 'Key experience statement (e.g. "15+ Years in Reproductive Medicine & Fetal Diagnostics").',
+      group: 'specialist',
+    }),
+    defineField({
+      name: 'specialistBio',
+      title: 'Doctor Biography / Clinical Overview',
+      type: 'text',
+      rows: 4,
+      description: 'Detailed doctor biography and medical philosophy displayed on the homepage and about page.',
+      group: 'specialist',
+    }),
+    defineField({
+      name: 'specialistImage',
+      title: 'Doctor / Specialist Portrait Photo',
+      type: 'image',
+      description: 'High-resolution portrait photo of the doctor (PNG, WebP, or JPG). Displayed in about cards and doctor profile sections.',
+      options: { hotspot: true },
+      group: 'specialist',
+    }),
+    defineField({
+      name: 'specialistQualifications',
+      title: 'Degrees, Fellowships & Accreditations',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'List of degrees and international fellowships (e.g. "Fellow in Fetal Medicine, FMF (UK)", "Recognised Fellowship in Reproductive Medicine").',
+      group: 'specialist',
     }),
 
     // ==========================================

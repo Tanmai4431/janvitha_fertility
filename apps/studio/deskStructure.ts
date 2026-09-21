@@ -1,28 +1,24 @@
 import type { StructureResolver } from 'sanity/structure';
 import { CogIcon } from '@sanity/icons/Cog';
-import { DocumentsIcon } from '@sanity/icons/Documents';
 import { ComposeIcon } from '@sanity/icons/Compose';
 import { HomeIcon } from '@sanity/icons/Home';
+import { UserIcon } from '@sanity/icons/User';
+import { CaseIcon } from '@sanity/icons/Case';
+import { DocumentsIcon } from '@sanity/icons/Documents';
 
 /**
  * Sanity Studio Desk Structure
  * ─────────────────────────────────────────────────────────────
  *
- * ARCHITECTURE: Pages → Sections → Components
- *
- * 📄 Pages                          ← All website pages live here
- *   ├── 🏠 Home Page                  Singleton: Hero + Orbit Items + SEO
- *   └── 📰 Blog                       Sub-folder: list of blog articles
- *
- *   [Future pages added here as the site grows dynamic:]
- *   ├── 📞 Contact Page
- *   ├── 🛠️ Services Page
- *   └── 💼 Our Works Page
+ * 🏠 Home Page                    Singleton: Hero + Orbit Items + Hospital Photos
+ * 👨‍⚕️ Doctor Profile               Singleton: Doctor Portrait, Name, Bio, Fellowships
+ * 🔬 Treatments & Services        Collection: All clinical fertility treatments
+ * 📰 Blog Articles                Collection: Medical articles & guides
  *
  * ─ divider ─
  *
- * ⚙️  Global Site Settings          ← System / rare-touch (branding, SEO, analytics, email, PWA)
- *
+ * ⚙️ Global Site Settings         Singleton: Branding, SEO, Contact, Analytics, PWA
+ * 📄 Other Pages                  Static and custom page builders
  * ─────────────────────────────────────────────────────────────
  */
 export const deskStructure: StructureResolver = (S) =>
@@ -30,63 +26,68 @@ export const deskStructure: StructureResolver = (S) =>
     .title('Content Workspace')
     .items([
 
-      // ══════════════════════════════════════════════
-      // 📄 PAGES — All website pages live here
-      // ══════════════════════════════════════════════
+      // ─────────────────────────────────────
+      // 🏠 Home Page (Singleton)
+      // Contains: Hero Section, Orbit Items, Hospital Facility Photos
+      // ─────────────────────────────────────
       S.listItem()
-        .title('Pages')
-        .icon(DocumentsIcon)
+        .title('🏠 Home Page')
+        .icon(HomeIcon)
+        .id('homePage')
         .child(
-          S.list()
-            .title('Website Pages')
-            .items([
+          S.document()
+            .schemaType('homePage')
+            .documentId('homePage')
+            .title('Home Page Settings')
+        ),
 
-              // ─────────────────────────────────────
-              // 🏠 Home Page (Singleton)
-              // Contains: Hero Section, Orbit Items, SEO
-              // ─────────────────────────────────────
-              S.listItem()
-                .title('Home Page')
-                .icon(HomeIcon)
-                .id('homePage')
-                .child(
-                  S.document()
-                    .schemaType('homePage')
-                    .documentId('homePage')
-                    .title('Home Page')
-                ),
+      // ─────────────────────────────────────
+      // 👨‍⚕️ Doctor & Specialist Profile (Singleton)
+      // Contains: Doctor Portrait Photo, Bio, Qualifications, Title
+      // ─────────────────────────────────────
+      S.listItem()
+        .title('👨‍⚕️ Doctor Profile')
+        .icon(UserIcon)
+        .id('doctorProfile')
+        .child(
+          S.document()
+            .schemaType('doctorProfile')
+            .documentId('doctorProfile')
+            .title('Doctor & Specialist Profile')
+        ),
 
-              // ─────────────────────────────────────
-              // 📰 Blog
-              // Sub-folder: contains list of blog article documents
-              // ─────────────────────────────────────
-              S.listItem()
-                .title('Blog')
-                .icon(ComposeIcon)
-                .child(
-                  S.documentTypeList('post')
-                    .title('Blog Articles')
-                ),
+      // ─────────────────────────────────────
+      // 🔬 Treatments & Clinical Services (Collection)
+      // Contains: IVF, IUI, ICSI, PICSI, Genetic Programs, etc.
+      // ─────────────────────────────────────
+      S.listItem()
+        .title('🔬 Treatments & Services')
+        .icon(CaseIcon)
+        .child(
+          S.documentTypeList('service')
+            .title('Treatments & Clinical Services')
+        ),
 
-              // ─────────────────────────────────────
-              // [Future Pages — Add here as pages become CMS-driven]
-              // e.g.:
-              //   S.listItem().title('Services Page').child(...)
-              //   S.listItem().title('Contact Page').child(...)
-              //   S.listItem().title('Our Works Page').child(...)
-              // ─────────────────────────────────────
-            ])
+      // ─────────────────────────────────────
+      // 📰 Blog Articles & News (Collection)
+      // ─────────────────────────────────────
+      S.listItem()
+        .title('📰 Blog Articles')
+        .icon(ComposeIcon)
+        .child(
+          S.documentTypeList('post')
+            .title('Blog Articles & Clinical Guides')
         ),
 
       // Visual separator — divides content from system configuration
       S.divider(),
 
-      // ══════════════════════════════════════════════
-      // ⚙️  GLOBAL SITE SETTINGS — System / Rare Touch
-      // Branding, SEO, Analytics, Email, PWA, Social Links
-      // ══════════════════════════════════════════════
+      // ─────────────────────────────────────
+      // ⚙️ GLOBAL SITE SETTINGS (Singleton)
+      // Branding, Logo, SEO, Analytics, Contact, WhatsApp
+      // ─────────────────────────────────────
       S.listItem()
-        .title('Global Site Settings')
+        .title('⚙️ Global Site Settings')
         .icon(CogIcon)
         .child(
           S.document()
@@ -95,4 +96,16 @@ export const deskStructure: StructureResolver = (S) =>
             .title('Global Site Settings')
         ),
 
+      // ─────────────────────────────────────
+      // 📄 All Additional Pages
+      // ─────────────────────────────────────
+      S.listItem()
+        .title('📄 Other Custom Pages')
+        .icon(DocumentsIcon)
+        .child(
+          S.documentTypeList('page')
+            .title('Custom Pages')
+        ),
+
     ]);
+
