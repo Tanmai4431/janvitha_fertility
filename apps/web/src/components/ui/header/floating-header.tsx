@@ -371,24 +371,17 @@ export function FloatingHeader({
           </div>
         </div>
 
-        {/* Main Floating Nav Header */}
+        {/* Main Sticky Nav Header */}
         <header
           ref={headerRef}
           className={cn(
-            'w-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] relative',
+            'w-full transition-all duration-300 relative',
             scrolled
-              ? 'py-2 sm:py-2.5 px-3 sm:px-6'
-              : 'py-2.5 sm:py-3 px-4 sm:px-6 lg:px-8 bg-white/80 backdrop-blur-md'
+              ? 'bg-white/95 backdrop-blur-xl shadow-[0_4px_20px_rgba(228,0,110,0.06)] py-2 sm:py-2.5 px-4 sm:px-6 lg:px-8'
+              : 'bg-white/90 backdrop-blur-md py-2.5 sm:py-3 px-4 sm:px-6 lg:px-8'
           )}
         >
-          <div
-            className={cn(
-              'mx-auto w-full transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]',
-              scrolled
-                ? 'max-w-6xl rounded-full bg-white/95 supports-[backdrop-filter]:bg-white/90 backdrop-blur-xl shadow-[0_8px_32px_rgba(228,0,110,0.08)] px-4 sm:px-6 py-1.5'
-                : 'max-w-7xl px-0'
-            )}
-          >
+          <div className="max-w-7xl mx-auto w-full">
             <nav className="relative flex w-full items-center justify-between h-12 sm:h-14 lg:h-15">
               
               {/* Left Side: Brand Logo */}
